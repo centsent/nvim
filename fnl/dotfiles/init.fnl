@@ -1,5 +1,6 @@
-(module dotfiles.init)
+(module dotfiles.init 
+        {autoload {util dotfiles.util}})
 
-(require :dotfiles.core)
-(require :dotfiles.keymaps)
-(require :dotfiles.plugin)
+(util.req :core)
+(util.req :keymaps)
+(util.req :plugin)

@@ -1,6 +1,6 @@
 (module dotfiles.plugin
-        {autoload {a aniseed.core
-                   packer packer}})
+  {autoload {a aniseed.core
+             packer packer}})
 
 (defn- safe-require-plugin-config [name]
   "Safely require a module under the dotfiles.plugin.* prefix. Will catch errors
@@ -9,13 +9,6 @@
   (let [(ok? val-or-err) (pcall require (.. "dotfiles.plugin." name))]
     (when (not ok?)
       (print (.. "Plugin config error: " val-or-err)))))
-
-(defn req [name]
-  "A shortcut to building a require string for your plugin
-  configuration. Intended for use with packer's config or setup
-  configuration options. Will prefix the name with `dotfiles.plugin.`
-  before requiring."
-  (.. "require('dotfiles.plugin." name "')"))
 
 (defn- use [...]
   "Iterates through the arguments as pairs and calls packer's use function for

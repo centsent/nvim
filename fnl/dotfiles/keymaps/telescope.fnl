@@ -1,15 +1,21 @@
 (module dotfiles.keymaps.telescope
-        {autoload {util dotfiles.util
-                   telescope telescope}})
+  {autoload {util dotfiles.util
+             telescope telescope}})
 
 (def- nmap util.nmap)
 
 (telescope.setup
-  {:defaults
-  {:vimgrep_arguments ["rg" "--color=never" "--no-heading"
-                       "--with-filename" "--line-number" "--column"
-                       "--smart-case" "--hidden" "--follow"
-                       "-g" "!.git/"]}})
+  {:defaults {:vimgrep_arguments ["rg" 
+                                  "--color=never" 
+                                  "--no-heading"
+                                  "--with-filename" 
+                                  "--line-number" 
+                                  "--column"
+                                  "--smart-case" 
+                                  "--hidden" 
+                                  "--follow"
+                                  "-g"
+                                  "!.git/"]}})
 
 (defn mapping []
   "Telescope keymaps."

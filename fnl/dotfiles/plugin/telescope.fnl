@@ -1,6 +1,6 @@
-(module dotfiles.plugin.telescope
-        {autoload {builtin telescope.builtin
-                   keymaps dotfiles.keymaps.telescope}})
+(module dotfiles.plugin.telescope 
+  {autoload {builtin telescope.builtin
+             keymaps dotfiles.keymaps.telescope}})
 
 (def- find_files builtin.find_files)
 
