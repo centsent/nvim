@@ -24,5 +24,6 @@
   (nmap "ff" ":lua require'dotfiles.plugin.telescope'.find_project_files()<cr>")
   (nmap "fg" ":Telescope live_grep<cr>")
   (nmap "fm" ":Telescope keymaps<cr>")
+  (nmap "fa" ":Telescope lsp_code_actions<cr>")
   (nmap "fr" ":Telescope lsp_references<cr>")
   (nmap "fd" ":Telescope lsp_document_symbols<cr>"))
