@@ -7,6 +7,17 @@
   before requiring."
   (pcall require (.. "dotfiles." name)))
 
+(defn merge_table [...]
+  "Merge multiple tables into one new table."
+  (local result {})
+
+  (let [tables [...]]
+    (each [_ tbl (ipairs tables)]
+      (each [k v (pairs tbl)]
+        (tset result k v))))
+
+  result)
+
 (defn map [mode from to opt]
   "Creates a mode-specific keymap."
   (vim.api.nvim_set_keymap mode from to (or opt {})))

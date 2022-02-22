@@ -1,7 +1,8 @@
 (module :dotfiles.plugin.lspconfig
   {autoload {keymaps dotfiles.keymaps.lspconfig
              cmp-nvim-lsp cmp_nvim_lsp
-             lspconfig lspconfig}})
+             lspconfig lspconfig
+             util dotfiles.util}})
 
 (defn- update-capabilities []
   "Update the capabilities of the LSP clients."
@@ -10,20 +11,26 @@
   capabilities)
 
 (def- lsp_opt {:capabilities (update-capabilities)
-                :flags {:debounce_text_change 150}
-                :on_attach keymaps.custom-lsp-attach})
+               :flags {:debounce_text_change 150}
+               :on_attach keymaps.custom-lsp-attach})
+
+(def- sumneko_lua_setup {:settings
+                          {:Lua
+                            {:diagnostics {:globals ["vim"]}
+                             :runtime {:version "LuaJIT"}}
+                          }})
 
 ; https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-(def- clients [:clangd 
-               :gopls 
-               :julials 
-               :pyright 
-               :rust_analyzer 
-               :sumneko_lua 
-               :tsserver])
+(def- clients {:clangd {}
+               :gopls {}
+               :julials {}
+               :pyright {}
+               :rust_analyzer {}
+               :sumneko_lua sumneko_lua_setup
+               :tsserver {}})
 
-(each [_ name (ipairs clients)]
-  ((. lspconfig name :setup) lsp_opt))
+(each [name opt (pairs clients)]
+  ((. lspconfig name :setup) (util.merge_table lsp_opt opt)))
 
 ;; Format on save.
 (vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
