@@ -30,7 +30,7 @@
                :tsserver {}})
 
 (each [name opt (pairs clients)]
-  ((. lspconfig name :setup) (util.merge_table lsp_opt opt)))
+  ((. lspconfig name :setup) (util.merge_tables lsp_opt opt)))
 
 ;; Format on save.
 (vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")

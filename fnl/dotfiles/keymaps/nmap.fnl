@@ -26,12 +26,6 @@
 (nmap "H" "^")
 (nmap "L" "$")
 
-; Treat long lines as break lines (useful when moving around in them)
-(nmap "k" "gk" noremap-silent)
-(nmap "gk" "k" noremap-silent)
-(nmap "j" "gj" noremap-silent)
-(nmap "gj" "j" noremap-silent)
-
 ; Move a line of text up and down
 (nmap "<c-j>" "mz:m+<cr>`z")
 (nmap "<c-k>" "mz:m-2<cr>`z")
@@ -51,5 +45,3 @@
 
 ; Toggle netrw
 (nmap "<leader>f" ":Lex<cr>")
-
-

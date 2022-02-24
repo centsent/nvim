@@ -7,7 +7,7 @@
   before requiring."
   (pcall require (.. "dotfiles." name)))
 
-(defn merge_table [...]
+(defn merge_tables [...]
   "Merge multiple tables into one new table."
   (local result {})
 

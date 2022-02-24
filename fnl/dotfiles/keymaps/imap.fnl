@@ -5,8 +5,8 @@
 
 ;;; Insert Mode Keymaps
 
-; Use <c-j> for escaping
-(imap "<c-j>" "<esc>")
+; Use <c-j> for escaping and quickly save
+(imap "<c-j>" "<esc>:w<cr>")
 
 ; Directions in insert mode
 (imap "<c-b>" "<c-o>h")
@@ -22,7 +22,3 @@
 (imap "<c-u>" "<c-\\><c-o><c-u>")
 ; Scroll down
 (imap "<c-d>" "<c-\\><c-o><c-d>")
-
-; Quickly save and escape to normal mode
-(imap "<leader>," "<esc>:w<cr>")
-

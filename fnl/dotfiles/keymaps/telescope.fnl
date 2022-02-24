@@ -22,6 +22,7 @@
 
   ; List files in current project.
   (nmap "ff" ":lua require'dotfiles.plugin.telescope'.find_project_files()<cr>")
+  (nmap "fb" ":Telescope buffers<cr>")
   (nmap "fg" ":Telescope live_grep<cr>")
   (nmap "fm" ":Telescope keymaps<cr>")
   (nmap "fa" ":Telescope lsp_code_actions<cr>")
