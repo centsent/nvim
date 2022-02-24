@@ -73,9 +73,6 @@
   ; Breakdown Vim's --startuptime output.
   :tweekmonster/startuptime.vim {}
 
-  ; A blazing fast and easy to configure neovim statusline plugin written in pure lua.
-  :nvim-lualine/lualine.nvim {:mod :lualine}
-
   ; A port of Material colorscheme for NeoVim written in Lua.
   :marko-cerovac/material.nvim {:mod :material}
 
