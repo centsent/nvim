@@ -52,3 +52,9 @@ set termencoding=utf-8
 set encoding=utf-8
 set fileencoding=utf-8
 ")
+
+; Making the background transparent
+(command "
+au ColorScheme * hi Normal ctermbg=none guibg=none
+au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
+")
