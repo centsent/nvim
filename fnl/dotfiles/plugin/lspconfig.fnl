@@ -14,11 +14,10 @@
                :flags {:debounce_text_change 150}
                :on_attach keymaps.custom-lsp-attach})
 
-(def- sumneko_lua_setup {:settings
-                          {:Lua
-                            {:diagnostics {:globals ["vim"]}
-                             :runtime {:version "LuaJIT"}}
-                          }})
+(def- lua_lsp_opt {:diagnostics {:globals ["vim"]}
+                   :runtime {:version "LuaJIT"}})
+
+(def- sumneko_lua_setup {:settings {:Lua lua_lsp_opt}})
 
 ; https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 (def- clients {:clangd {}

@@ -54,7 +54,4 @@ set fileencoding=utf-8
 ")
 
 ; Making the background transparent
-(command "
-au ColorScheme * hi Normal ctermbg=none guibg=none
-au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
-")
+(command "au ColorScheme * highlight Normal ctermbg=none guibg=none")
