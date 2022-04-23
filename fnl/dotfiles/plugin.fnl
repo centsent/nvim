@@ -76,6 +76,9 @@
   ; A port of Material colorscheme for NeoVim written in Lua.
   :marko-cerovac/material.nvim {:mod :material}
 
+  ; A neovim lua plugin to help easily manage multiple terminal windows
+  :akinsho/toggleterm.nvim {:mod :toggleterm}
+
   ; Github Copilot is an AI pair programmer
   ; which suggests line completions and entire function bodies as you type.
   :github/copilot.vim {:mod :copilot}
