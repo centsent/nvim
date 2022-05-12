@@ -15,7 +15,8 @@
                                   "--hidden" 
                                   "--follow"
                                   "-g"
-                                  "!.git/"]}})
+                                  "!.git/"]
+              :file_ignore_patterns ["node_modules" ".git"]}})
 
 (defn mapping []
   "Telescope keymaps."
