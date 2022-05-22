@@ -21,4 +21,8 @@
   (buf-set-keymap "n" "gh" ":lua vim.lsp.buf.hover()<cr>" opts)
   (buf-set-keymap "n" "gn" ":lua vim.diagnostic.goto_next()<cr>" opts)
   (buf-set-keymap "n" "gp" ":lua vim.diagnostic.goto_prev()<cr>" opts)
-  (buf-set-keymap "n" "ge" ":lua vim.diagnostic.open_float()<cr>" opts))
+  (buf-set-keymap "n" "ge" ":lua vim.diagnostic.open_float()<cr>" opts)
+  
+  ; Format on save.
+  (if client.resolved_capabilities.document_formatting
+    (vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")))
