@@ -87,5 +87,5 @@
   ; If you use my nvim-config, please comment out the following line.
   :wakatime/vim-wakatime {}
 
-  ; :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
+  :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
   )
