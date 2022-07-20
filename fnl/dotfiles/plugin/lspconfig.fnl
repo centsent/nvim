@@ -20,8 +20,11 @@
 
 (def- sumneko_lua_setup {:settings {:Lua lua_lsp_opt}})
 
+(def- emmet_ls_setup {:filetypes ["html" "typescriptreact" "javascriptreact" "css" "sass" "scss" "less"]})
+
 ; https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 (def- clients {:clangd {}
+               :emmet_ls {}
                :gopls {}
                :julials {}
                :pyright {}
