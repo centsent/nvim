@@ -45,6 +45,9 @@
   ; A collection of common configurations for Neovim's built-in language server client.
   :neovim/nvim-lspconfig {:mod :lspconfig}
 
+  ;An asynchronous linter plugin for Neovim
+  :mfussenegger/nvim-lint {:mod :nvim-lint}
+
   ; telescope.nvim is a highly extendable fuzzy finder over lists.
   :nvim-telescope/telescope.nvim {:mod :telescope :requires [[:nvim-lua/plenary.nvim]]}
 
