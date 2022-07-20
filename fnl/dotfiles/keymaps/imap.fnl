@@ -6,7 +6,7 @@
 ;;; Insert Mode Keymaps
 
 ; Use <c-j> for escaping and quickly save
-(imap "<c-j>" "<esc>:w<cr>")
+(imap "<c-j>" "<esc>")
 
 ; Directions in insert mode
 (imap "<c-b>" "<c-o>h")

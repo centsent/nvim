@@ -61,7 +61,7 @@
   :gpanders/editorconfig.nvim {}
 
   ; A collection of language packs for vim.
-  :sheerun/vim-polyglot {}
+  ;:sheerun/vim-polyglot {}
 
   ; `gS` to split a one-liner into multiple lines
   ; `gJ` (with the cursor on the first line) to join a block into a single line statement.

@@ -11,7 +11,7 @@ local fmt = string.format
 -- Work out where our plugins will be stored.
 local pack_path = fn.stdpath("data") .. "/site/pack"
 
-local function ensure (user, repo)
+local function ensure(user, repo)
   -- Ensures a given github.com/USER/REPO is cloned in the pack/packer/start directory.
   local install_path = fmt("%s/packer/start/%s", pack_path, repo, repo)
   if fn.empty(fn.glob(install_path)) > 0 then
@@ -30,6 +30,6 @@ ensure("Olical", "aniseed")
 -- Aniseed looks for this when it's loaded then loads the rest of your
 -- configuration if it's set.
 vim.g["aniseed#env"] = {
-	module = "dotfiles.init",
-	compile = true,
+  module = "dotfiles.init",
+  compile = true,
 }

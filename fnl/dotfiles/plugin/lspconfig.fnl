@@ -4,6 +4,7 @@
              lspconfig lspconfig
              util dotfiles.util}})
 
+
 (defn- update-capabilities []
   "Update the capabilities of the LSP clients."
   (var capabilities (vim.lsp.protocol.make_client_capabilities))
