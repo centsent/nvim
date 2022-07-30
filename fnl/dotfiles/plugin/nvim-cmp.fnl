@@ -1,6 +1,7 @@
 (module dotfiles.plugin.nvim-cmp
   {autoload {cmp cmp
-             luasnip luasnip}})
+             luasnip luasnip
+             from_vscode luasnip.loaders.from_vscode}})
 
 ; Snippet sources
 (def- sources [{:name "nvim_lsp"}
@@ -22,3 +23,5 @@
 (cmp.setup {:snippet {:expand lsp_expand}
             :mapping mapping
             :sources sources})
+
+(from_vscode.lazy_load)

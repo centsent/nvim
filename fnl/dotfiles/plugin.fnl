@@ -40,7 +40,8 @@
                                                [:hrsh7th/cmp-nvim-lsp] 
                                                [:hrsh7th/cmp-path]
                                                [:hrsh7th/cmp-buffer]
-                                               [:saadparwaiz1/cmp_luasnip]]}
+                                               [:saadparwaiz1/cmp_luasnip]
+                                               [:rafamadriz/friendly-snippets]]}
 
   ; A collection of common configurations for Neovim's built-in language server client.
   :neovim/nvim-lspconfig {:mod :lspconfig}
@@ -63,9 +64,6 @@
   ; EditorConfig plugin for Neovim written in Fennel.
   :gpanders/editorconfig.nvim {}
 
-  ; A collection of language packs for vim.
-  ;:sheerun/vim-polyglot {}
-
   ; `gS` to split a one-liner into multiple lines
   ; `gJ` (with the cursor on the first line) to join a block into a single line statement.
   :AndrewRadev/splitjoin.vim {}
@@ -81,10 +79,6 @@
 
   ; A neovim lua plugin to help easily manage multiple terminal windows
   :akinsho/toggleterm.nvim {:mod :toggleterm}
-
-  ; Github Copilot is an AI pair programmer
-  ; which suggests line completions and entire function bodies as you type.
-  :github/copilot.vim {:mod :copilot}
 
   ; For my own use,
   ; If you use my nvim-config, please comment out the following line.
