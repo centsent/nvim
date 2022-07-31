@@ -25,6 +25,7 @@
                :csharp_ls {}
                :gopls {}
                :golangci_lint_ls {}
+               :html {}
                :julials {}
                :phpactor {}
                :pyright {}
@@ -33,4 +34,4 @@
                :tsserver {}})
 
 (each [name opt (pairs clients)]
-  ((. lspconfig name :setup) (util.merge_tables lsp_opt opt)))
+  ((. lspconfig name :setup) (vim.tbl_deep_extend "force" lsp_opt opt)))
