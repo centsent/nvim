@@ -17,6 +17,8 @@ local function ensure(user, repo)
   if fn.empty(fn.glob(install_path)) > 0 then
     execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
     execute(fmt("packadd %s", repo))
+
+    _G.packer_bootstrap = true
   end
 end
 

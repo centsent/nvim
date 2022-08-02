@@ -9,7 +9,7 @@
 
 (defn map [mode from to opt]
   "Creates a mode-specific keymap."
-  (vim.api.nvim_set_keymap mode from to (or opt {})))
+  (vim.keymap.set mode from to (or opt {})))
 
 ; Set keymap in Normal mode
 (def nmap (partial map "n"))

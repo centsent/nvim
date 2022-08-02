@@ -2,8 +2,6 @@
   {autoload {util dotfiles.util}})
 
 (def- nmap util.nmap)
-(def- noremap-silent {:noremap true 
-                      :silent true })
 
 ;;; Normal Mode Keymaps
 
@@ -11,7 +9,7 @@
 (nmap ";" ":")
 
 ; Don't highlight search result
-(nmap "<leader>/" ":nohlsearch<cr>" noremap-silent)
+(nmap "<leader>/" ":nohlsearch<cr>")
 
 ; Fast saving
 (nmap "<leader>w" ":w!<cr>")

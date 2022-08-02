@@ -23,7 +23,12 @@
           (let [name (. pkgs i)
                 opts (. pkgs (+ i 1))]
             (-?> (. opts :mod) (safe-require-plugin-config))
-            (use (a.assoc opts 1 name)))))))
+            (use (a.assoc opts 1 name))))
+
+        (if _G.packer_bootstrap
+          (packer.sync)))))
+
+
   nil)
 
 
