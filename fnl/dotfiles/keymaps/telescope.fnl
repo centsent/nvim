@@ -28,4 +28,5 @@
   (nmap "fm" ":Telescope keymaps<cr>")
   (nmap "fa" ":Telescope lsp_code_actions<cr>")
   (nmap "fr" ":Telescope lsp_references<cr>")
-  (nmap "fd" ":Telescope lsp_document_symbols<cr>"))
+  (nmap "fd" ":Telescope lsp_document_symbols<cr>")
+  (nmap "fp" ":lua require'telescope'.extensions.project.project{}<cr>"))

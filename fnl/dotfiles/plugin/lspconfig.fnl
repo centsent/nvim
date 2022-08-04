@@ -23,15 +23,19 @@
 ; https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 (def- clients {:clangd {}
                :csharp_ls {}
+               :cssls {}
+               :cmake {}
                :gopls {}
                :golangci_lint_ls {}
                :html {}
+               :jsonls {}
                :julials {}
                :phpactor {}
                :pyright {}
                :rust_analyzer {}
                :sumneko_lua sumneko_lua_setup
-               :tsserver {}})
+               :tsserver {}
+               :vuels {}})
 
 (each [name opt (pairs clients)]
   ((. lspconfig name :setup) (vim.tbl_deep_extend "force" lsp_opt opt)))

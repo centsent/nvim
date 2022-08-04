@@ -55,7 +55,8 @@
   :mfussenegger/nvim-lint {:mod :nvim-lint}
 
   ; telescope.nvim is a highly extendable fuzzy finder over lists.
-  :nvim-telescope/telescope.nvim {:mod :telescope :requires [[:nvim-lua/plenary.nvim]]}
+  :nvim-telescope/telescope.nvim {:mod :telescope :requires [[:nvim-lua/plenary.nvim
+                                                              :nvim-telescope/telescope-project.nvim]]}
 
   ; A git wrapper for vim.
   :tpope/vim-fugitive {}
@@ -89,5 +90,11 @@
   ; If you use my nvim-config, please comment out the following line.
   :wakatime/vim-wakatime {}
 
-  :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
+  ; Syntax highlight
+  :nvim-treesitter/nvim-treesitter {:requires [[:p00f/nvim-ts-rainbow 
+                                                :windwp/nvim-ts-autotag]] 
+                                    :run ":TSUpdate" :mod :treesitter}
+
+  ; 
+  :williamboman/mason.nvim {:requires [[:williamboman/mason-lspconfig.nvim]] :mod :mason}
   )

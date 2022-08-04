@@ -4,8 +4,10 @@
              from_vscode luasnip.loaders.from_vscode}})
 
 ; Snippet sources
-(def- sources [{:name "nvim_lsp"}
-               {:name "luasnip"}])
+(def- sources [{:name :nvim_lsp}
+               {:name :luasnip}
+               {:name :buffer}
+               {:name :path}])
 
 ; Keymap for snippets.
 (def- mapping {:<c-p> (cmp.mapping.select_prev_item)
