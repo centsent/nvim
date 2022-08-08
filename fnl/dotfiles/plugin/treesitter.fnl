@@ -12,3 +12,8 @@
                   :indent {:enable true}
 
                   :autotag ["html" "javascript" "javascriptreact" "typescriptreact" "svelte" "vue"]})
+
+; Code folding with treesitter
+(vim.cmd "set foldmethod=expr")
+(vim.cmd "set foldexpr=nvim_treesitter#foldexpr()")
+(vim.cmd "autocmd BufReadPost,FileReadPost * normal zR")

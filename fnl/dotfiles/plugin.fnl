@@ -56,7 +56,8 @@
 
   ; telescope.nvim is a highly extendable fuzzy finder over lists.
   :nvim-telescope/telescope.nvim {:mod :telescope :requires [[:nvim-lua/plenary.nvim
-                                                              :nvim-telescope/telescope-project.nvim]]}
+                                                              :nvim-telescope/telescope-project.nvim
+                                                              :kyazdani42/nvim-web-devicons]]}
 
   ; A git wrapper for vim.
   :tpope/vim-fugitive {}
