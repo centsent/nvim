@@ -95,6 +95,6 @@
                                                 :windwp/nvim-ts-autotag]] 
                                     :run ":TSUpdate" :mod :treesitter}
 
-  ; 
+  ; Portable package manager for Neovim that runs everywhere Neovim runs.
   :williamboman/mason.nvim {:requires [[:williamboman/mason-lspconfig.nvim]] :mod :mason}
   )
