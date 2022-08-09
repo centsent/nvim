@@ -2,6 +2,14 @@
 
 (def- command vim.cmd)
 
+(defn- code_action_listener []
+  ; Show a sign when a code action is available
+  (local current_buf (vim.api.nvim_get_current_buf))
+  (local context {:diagnostics (vim.lsp.diagnostic.get_line_diagnostics current_buf)})
+  (local params (vim.lsp.util.make_range_params))
+  (set context.params params)
+  (vim.lsp.buf_request current_buf "textDocument/codeAction" params (fn [])))
+
 (defn custom-lsp-attach [client bufnr]
   "lspconfig keymaps"
   (defn- buf-set-keymap [...]
@@ -34,6 +42,9 @@
   ; this removes the jitter when warnings/errors flow in
   (command "set signcolumn=yes")
 
+  (if (client.supports_method "textDocument/codeAction")
+    (vim.api.nvim_create_autocmd "CursorHold" {:pattern "*" :callback code_action_listener}))
+
   ; Format on save.
   (if client.resolved_capabilities.document_formatting
-    (command "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")))
+    (command "autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")))

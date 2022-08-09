@@ -49,7 +49,8 @@
                                                [:rafamadriz/friendly-snippets]]}
 
   ; A collection of common configurations for Neovim's built-in language server client.
-  :neovim/nvim-lspconfig {:mod :lspconfig}
+  :neovim/nvim-lspconfig {:mod :lspconfig :requires [[:williamboman/mason.nvim
+                                                      :williamboman/mason-lspconfig.nvim]]}
 
   ;An asynchronous linter plugin for Neovim
   :mfussenegger/nvim-lint {:mod :nvim-lint}
@@ -95,7 +96,4 @@
   :nvim-treesitter/nvim-treesitter {:requires [[:p00f/nvim-ts-rainbow 
                                                 :windwp/nvim-ts-autotag]] 
                                     :run ":TSUpdate" :mod :treesitter}
-
-  ; Portable package manager for Neovim that runs everywhere Neovim runs.
-  :williamboman/mason.nvim {:requires [[:williamboman/mason-lspconfig.nvim]] :mod :mason}
   )

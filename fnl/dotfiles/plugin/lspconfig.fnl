@@ -1,14 +1,15 @@
 (module :dotfiles.plugin.lspconfig
   {autoload {keymaps dotfiles.keymaps.lspconfig
-             cmp-nvim-lsp cmp_nvim_lsp
+             cmp_nvim_lsp cmp_nvim_lsp
              lspconfig lspconfig
+             mason mason
+             mason_lspconfig mason-lspconfig
              util dotfiles.util}})
-
 
 (defn- update-capabilities []
   "Update the capabilities of the LSP clients."
   (var capabilities (vim.lsp.protocol.make_client_capabilities))
-  (set capabilities (cmp-nvim-lsp.update_capabilities capabilities))
+  (set capabilities (cmp_nvim_lsp.update_capabilities capabilities))
   capabilities)
 
 (def- lsp_opt {:capabilities (update-capabilities)
@@ -39,3 +40,6 @@
 
 (each [name opt (pairs clients)]
   ((. lspconfig name :setup) (vim.tbl_deep_extend "force" lsp_opt opt)))
+
+(mason.setup {:max_concurrent_installers 10})
+(mason_lspconfig.setup {:automatic_installation true})
