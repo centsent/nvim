@@ -96,4 +96,6 @@
   :nvim-treesitter/nvim-treesitter {:requires [[:p00f/nvim-ts-rainbow 
                                                 :windwp/nvim-ts-autotag]] 
                                     :run ":TSUpdate" :mod :treesitter}
+
+  :lewis6991/gitsigns.nvim {:mod :gitsigns}
   )

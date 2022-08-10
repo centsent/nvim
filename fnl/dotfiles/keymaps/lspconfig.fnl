@@ -38,7 +38,9 @@
   ; 300ms of no cursor movement to trigger CursorHold
   (command "set updatetime=300")
   ; Show diagnostic popup on CursorHold
-  (command "autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })")
+  (vim.api.nvim_create_autocmd "CursorHold" {:buffer current_buf 
+                                             :callback (fn []
+                                                         (vim.diagnostic.open_float nil {:focusable false}))})
   ; have a fixed column for the diagnostics to appear in
   ; this removes the jitter when warnings/errors flow in
   (command "set signcolumn=yes")
