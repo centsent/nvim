@@ -34,6 +34,11 @@
   (buf-set-keymap "n" "gp" ":lua vim.diagnostic.goto_prev()<cr>" opts)
   (buf-set-keymap "n" "ge" ":lua vim.diagnostic.open_float()<cr>" opts)
 
+  (command "set foldmethod=expr")
+  (command "set foldexpr=nvim_treesitter#foldexpr()")
+  (command "normal zR")
+
+
   ; Set updatetime for CursorHold
   ; 300ms of no cursor movement to trigger CursorHold
   (command "set updatetime=300")
