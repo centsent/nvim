@@ -50,7 +50,8 @@
 
   ; A collection of common configurations for Neovim's built-in language server client.
   :neovim/nvim-lspconfig {:mod :lspconfig :requires [[:williamboman/mason.nvim
-                                                      :williamboman/mason-lspconfig.nvim]]}
+                                                      :williamboman/mason-lspconfig.nvim
+                                                      :folke/lua-dev.nvim]]}
 
   ;An asynchronous linter plugin for Neovim
   :mfussenegger/nvim-lint {:mod :nvim-lint}

@@ -4,6 +4,7 @@
              lspconfig lspconfig
              mason mason
              mason_lspconfig mason-lspconfig
+             lua_dev lua-dev
              util dotfiles.util}})
 
 (defn- update-capabilities []
@@ -16,10 +17,8 @@
                :flags {:debounce_text_change 150}
                :on_attach keymaps.custom-lsp-attach})
 
-(def- lua_lsp_opt {:diagnostics {:globals ["vim"]}
-                   :runtime {:version "LuaJIT"}})
-
-(def- sumneko_lua_setup {:settings {:Lua lua_lsp_opt}})
+(def- luadev (lua_dev.setup {:runtime_path true
+                             :lspconfig {:runtime {:version "LuaJIT"}}}))
 
 ; https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 (def- clients {:clangd {}
@@ -34,7 +33,7 @@
                :phpactor {}
                :pyright {}
                :rust_analyzer {}
-               :sumneko_lua sumneko_lua_setup
+               :sumneko_lua luadev
                :tsserver {}
                :vuels {}})
 
