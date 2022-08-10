@@ -16,6 +16,7 @@
     (vim.api.nvim_buf_set_keymap bufnr ...))
   (defn- buf-set-option [...]
     (vim.api.nvim_buf_set_option bufnr ...))
+  (local current_buf (vim.api.nvim_get_current_buf))
 
   ; Enable completion triggered by <c-x><c-o>
   (buf-set-option "omnifunc" "v:lua.vim.lsp.omnifunc")
@@ -43,7 +44,7 @@
   (command "set signcolumn=yes")
 
   (if (client.supports_method "textDocument/codeAction")
-    (vim.api.nvim_create_autocmd "CursorHold" {:pattern "*" :callback code_action_listener}))
+    (vim.api.nvim_create_autocmd "CursorHold" {:buffer current_buf :callback code_action_listener}))
 
   ; Format on save.
   (if client.resolved_capabilities.document_formatting
