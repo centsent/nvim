@@ -33,9 +33,21 @@ local function vue_config()
     args = {
       "--stdin-filepath",
       vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
-      "--single-quote",
+      "--doule-quote",
       "--parser",
       "vue",
+    },
+    stdin = true,
+  }
+end
+
+local function java_config()
+  return {
+    exe = "java",
+    args = {
+      "-jar",
+      os.getenv("HOME") .. "/.local/jars/google-java-format.jar",
+      vim.api.nvim_buf_get_name(0),
     },
     stdin = true,
   }
@@ -44,6 +56,8 @@ end
 local formatter_config = {
   lua = { lua_config },
   vue = { vue_config },
+  java = { java_config },
+
   ["*"] = {
     function()
       return {
@@ -60,7 +74,6 @@ local common_filetypes = {
   "css",
   "scss",
   "html",
-  "java",
   "javascript",
   "javascriptreact",
   "typescript",

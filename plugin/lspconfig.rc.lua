@@ -3,13 +3,8 @@ if not ok then
   return
 end
 
+local M = {}
 local protocol = require("vim.lsp.protocol")
-local luadev = require("lua-dev").setup({
-  runtime_path = true,
-  lspconfig = {
-    runtime = { version = "LUaJIT" },
-  },
-})
 
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...)
@@ -70,24 +65,26 @@ local function on_attach(client, bufnr)
   end
 end
 
+M.on_attach = on_attach
+
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require("cmp_nvim_lsp").update_capabilities(protocol.make_client_capabilities())
 
 local clients = {
-  clangd = {},
-  csharp_ls = {},
-  cssls = {},
-  cmake = {},
-  gopls = {},
-  html = {},
-  jsonls = {},
-  julials = {},
-  phpactor = {},
-  pyright = {},
-  rust_analyzer = {},
-  sumneko_lua = luadev,
-  tsserver = {},
-  vuels = {},
+  "clangd",
+  "csharp_ls",
+  "cssls",
+  "cmake",
+  "gopls",
+  "html",
+  "jsonls",
+  "julials",
+  "phpactor",
+  "pyright",
+  "rust_analyzer",
+  "sumneko_lua",
+  "tsserver",
+  "vuels",
 }
 
 local lsp_opt = {
@@ -96,8 +93,14 @@ local lsp_opt = {
   flags = { debounce_text_change = 150 },
 }
 
-for name, opt in pairs(clients) do
-  lspconfig[name].setup(vim.tbl_deep_extend("force", lsp_opt, opt))
+for _, name in ipairs(clients) do
+  local m_ok, m = pcall(require, "lsp." .. name .. "_config")
+  if m_ok then
+    local config = m.make_config()
+    lspconfig[name].setup(vim.tbl_deep_extend("force", lsp_opt, config))
+  else
+    lspconfig[name].setup(lsp_opt)
+  end
 end
 
 -- Diagnostic symbols in the sign column (gutter)
@@ -106,3 +109,5 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
+
+return M
