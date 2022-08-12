@@ -35,25 +35,13 @@ local function on_attach(client, bufnr)
   vim.api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
     callback = function()
-      vim.diagnostic.open_float(nil, { cocusable = false })
+      vim.diagnostic.open_float(nil, { focusable = false })
     end,
   })
 
   -- have a fixed column for the diagnostics to appear in
   -- this removes the jitter when warnings/errors flow in
   vim.opt.signcolumn = "yes"
-
-  if client.supports_method("textDocument/codeAction") then
-    vim.api.nvim_create_autocmd("CursorHold", {
-      buffer = bufnr,
-      callback = function()
-        local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics(bufnr) }
-        local params = vim.lsp.util.make_range_params()
-        context.params = params
-        vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function() end)
-      end,
-    })
-  end
 
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_create_autocmd("BufWritePost", {
