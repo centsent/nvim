@@ -33,8 +33,8 @@ local function on_attach(client, bufnr)
   buf_set_keymap("n", "gr", ":lua vim.lsp.buf.rename()<cr>", opts)
   buf_set_keymap("n", "gy", ":lua vim.lsp.buf.type_definition()<cr>", opts)
   buf_set_keymap("n", "gh", ":lua vim.lsp.buf.hover()<cr>", opts)
-  buf_set_keymap("n", "gn", ":lua vim.lsp.diagnostic.goto_next()<cr>", opts)
-  buf_set_keymap("n", "gp", ":lua vim.lsp.diagnostic.goto_prev()<cr>", opts)
+  buf_set_keymap("n", "gn", ":lua vim.diagnostic.goto_next()<cr>", opts)
+  buf_set_keymap("n", "gp", ":lua vim.diagnostic.goto_prev()<cr>", opts)
   buf_set_keymap("n", "ga", ":lua vim.lsp.buf.code_action()<cr>", opts)
 
   -- Set updatetime for CursorHold
