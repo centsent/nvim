@@ -1,59 +1,53 @@
 vim.cmd("autocmd!")
 
-vim.wo.number = true
+local o = function(option, value)
+  vim.api.nvim_set_option(option, value)
+end
+
+local wo = function(option, value)
+  vim.api.nvim_win_set_option(0, option, value)
+end
+
+wo("number", true)
 
 -- Set default encoding to UTF-8
-vim.scriptencoding = "utf-8"
-vim.opt.encoding = "utf-8"
-vim.opt.termencoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
+local default_encoding = "utf-8"
+o("encoding", default_encoding)
+o("fileencoding", default_encoding)
 
-vim.opt.title = true
-vim.opt.autoindent = true
+o("title", true)
+o("autoindent", true)
 -- Show me what I'm typing
-vim.opt.showcmd = true
+o("showcmd", true)
 -- No backup
-vim.opt.backup = false
+o("backup", false)
 -- Prefer Unix over Windows Over MacOS formats
-vim.opt.fileformats = "unix,dos,mac"
+o("fileformats", "unix,dos,mac")
 -- Automatically read changed files
-vim.opt.autoread = true
+o("autoread", true)
 -- Always show current position
-vim.opt.cursorline = true
-vim.opt.cursorcolumn = true
-vim.opt.ruler = true
-vim.opt.colorcolumn = "80"
+o("cursorline", true)
+o("cursorcolumn", true)
+o("ruler", true)
+o("colorcolumn", "80")
 -- highlights
-vim.opt.termguicolors = true
-vim.opt.winblend = 0
-vim.opt.wildoptions = "pum"
-vim.opt.pumblend = 5
-vim.opt.background = "dark"
+o("termguicolors", true)
+o("winblend", 0)
+o("wildoptions", "pum")
+o("pumblend", 5)
+o("background", "dark")
 
-vim.opt.cmdheight = 1
-vim.opt.laststatus = 2
+o("cmdheight", 1)
+o("laststatus", 3)
 
-vim.opt.smarttab = true
-vim.opt.breakindent = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.wrap = false
-vim.opt.backspace = { "start", "eol", "indent" }
+o("smarttab", true)
+o("breakindent", true)
+o("shiftwidth", 2)
+o("tabstop", 2)
+o("wrap", false)
+
 vim.opt.path:append({ "**" })
 vim.opt.wildignore:append({ "*/node_modules/*" })
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.ignorecase = true
-
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
-
--- Add asterisks in block comments
-vim.opt.formatoptions:append({ "r" })
-
--- Making the background transparent
-vim.cmd("autocmd ColorScheme * highlight Normal ctermbg=none guibg=none")
-
--- Enter automatically into the files directory
-vim.api.nvim_create_autocmd({ "BufEnter" }, { command = "silent! lcd %:p:h" })
+o("ignorecase", true)

@@ -5,6 +5,14 @@ end
 
 local M = {}
 local protocol = require("vim.lsp.protocol")
+local o = function(option, value)
+  vim.api.nvim_set_option(option, value)
+end
+local with = function(fn)
+  return function()
+    fn()
+  end
+end
 
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...)
@@ -31,7 +39,7 @@ local function on_attach(client, bufnr)
 
   -- Set updatetime for CursorHold
   -- 300ms of no cursor movement to trigger CursorHold
-  vim.opt.updatetime = 300
+  o("updatetime", 300)
   vim.api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
     callback = function()
@@ -41,14 +49,12 @@ local function on_attach(client, bufnr)
 
   -- have a fixed column for the diagnostics to appear in
   -- this removes the jitter when warnings/errors flow in
-  vim.opt.signcolumn = "yes"
+  o("signcolumn", "yes")
 
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_create_autocmd("BufWritePost", {
       buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.formatting({})
-      end,
+      callback = with(vim.lsp.buf.formatting),
     })
   end
 end
@@ -83,7 +89,7 @@ local lsp_opt = {
 
 for _, name in ipairs(clients) do
   local m_ok, m = pcall(require, "lsp." .. name .. "_config")
-  if m_ok then
+  if m_ok and m.make_config then
     local config = m.make_config()
     lspconfig[name].setup(vim.tbl_deep_extend("force", lsp_opt, config))
   else

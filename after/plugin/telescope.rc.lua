@@ -2,7 +2,13 @@ local ok, telescope = pcall(require, "telescope")
 if not ok then
   return
 end
+
 local builtin = require("telescope.builtin")
+local with = function(fn)
+  return function()
+    fn()
+  end
+end
 
 telescope.setup({
   defaults = {
@@ -35,12 +41,12 @@ local function find_project_files()
 end
 
 -- Mappings
-local keymap = vim.keymap
+local set_keymap = vim.keymap.set
 
-keymap.set("n", "ff", find_project_files)
-keymap.set("n", "fb", builtin.buffers)
-keymap.set("n", "fg", builtin.live_grep)
-keymap.set("n", "fm", builtin.keymaps)
-keymap.set("n", "fr", builtin.lsp_references)
-keymap.set("n", "fd", builtin.lsp_document_symbols)
-keymap.set("n", "fp", telescope.extensions.project.project)
+set_keymap("n", "ff", with(find_project_files))
+set_keymap("n", "fb", with(builtin.buffers))
+set_keymap("n", "fg", with(builtin.live_grep))
+set_keymap("n", "fm", with(builtin.keymaps))
+set_keymap("n", "fp", with(telescope.extensions.project.project))
+set_keymap("n", "fd", with(builtin.lsp_document_symbols))
+set_keymap("n", "fr", with(builtin.lsp_references))

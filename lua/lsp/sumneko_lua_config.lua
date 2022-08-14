@@ -10,7 +10,7 @@ M.make_config = function()
     },
     lspconfig = {
       runtime = { version = "LuaJIT" },
-      global = {'vim'},
+      global = { "vim" },
     },
   })
 

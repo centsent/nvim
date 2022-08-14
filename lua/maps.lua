@@ -1,15 +1,15 @@
-local keymap = vim.keymap
+local set_keymap = vim.keymap.set
 
 local function nmap(from, to)
-  keymap.set("n", from, to)
+  set_keymap("n", from, to)
 end
 
 local function imap(from, to)
-  keymap.set("i", from, to)
+  set_keymap("i", from, to)
 end
 
 local function vmap(from, to)
-  keymap.set("v", from, to)
+  set_keymap("v", from, to)
 end
 
 -- Map leader key to comma
