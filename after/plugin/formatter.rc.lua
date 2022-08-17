@@ -27,7 +27,7 @@ local lua_config = function()
   }
 end
 
-local function vue_config()
+local vue_config = function()
   return {
     exe = "prettier",
     args = {
@@ -41,7 +41,7 @@ local function vue_config()
   }
 end
 
-local function java_config()
+local java_config = function()
   return {
     exe = "java",
     args = {
@@ -57,17 +57,7 @@ local formatter_config = {
   lua = { lua_config },
   vue = { vue_config },
   java = { java_config },
-
-  ["*"] = {
-    function()
-      return {
-        -- remove trailing whitespace
-        exe = "sed",
-        args = { "-i", "'s/[ \t]*$//'" },
-        stdin = false,
-      }
-    end,
-  },
+  fish = { require("formatter.filetypes.fish").fishindent },
 }
 
 local common_filetypes = {
@@ -91,6 +81,7 @@ for _, filetype in ipairs(common_filetypes) do
   formatter_config[filetype] = { prettier_config }
 end
 
+-- Format on save
 formatter.setup({
   filetype = formatter_config,
 })

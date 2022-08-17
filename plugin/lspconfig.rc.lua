@@ -65,6 +65,7 @@ M.on_attach = on_attach
 local capabilities = require("cmp_nvim_lsp").update_capabilities(protocol.make_client_capabilities())
 
 local clients = {
+  "bashls",
   "clangd",
   "csharp_ls",
   "cssls",
@@ -79,6 +80,7 @@ local clients = {
   "sumneko_lua",
   "tsserver",
   "vuels",
+  "yamlls",
 }
 
 local lsp_opt = {
