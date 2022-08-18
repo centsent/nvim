@@ -19,6 +19,10 @@ lint.linters_by_ft = {
   python = { "flake8" },
   yaml = { "yamllint" },
   gitcommit = { "codespell" },
+  -- Install phpcs via composer:
+  -- $ composer global require squizlabs/php_codesniffer
+  -- and make sure global vendor binaries directory is in $PATH
+  php = { "phpcs" },
 }
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufLeave" }, {

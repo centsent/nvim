@@ -6,7 +6,12 @@ end
 local prettier_config = function()
   return {
     exe = "prettier",
-    args = { "--stdin-filepath", vim.fn.shellescape(vim.api.nvim_buf_get_name(0)) },
+    args = {
+      "--stdin-filepath",
+      vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+      "--tab-width",
+      2,
+    },
     stdin = true,
   }
 end
@@ -34,6 +39,8 @@ local vue_config = function()
       "--stdin-filepath",
       vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
       "--doule-quote",
+      "--tab-width",
+      2,
       "--parser",
       "vue",
     },
@@ -53,9 +60,25 @@ local java_config = function()
   }
 end
 
+local php_config = function()
+  return {
+    -- Install phpcbf via composer:
+    -- $ composer global require squizlabs/php_codesniffer
+    -- and make sure global vendor binaries directory is in $PATH
+    exe = "phpcbf",
+    args = {
+      "--standard=PSR12",
+      vim.api.nvim_buf_get_name(0),
+    },
+    stdin = true,
+    ignore_exitcode = true,
+  }
+end
+
 local formatter_config = {
   lua = { lua_config },
   vue = { vue_config },
+  php = { php_config },
   java = { java_config },
   fish = { require("formatter.filetypes.fish").fishindent },
 }
