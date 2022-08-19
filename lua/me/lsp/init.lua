@@ -42,14 +42,15 @@ local on_attach = function(client, bufnr)
   end
 
   local format_on_save = function()
-    local has_fmtconfig, fmtconfig = pcall(require, "formatters.config")
-    if has_fmtconfig then
-      local formatters = fmtconfig.values.filetype
-      local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-      if not formatters[ft] then
-        vim.lsp.buf.formatting({})
-      end
-    else
+    local has_fmtconfig, fmtconfig = pcall(require, "formatter.config")
+    if not has_fmtconfig then
+      vim.lsp.buf.formatting({})
+      return
+    end
+
+    local formatters = fmtconfig.values.filetype
+    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+    if not formatters[ft] then
       vim.lsp.buf.formatting({})
     end
   end
