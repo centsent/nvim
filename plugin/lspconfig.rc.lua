@@ -1,43 +1,25 @@
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+if not has_lspconfig then
   return
 end
 
-local on_attach = require("me.lsp").on_attach
-local capabilities = require("me.lsp").make_capabilities()
+local lsp = require("me.lsp")
+local capabilities = lsp.make_capabilities()
+local servers = lsp.get_servers()
 
-local clients = {
-  "bashls",
-  "clangd",
-  "csharp_ls",
-  "cssls",
-  "cmake",
-  "gopls",
-  "html",
-  "jsonls",
-  "julials",
-  "phpactor",
-  "pyright",
-  "rust_analyzer",
-  "sumneko_lua",
-  "tsserver",
-  "vuels",
-  "yamlls",
-}
-
-local lsp_opt = {
+local default_config = {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = lsp.on_attach,
   flags = { debounce_text_change = 150 },
 }
 
-for _, name in ipairs(clients) do
-  local m_ok, m = pcall(require, "me.lsp.conf." .. name)
-  if m_ok and m.make_config then
-    local config = m.make_config()
-    lspconfig[name].setup(vim.tbl_deep_extend("force", lsp_opt, config))
+for _, name in ipairs(servers) do
+  local has_m, m = pcall(require, "me.lsp.conf." .. name)
+  if has_m and m ~= nil and m.make_config then
+    local server_config = m.make_config()
+    lspconfig[name].setup(vim.tbl_deep_extend("force", default_config, server_config))
   else
-    lspconfig[name].setup(lsp_opt)
+    lspconfig[name].setup(default_config)
   end
 end
 

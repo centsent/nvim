@@ -1,7 +1,12 @@
 local M = {}
 
 M.make_config = function()
-  local config = require("lua-dev").setup({
+  local has_lua_dev, lua_dev = pcall(require, "lua-dev")
+  if not has_lua_dev then
+    return {}
+  end
+
+  local config = lua_dev.setup({
     runtime_path = true,
     library = {
       vimruntime = true,

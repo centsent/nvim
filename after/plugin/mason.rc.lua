@@ -1,10 +1,10 @@
-local ok, mason = pcall(require, "mason")
-if not ok then
+local has_mason, mason = pcall(require, "mason")
+if not has_mason then
   return
 end
 
-local mason_lsp_on, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not mason_lsp_on then
+local has_mason_lsp, mason_lsp = pcall(require, "mason-lspconfig")
+if not has_mason_lsp then
   return
 end
 
@@ -12,6 +12,7 @@ mason.setup({
   max_concurrent_installers = 10,
 })
 
-mason_lspconfig.setup({
+mason_lsp.setup({
+  ensure_installed = require("me.lsp").get_servers(),
   automatic_installation = true,
 })

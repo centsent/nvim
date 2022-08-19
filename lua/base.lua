@@ -1,5 +1,3 @@
-vim.cmd("autocmd!")
-
 local o = function(option, value)
   vim.api.nvim_set_option(option, value)
 end

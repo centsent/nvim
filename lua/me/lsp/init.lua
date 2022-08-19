@@ -3,11 +3,34 @@ local M = {}
 local o = function(option, value)
   vim.api.nvim_set_option(option, value)
 end
+
 local with = function(fn)
   return function()
     fn()
   end
 end
+
+local get_servers = function()
+  return {
+    "bashls",
+    "clangd",
+    "csharp_ls",
+    "cssls",
+    "cmake",
+    "gopls",
+    "html",
+    "jsonls",
+    "julials",
+    "phpactor",
+    "pyright",
+    "rust_analyzer",
+    "sumneko_lua",
+    "tsserver",
+    "volar",
+    "yamlls",
+  }
+end
+M.get_servers = get_servers
 
 local on_attach = function(client, bufnr)
   local buf_set_keymap = function(...)
@@ -19,9 +42,14 @@ local on_attach = function(client, bufnr)
   end
 
   local format_on_save = function()
-    local formatters = require("formatter.config").values.filetype
-    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-    if not formatters[ft] then
+    local has_fmtconfig, fmtconfig = pcall(require, "formatters.config")
+    if has_fmtconfig then
+      local formatters = fmtconfig.values.filetype
+      local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+      if not formatters[ft] then
+        vim.lsp.buf.formatting({})
+      end
+    else
       vim.lsp.buf.formatting({})
     end
   end
@@ -62,17 +90,17 @@ local on_attach = function(client, bufnr)
     })
   end
 end
-
 M.on_attach = on_attach
 
 local make_capabilities = function()
-  local protocol = require("vim.lsp.protocol")
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
   -- Set up completion using nvim_cmp with LSP source
-  local capabilities = require("cmp_nvim_lsp").update_capabilities(protocol.make_client_capabilities())
-
+  local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
+  if has_cmp then
+    capabilities = cmp.update_capabilities(capabilities)
+  end
   return capabilities
 end
-
 M.make_capabilities = make_capabilities
 
 return M

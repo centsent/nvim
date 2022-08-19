@@ -1,5 +1,5 @@
-local ok, lint = pcall(require, "lint")
-if not ok then
+local has_lint, lint = pcall(require, "lint")
+if not has_lint then
   return
 end
 
@@ -15,6 +15,7 @@ lint.linters_by_ft = {
   java = { "codespell" },
   javascript = { "eslint" },
   typescript = { "eslint" },
+  vue = { "eslint" },
   go = { "golangci-lint" },
   python = { "flake8" },
   yaml = { "yamllint" },

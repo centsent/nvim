@@ -1,5 +1,5 @@
-local ok, formatter = pcall(require, "formatter")
-if not ok then
+local has_formatter, formatter = pcall(require, "formatter")
+if not has_formatter then
   return
 end
 
@@ -104,10 +104,10 @@ for _, filetype in ipairs(common_filetypes) do
   formatter_config[filetype] = { prettier_config }
 end
 
--- Format on save
 formatter.setup({
   filetype = formatter_config,
 })
 
+-- Format on save
 local group = vim.api.nvim_create_augroup("FormatAutogroup", {})
 vim.api.nvim_create_autocmd("BufWritePost", { group = group, command = "FormatWrite" })

@@ -1,5 +1,5 @@
-local ok, toggleterm = pcall(require, "toggleterm")
-if not ok then
+local has_toggleterm, toggleterm = pcall(require, "toggleterm")
+if not has_toggleterm then
   return
 end
 

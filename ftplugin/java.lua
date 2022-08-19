@@ -1,5 +1,5 @@
-local ok, jdtls = pcall(require, "jdtls")
-if not ok then
+local has_jdtls, jdtls = pcall(require, "jdtls")
+if not has_jdtls then
   return
 end
 
