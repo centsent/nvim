@@ -20,4 +20,4 @@ local make_config = function()
   return config
 end
 
-require("me.lsp").extend_lsp_config("sumneko_lua", make_config())
+require("me.lsp").extend_config("sumneko_lua", make_config())
