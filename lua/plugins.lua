@@ -18,6 +18,8 @@ local packer = require("packer")
 local plugins = {
   -- A use-package inspired plugin manager for Neovim.
   { "wbthomason/packer.nvim" },
+  -- Speed up loading Lua modules in Neovim to improve startup time.
+  { "lewis6991/impatient.nvim" },
   -- All the lua functions I don't want to write twice.
   { "nvim-lua/plenary.nvim" },
   -- A completion plugin for neovim coded in Lua.
