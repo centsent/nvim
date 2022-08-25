@@ -15,9 +15,9 @@ local servers = lsp.get_servers()
 
 local setup = function(name)
   local ok, _ = pcall(require, "me.lsp.conf." .. name)
-  local default_config = lsp.get_default_config()
 
   if not ok then
+    local default_config = lsp.get_default_config()
     lspconfig[name].setup(default_config)
   end
 end

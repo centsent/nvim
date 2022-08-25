@@ -58,15 +58,20 @@ M.on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
   -- Mappings.
   local opts = { noremap = true, silent = true }
+  local keymaps = {
+    ["gd"] = ":lua vim.lsp.buf.definition()<cr>",
+    ["gi"] = ":lua vim.lsp.buf.implementation()<cr>",
+    ["gr"] = ":lua vim.lsp.buf.rename()<cr>",
+    ["gy"] = ":lua vim.lsp.buf.type_definition()<cr>",
+    ["gh"] = ":lua vim.lsp.buf.hover()<cr>",
+    ["gn"] = ":lua vim.diagnostic.goto_next()<cr>",
+    ["gp"] = ":lua vim.diagnostic.goto_prev()<cr>",
+    ["ga"] = ":lua vim.lsp.buf.code_action()<cr>",
+  }
 
-  buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<cr>", opts)
-  buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<cr>", opts)
-  buf_set_keymap("n", "gr", ":lua vim.lsp.buf.rename()<cr>", opts)
-  buf_set_keymap("n", "gy", ":lua vim.lsp.buf.type_definition()<cr>", opts)
-  buf_set_keymap("n", "gh", ":lua vim.lsp.buf.hover()<cr>", opts)
-  buf_set_keymap("n", "gn", ":lua vim.diagnostic.goto_next()<cr>", opts)
-  buf_set_keymap("n", "gp", ":lua vim.diagnostic.goto_prev()<cr>", opts)
-  buf_set_keymap("n", "ga", ":lua vim.lsp.buf.code_action()<cr>", opts)
+  for from, to in pairs(keymaps) do
+    buf_set_keymap("n", from, to, opts)
+  end
 
   -- Set updatetime for CursorHold
   -- 300ms of no cursor movement to trigger CursorHold

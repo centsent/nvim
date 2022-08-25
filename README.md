@@ -1,5 +1,3 @@
-Neovim configuration written in `Fennel` for my own personal use.
-
 ## Keymaps
 
 ### Normal Mode
@@ -36,10 +34,11 @@ Neovim configuration written in `Fennel` for my own personal use.
   - `ge`: `vim.diagnostic.open_float()`
 - prefix `f` for `telescope` keymaps
   - `ff`: list files in current project.
+  - `fb`: list buffers.
   - `fg`: `Telescope live_grep`
   - `fm`: `Telescope keymaps`
-  - `fr`: `Telescope lsp_references`
   - `fd`: `Telescope lsp_document_symbols`
+  - `fr`: `Telescope lsp_references`
 
 ### Visual Mode
 

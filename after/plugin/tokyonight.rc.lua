@@ -4,15 +4,22 @@ if not ok then
 end
 
 -- Sets the global variable
-local g = function(name, value)
-  vim.g[name] = value
+local g = function(option, value)
+  vim.g[option] = value
 end
 
--- Make functions italic
-g("tokyonight_italic_functions", true)
--- Enable this to disable setting the background color
-g("tokyonight_transparent", true)
--- Sidebar like windows like NvimTree get a transparent background
-g("tokyonight_transparent_sidebar", true)
+local tokyonight_settings = {
+  -- Make functions italic
+  tokyonight_italic_functions = true,
+  -- Enable this to disable setting the background color
+  tokyonight_transparent = true,
+  -- Sidebar like windows like NvimTree get a transparent background
+  tokyonight_transparent_sidebar = true,
+}
+
+for option, value in pairs(tokyonight_settings) do
+  g(option, value)
+end
+
 -- Load the colorscheme
 vim.cmd("colorscheme tokyonight")

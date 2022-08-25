@@ -1,10 +1,9 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
-local M = {}
+local packer_bootstrap = nil
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  M.packer_bootstrap = fn.system({
+  packer_bootstrap = fn.system({
     "git",
     "clone",
     "--depth",
@@ -12,61 +11,103 @@ if fn.empty(fn.glob(install_path)) > 0 then
     "https://github.com/wbthomason/packer.nvim",
     install_path,
   })
-  vim.cmd([[packadd packer.nvim]])
+  vim.cmd("packadd packer.nvim")
 end
 
 local packer = require("packer")
-
-packer.startup(function(use)
-  use("wbthomason/packer.nvim")
-  use("nvim-lua/plenary.nvim")
-
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-nvim-lsp-signature-help")
-  use("hrsh7th/nvim-cmp")
-  use("hrsh7th/cmp-path")
-  use("hrsh7th/cmp-cmdline")
-  use("L3MON4D3/LuaSnip")
-  use("saadparwaiz1/cmp_luasnip")
-  use("rafamadriz/friendly-snippets")
-
-  use("neovim/nvim-lspconfig")
-  use("folke/lua-dev.nvim")
-  use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
-
-  use("b0o/schemastore.nvim")
-
-  use("mfussenegger/nvim-jdtls")
-  use("mfussenegger/nvim-lint")
-  use("mhartington/formatter.nvim")
-
-  use({
+local plugins = {
+  -- A use-package inspired plugin manager for Neovim.
+  { "wbthomason/packer.nvim" },
+  -- All the lua functions I don't want to write twice.
+  { "nvim-lua/plenary.nvim" },
+  -- A completion plugin for neovim coded in Lua.
+  { "hrsh7th/nvim-cmp" },
+  -- nvim-cmp source for buffer words
+  { "hrsh7th/cmp-buffer" },
+  -- nvim-cmp source for neovim builtin LSP client
+  { "hrsh7th/cmp-nvim-lsp" },
+  -- nvim-cmp source for displaying function signatures with the current parameter emphasized:
+  { "hrsh7th/cmp-nvim-lsp-signature-help" },
+  -- nvim-cmp source for path
+  { "hrsh7th/cmp-path" },
+  -- nvim-cmp source for vim's cmdline
+  { "hrsh7th/cmp-cmdline" },
+  -- Snippet Engine for Neovim written in Lua.
+  { "L3MON4D3/LuaSnip" },
+  -- luasnip completion source for nvim-cmp
+  { "saadparwaiz1/cmp_luasnip" },
+  -- Set of preconfigured snippets for different languages.
+  { "rafamadriz/friendly-snippets" },
+  -- Configs for neovim lsp client
+  { "neovim/nvim-lspconfig" },
+  -- Dev setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
+  { "folke/lua-dev.nvim" },
+  -- Portable package manager for Neovim that runs everywhere Neovim runs.
+  { "williamboman/mason.nvim" },
+  -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim
+  { "williamboman/mason-lspconfig.nvim" },
+  -- JSON schemas for Neovim
+  { "b0o/schemastore.nvim" },
+  -- Extensions for the built-in LSP support in Neovim for eclipse.jdt.ls
+  { "mfussenegger/nvim-jdtls" },
+  -- An asynchronous linter plugin for Neovim complementary to the built-in Language Server Protocol support.
+  { "mfussenegger/nvim-lint" },
+  -- Opt-in formatters
+  { "mhartington/formatter.nvim" },
+  -- Nvim Treesitter configurations and abstraction layer
+  {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-  })
-  use("windwp/nvim-ts-autotag")
-  use("p00f/nvim-ts-rainbow")
-  use("JoosepAlviste/nvim-ts-context-commentstring")
+  },
+  -- Use treesitter to autoclose and autorename html tag
+  { "windwp/nvim-ts-autotag" },
+  -- Rainbow parentheses for neovim using tree-sitter
+  { "p00f/nvim-ts-rainbow" },
+  -- Neovim treesitter plugin for setting the commentstring based on the cursor location in a file
+  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  -- Find, Filter, Preview, Pick. All lua, all the time.
+  { "nvim-telescope/telescope.nvim" },
+  -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker.
+  { "nvim-telescope/telescope-ui-select.nvim" },
+  -- A neovim lua plugin to help easily manage multiple terminal windows
+  { "akinsho/toggleterm.nvim" },
+  -- A super powerful autopair plugin for Neovim that supports multiple characters
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup({})
+    end,
+  },
+  -- Add/change/delete surrounding delimiter pairs with ease.
+  {
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup({})
+    end,
+  },
+  -- EditorConfig plugin for Neovim
+  { "gpanders/editorconfig.nvim" },
+  -- Vim plugin for intensely nerdy commenting powers
+  { "preservim/nerdcommenter" },
+  -- Git integration for buffers
+  { "lewis6991/gitsigns.nvim" },
+  -- lua `fork` of vim-web-devicons for neovim
+  { "kyazdani42/nvim-web-devicons" },
+  -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
+  { "folke/tokyonight.nvim" },
 
-  use("nvim-telescope/telescope.nvim")
-  use("nvim-telescope/telescope-project.nvim")
+  -- For my personal use only
+  -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
+  { "wakatime/vim-wakatime" },
+}
 
-  use("akinsho/toggleterm.nvim")
+packer.startup(function(use)
+  for _, plugin in ipairs(plugins) do
+    use(plugin)
+  end
 
-  use("windwp/nvim-autopairs")
-  use("tpope/vim-surround")
-  use("gpanders/editorconfig.nvim")
-  use("preservim/nerdcommenter")
-
-  use("lewis6991/gitsigns.nvim")
-  use("kyazdani42/nvim-web-devicons")
-  use("folke/tokyonight.nvim")
-
-  use("wakatime/vim-wakatime")
-
-  if M.packer_bootstrap then
-    require("packer").sync()
+  if packer_bootstrap then
+    -- Install the plugins for first usage
+    packer.sync()
   end
 end)

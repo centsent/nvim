@@ -24,6 +24,11 @@ telescope.setup({
     },
     file_ignore_patterns = { "node_modules", ".git" },
   },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({}),
+    },
+  },
 })
 
 local function find_project_files()
@@ -40,13 +45,18 @@ local function find_project_files()
   })
 end
 
--- Mappings
-local set_keymap = vim.keymap.set
+local telescope_keymaps = {
+  -- Normal mode
+  normal_mode = {
+    ["ff"] = with(find_project_files),
+    ["fb"] = with(builtin.buffers),
+    ["fg"] = with(builtin.live_grep),
+    ["fm"] = with(builtin.keymaps),
+    ["fd"] = with(builtin.lsp_document_symbols),
+    ["fr"] = with(builtin.lsp_references),
+  },
+}
 
-set_keymap("n", "ff", with(find_project_files))
-set_keymap("n", "fb", with(builtin.buffers))
-set_keymap("n", "fg", with(builtin.live_grep))
-set_keymap("n", "fm", with(builtin.keymaps))
-set_keymap("n", "fp", with(telescope.extensions.project.project))
-set_keymap("n", "fd", with(builtin.lsp_document_symbols))
-set_keymap("n", "fr", with(builtin.lsp_references))
+require("keymaps").load_keymaps(telescope_keymaps)
+
+telescope.load_extension("ui-select")
