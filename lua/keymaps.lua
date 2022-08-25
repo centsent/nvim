@@ -90,7 +90,12 @@ local default_keymaps = {
 }
 
 local load_mode = function(mode_key, keymaps)
-  local mode = mode_adapters[mode_key] or "n"
+  local mode = mode_adapters[mode_key]
+
+  if not mode then
+    return
+  end
+
   for from, to in pairs(keymaps) do
     vim.keymap.set(mode, from, to)
   end

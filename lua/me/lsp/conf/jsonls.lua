@@ -1,8 +1,6 @@
 local make_config = function()
   local settings = {
-    json = {
-      validate = { enable = true },
-    },
+    json = {},
   }
 
   local has_schemastore, schemastore = pcall(require, "schemastore")
@@ -13,4 +11,4 @@ local make_config = function()
   return { settings = settings }
 end
 
-require("me.lsp").extend_lsp_config("jsonls", make_config())
+require("me.lsp").extend_config("jsonls", make_config())
