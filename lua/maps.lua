@@ -1,15 +1,23 @@
 local set_keymap = vim.keymap.set
 
+-- Mapping a key in Normal Mode
 local function nmap(from, to)
   set_keymap("n", from, to)
 end
 
+-- Mapping a key in Insert Mode
 local function imap(from, to)
   set_keymap("i", from, to)
 end
 
+-- Mapping a key in Visual Mode
 local function vmap(from, to)
   set_keymap("v", from, to)
+end
+
+-- Mapping a key in Visual Block Mode
+local function xmap(from, to)
+  set_keymap("x", from, to)
 end
 
 -- Map leader key to comma
@@ -32,9 +40,12 @@ nmap("<leader>/", ":nohlsearch<cr>")
 
 -- Fast saving
 nmap("<leader>w", ":w!<cr>")
-
 -- Quickly close the current window/buffer
-nmap("<leader>q", ":q!<cr>")
+nmap("<leader>q", ":q<cr>")
+-- Quickly close the current window/buffer without reminder
+nmap("<leader>a", ":q!<cr>")
+-- Toggle netrw
+nmap("<leader>f", ":Lex<cr>")
 
 -- Remap U to <c-r> for easier undo
 nmap("U", "<c-r>")
@@ -44,24 +55,24 @@ nmap("H", "^")
 nmap("L", "$")
 
 -- Move a line of text up and down
-nmap("<c-j>", "mz:m+<cr>`z")
-nmap("<c-k>", "mz:m-2<cr>`z")
+nmap("<c-j>", ":move +1<cr>")
+nmap("<c-k>", ":move -2<cr>")
 
 -- Use tab for circular windows navigation
 nmap("<tab>", "<c-w>w")
 
 -- Mappings for managing tabs
+-- Open a new tab
 nmap("tt", ":tabnew<cr>")
+-- Navigate to previous tab
 nmap("tp", ":tabprevious<cr>")
+-- Navigate to next tab
 nmap("tn", ":tabnext<cr>")
 
 -- New horizontal split(editing current buffer)
 nmap("<space>1", "<c-w>s")
 -- Split window vertically(editing current buffer)
 nmap("<space>2", "<c-w>v")
-
--- Toggle netrw
-nmap("<leader>f", ":Lex<cr>")
 
 -- Copy to clipboard
 vmap("<leader>y", '"+y')
@@ -73,15 +84,20 @@ vmap("<leader>x", '"+d')
 vmap("H", "^")
 vmap("L", "$")
 
--- Use <c-j> for escaping and quickly save
+-- Move text up and down
+xmap("<c-j>", ":move '>+1<CR>gv-gv")
+xmap("<c-k>", ":move '<-2<CR>gv-gv")
+
+-- Use <c-j> for escaping
 imap("<c-j>", "<esc>")
 
 -- Directions in insert mode
 imap("<c-b>", "<c-o>h")
-imap("<c-n>", "<c-o>j")
-imap("<c-p>", "<c-o>k")
 imap("<c-f>", "<c-o>l")
-
+-- Go to next line
+imap("<c-n>", "<c-o>j")
+-- Go to previous line
+imap("<c-p>", "<c-o>k")
 -- Go to home
 imap("<c-a>", "<c-o>^")
 -- Go to end
