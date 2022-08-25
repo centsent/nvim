@@ -1,6 +1,4 @@
-local M = {}
-
-M.make_config = function()
+local make_config = function()
   local settings = {
     yaml = {
       hover = true,
@@ -17,4 +15,4 @@ M.make_config = function()
   return { settings = settings }
 end
 
-return M
+require("me.lsp").extend_config("yamlls", make_config())

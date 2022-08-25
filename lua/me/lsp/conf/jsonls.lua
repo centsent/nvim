@@ -1,6 +1,4 @@
-local M = {}
-
-M.make_config = function()
+local make_config = function()
   local settings = {
     json = {
       validate = { enable = true },
@@ -15,4 +13,4 @@ M.make_config = function()
   return { settings = settings }
 end
 
-return M
+require("me.lsp").extend_lsp_config("jsonls", make_config())

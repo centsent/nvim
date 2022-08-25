@@ -10,7 +10,7 @@ local with = function(fn)
   end
 end
 
-local get_servers = function()
+M.get_servers = function()
   return {
     "bashls",
     "clangd",
@@ -30,9 +30,8 @@ local get_servers = function()
     "yamlls",
   }
 end
-M.get_servers = get_servers
 
-local on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
   local buf_set_keymap = function(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -83,7 +82,7 @@ local on_attach = function(client, bufnr)
   -- this removes the jitter when warnings/errors flow in
   o("signcolumn", "yes")
 
-  -- Format on save
+  -- Format on save if the lsp client supports formatting
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_create_autocmd("BufWritePost", {
       buffer = bufnr,
@@ -91,17 +90,33 @@ local on_attach = function(client, bufnr)
     })
   end
 end
-M.on_attach = on_attach
 
-local make_capabilities = function()
+M.make_capabilities = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   -- Set up completion using nvim_cmp with LSP source
   local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
   if has_cmp then
     capabilities = cmp.update_capabilities(capabilities)
   end
+
   return capabilities
 end
-M.make_capabilities = make_capabilities
+
+M.get_default_config = function()
+  return {
+    capabilities = M.make_capabilities(),
+    on_attach = M.on_attach,
+    flags = { debounce_text_change = 150 },
+  }
+end
+
+M.extend_config = function(name, config)
+  local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+  if not has_lspconfig then
+    return
+  end
+
+  lspconfig[name].setup(vim.tbl_deep_extend("force", M.get_default_config(), config))
+end
 
 return M

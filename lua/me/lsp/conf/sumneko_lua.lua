@@ -1,6 +1,4 @@
-local M = {}
-
-M.make_config = function()
+local make_config = function()
   local has_lua_dev, lua_dev = pcall(require, "lua-dev")
   if not has_lua_dev then
     return {}
@@ -22,4 +20,4 @@ M.make_config = function()
   return config
 end
 
-return M
+require("me.lsp").extend_lsp_config("sumneko_lua", make_config())
