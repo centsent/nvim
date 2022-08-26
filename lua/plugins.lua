@@ -103,6 +103,13 @@ local plugins = {
   { "wakatime/vim-wakatime" },
 }
 
+local packer_augroup = vim.api.nvim_create_augroup("packer_user_config", {})
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  group = packer_augroup,
+  pattern = { "plugins.lua" },
+  command = "source <afile> | PackerSync",
+})
+
 packer.startup(function(use)
   for _, plugin in ipairs(plugins) do
     use(plugin)
