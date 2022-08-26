@@ -97,12 +97,20 @@ local plugins = {
   { "kyazdani42/nvim-web-devicons" },
   -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
   { "folke/tokyonight.nvim" },
+  -- A fancy, configurable, notification manager for NeoVim
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+    end,
+  },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
   { "wakatime/vim-wakatime" },
 }
 
+-- source plugins.lua automatically and run PackerSync
 local packer_augroup = vim.api.nvim_create_augroup("packer_user_config", {})
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   group = packer_augroup,
