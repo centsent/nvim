@@ -62,3 +62,8 @@
 - `<c-e>`: go to end of the line
 - `<c-u>`: scroll up
 - `<c-d>`: scroll down
+
+### Operator Pending Mode
+
+- `H`: go to the beginning of the line
+- `L`: go to end of the line

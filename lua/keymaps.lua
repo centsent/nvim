@@ -8,6 +8,7 @@ local mode_adapters = {
   visual_mode = "v",
   visual_block_mode = "x",
   insert_mode = "i",
+  operator_pending_mode = "o",
 }
 
 local default_keymaps = {
@@ -86,6 +87,10 @@ local default_keymaps = {
     ["<c-u>"] = "<c-\\><c-o><c-u>",
     -- Scroll down
     ["<c-d>"] = "<c-\\><c-o><c-d>",
+  },
+  operator_pending_mode = {
+    ["H"] = "^",
+    ["L"] = "$",
   },
 }
 
