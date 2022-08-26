@@ -4,7 +4,7 @@ if has_impatient and impatient ~= nil then
 end
 
 -- Basic options for neovim
-require("base")
+require("options")
 -- Keymaps
 require("keymaps")
 -- The plugins that I use
