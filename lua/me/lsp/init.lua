@@ -21,6 +21,7 @@ M.get_servers = function()
     "html",
     "jsonls",
     "julials",
+    "marksman",
     "phpactor",
     "pyright",
     "rust_analyzer",
