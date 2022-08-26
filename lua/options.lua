@@ -58,6 +58,8 @@ local global_options = {
   sidescrolloff = 8,
   -- Time to wait for a mapped sequence to complete (in milliseconds)
   timeoutlen = 1000,
+  -- Access system's clipboard
+  clipboard = "unnamedplus",
 }
 
 for option, value in pairs(global_options) do
