@@ -19,6 +19,8 @@
   - `<leader>a`: Quickly close the window/buffer without reminder
   - `<leader>/`: no highlight search
   - `<leader>f`: toggle netwr
+  - `<leader>tt`: toggle a float terminal
+  - `<leader>tg`: toggle a lazygit terminal
 - prefix `t` for Tab Management
   - `tt`: new tab
   - `tn`: next tab
