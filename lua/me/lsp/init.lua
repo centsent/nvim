@@ -27,6 +27,7 @@ M.get_servers = function()
     "rust_analyzer",
     "sumneko_lua",
     "tsserver",
+    "vimls",
     "volar",
     "yamlls",
   }
