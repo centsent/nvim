@@ -75,19 +75,9 @@ local plugins = {
   -- A neovim lua plugin to help easily manage multiple terminal windows
   { "akinsho/toggleterm.nvim" },
   -- A super powerful autopair plugin for Neovim that supports multiple characters
-  {
-    "windwp/nvim-autopairs",
-    run = function()
-      require("nvim-autopairs").setup({})
-    end,
-  },
+  { "windwp/nvim-autopairs" },
   -- Add/change/delete surrounding delimiter pairs with ease.
-  {
-    "kylechui/nvim-surround",
-    run = function()
-      require("nvim-surround").setup({})
-    end,
-  },
+  { "kylechui/nvim-surround" },
   -- EditorConfig plugin for Neovim
   { "gpanders/editorconfig.nvim" },
   -- Vim plugin for intensely nerdy commenting powers
@@ -99,12 +89,7 @@ local plugins = {
   -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
   { "folke/tokyonight.nvim" },
   -- A fancy, configurable, notification manager for NeoVim
-  {
-    "rcarriga/nvim-notify",
-    run = function()
-      vim.notify = require("notify")
-    end,
-  },
+  { "rcarriga/nvim-notify" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
