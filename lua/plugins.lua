@@ -1,9 +1,9 @@
-local is_file_exists = require("utils").is_file_exists
+local is_directory = require("utils").is_directory
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 local packer_bootstrap = nil
 
-if not is_file_exists(install_path) then
+if not is_directory(install_path) then
   packer_bootstrap = fn.system({
     "git",
     "clone",

@@ -1,4 +1,5 @@
 local utils = {}
+local uv = vim.loop
 
 utils.is_executable = function(expr)
   return vim.fn.executable(expr) == 1
@@ -10,15 +11,14 @@ utils.with = function(fn)
   end
 end
 
-utils.is_file_exists = function(path)
-  local f = io.open(path, "r")
+utils.is_file = function(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == "file" or false
+end
 
-  if f ~= nil then
-    io.close(f)
-    return true
-  end
-
-  return false
+utils.is_directory = function(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == "directory" or false
 end
 
 return utils
