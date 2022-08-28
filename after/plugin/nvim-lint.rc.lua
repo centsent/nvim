@@ -3,6 +3,14 @@ if not has_lint then
   return
 end
 
+local phpcs = require("lint.linters.phpcs")
+phpcs.args = {
+  "-q",
+  "--report=json",
+  "--standard=PSR12",
+  "-",
+}
+
 lint.linters_by_ft = {
   lua = { "luacheck", "codespell" },
   sh = { "shellcheck" },
