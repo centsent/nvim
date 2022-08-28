@@ -4,13 +4,11 @@ if not has_telescope then
 end
 
 local builtin = require("telescope.builtin")
-local with = function(fn)
-  return function()
-    fn()
-  end
-end
+local logger = require("logger")
+local utils = require("utils")
+local with = utils.with
 
-telescope.setup({
+local settings = {
   defaults = {
     vimgrep_arguments = {
       "rg",
@@ -29,9 +27,11 @@ telescope.setup({
       require("telescope.themes").get_dropdown({}),
     },
   },
-})
+}
 
-local function find_project_files()
+telescope.setup(settings)
+
+local find_project_files = function()
   local cwd = os.getenv("PWD")
   local client = vim.lsp.get_client_by_id(1)
 
@@ -45,12 +45,21 @@ local function find_project_files()
   })
 end
 
+local live_grep = function()
+  if not utils.is_executable("rg") then
+    logger.error("Please install ripgrep to use live grep")
+    return
+  end
+
+  builtin.live_grep()
+end
+
 local telescope_keymaps = {
   -- Normal mode
   normal_mode = {
     ["ff"] = with(find_project_files),
     ["fb"] = with(builtin.buffers),
-    ["fg"] = with(builtin.live_grep),
+    ["fg"] = with(live_grep),
     ["fm"] = with(builtin.keymaps),
     ["fd"] = with(builtin.lsp_document_symbols),
     ["fr"] = with(builtin.lsp_references),

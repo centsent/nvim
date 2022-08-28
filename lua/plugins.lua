@@ -1,8 +1,9 @@
+local is_file_exists = require("utils").is_file_exists
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 local packer_bootstrap = nil
 
-if fn.empty(fn.glob(install_path)) > 0 then
+if not is_file_exists(install_path) then
   packer_bootstrap = fn.system({
     "git",
     "clone",
@@ -76,14 +77,14 @@ local plugins = {
   -- A super powerful autopair plugin for Neovim that supports multiple characters
   {
     "windwp/nvim-autopairs",
-    config = function()
+    run = function()
       require("nvim-autopairs").setup({})
     end,
   },
   -- Add/change/delete surrounding delimiter pairs with ease.
   {
     "kylechui/nvim-surround",
-    config = function()
+    run = function()
       require("nvim-surround").setup({})
     end,
   },
@@ -100,7 +101,7 @@ local plugins = {
   -- A fancy, configurable, notification manager for NeoVim
   {
     "rcarriga/nvim-notify",
-    config = function()
+    run = function()
       vim.notify = require("notify")
     end,
   },

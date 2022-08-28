@@ -3,12 +3,6 @@ if not has_lint then
   return
 end
 
-local with = function(fn)
-  return function()
-    fn()
-  end
-end
-
 lint.linters_by_ft = {
   lua = { "luacheck", "codespell" },
   sh = { "shellcheck" },
@@ -28,5 +22,5 @@ lint.linters_by_ft = {
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufLeave" }, {
   group = vim.api.nvim_create_augroup("lint", { clear = true }),
-  callback = with(lint.try_lint),
+  callback = require("utils").with(lint.try_lint),
 })

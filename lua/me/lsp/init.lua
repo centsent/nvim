@@ -4,11 +4,7 @@ local o = function(option, value)
   vim.api.nvim_set_option(option, value)
 end
 
-local with = function(fn)
-  return function()
-    fn()
-  end
-end
+local with = require("utils").with
 
 M.get_servers = function()
   return {
