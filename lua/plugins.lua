@@ -70,7 +70,7 @@ local plugins = {
   { "JoosepAlviste/nvim-ts-context-commentstring" },
   -- Find, Filter, Preview, Pick. All lua, all the time.
   { "nvim-telescope/telescope.nvim" },
-  -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker.
+  -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker
   { "nvim-telescope/telescope-ui-select.nvim" },
   -- A neovim lua plugin to help easily manage multiple terminal windows
   { "akinsho/toggleterm.nvim" },
@@ -86,10 +86,12 @@ local plugins = {
   { "lewis6991/gitsigns.nvim" },
   -- lua `fork` of vim-web-devicons for neovim
   { "kyazdani42/nvim-web-devicons" },
-  -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
+  -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins
   { "folke/tokyonight.nvim" },
   -- A fancy, configurable, notification manager for NeoVim
   { "rcarriga/nvim-notify" },
+  -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
+  { "nvim-lualine/lualine.nvim" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
@@ -102,7 +104,7 @@ packer.startup(function(use)
   end
 
   if packer_bootstrap then
-    -- Install the plugins for first usage
+    -- Install the plugins for first time usage
     packer.sync()
   end
 end)

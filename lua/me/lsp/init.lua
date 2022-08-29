@@ -122,4 +122,13 @@ M.extend_config = function(name, config)
   lspconfig[name].setup(vim.tbl_deep_extend("force", M.get_default_config(), config))
 end
 
+M.signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+
+M.setup_signs = function()
+  for type, icon in pairs(M.signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+  end
+end
+
 return M
