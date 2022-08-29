@@ -56,7 +56,6 @@ local components = {
   },
   diff = {
     "diff",
-    symbols = { added = "+", modified = "柳", removed = "-" },
     diff_color = {
       added = { fg = colors.green },
       modified = { fg = colors.orange },
