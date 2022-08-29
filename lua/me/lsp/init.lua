@@ -5,6 +5,7 @@ local o = function(option, value)
 end
 
 local with = require("utils").with
+local get_formatter = require("utils").get_formatter
 
 M.get_servers = function()
   return {
@@ -39,15 +40,8 @@ M.on_attach = function(client, bufnr)
   end
 
   local format_on_save = function()
-    local has_fmtconfig, fmtconfig = pcall(require, "formatter.config")
-    if not has_fmtconfig then
-      vim.lsp.buf.formatting({})
-      return
-    end
-
-    local formatters = fmtconfig.values.filetype
-    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-    if not formatters[ft] then
+    local formatter = get_formatter()
+    if not formatter then
       vim.lsp.buf.formatting({})
     end
   end

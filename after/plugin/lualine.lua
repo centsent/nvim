@@ -22,11 +22,11 @@ local colors = {
 local components = {
   fileformat = {
     "fileformat",
-    color = { fg = colors.green, gui = colors.gui_bold },
+    color = { bg = colors.bg, fg = colors.green, gui = colors.gui_bold },
   },
   encoding = {
     "encoding",
-    color = { fg = colors.green, gui = colors.gui_bold },
+    color = { bg = colors.bg, fg = colors.green, gui = colors.gui_bold },
     fmt = string.upper,
   },
   filename = {
@@ -35,8 +35,7 @@ local components = {
   },
   filetype = {
     "filetype",
-    color = { fg = colors.white },
-    fmt = string.upper,
+    icon_only = true,
   },
   filesize = {
     "filesize",
@@ -93,6 +92,18 @@ local components = {
     end,
     color = { fg = colors.white, gui = colors.gui_bold },
   },
+  formatter = {
+    function()
+      return require("utils").get_formatter_name()
+    end,
+    color = { fg = colors.green },
+  },
+  linter = {
+    function()
+      return require("utils").get_linter_name()
+    end,
+    color = { fg = colors.magenta },
+  },
   gap = {
     function()
       return "%="
@@ -113,10 +124,12 @@ local config = {
       components.gap,
       components.filetype,
       components.lsp,
+      components.formatter,
+      components.linter,
     },
-    lualine_x = { components.encoding, components.fileformat },
-    lualine_y = { components.progress },
-    lualine_z = { components.location },
+    lualine_x = { components.progress },
+    lualine_y = { components.location },
+    lualine_z = { components.encoding, components.fileformat },
   },
 }
 

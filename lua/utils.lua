@@ -21,4 +21,50 @@ utils.is_directory = function(path)
   return stat and stat.type == "directory" or false
 end
 
+utils.get_formatter = function()
+  local has_fmtconfig, fmtconfig = pcall(require, "formatter.config")
+  if not has_fmtconfig then
+    return nil
+  end
+
+  local formatters = fmtconfig.values.filetype
+  local ft = vim.bo.filetype
+  return formatters[ft]
+end
+
+utils.get_formatter_name = function()
+  local formatters = utils.get_formatter()
+  if not formatters then
+    return ""
+  end
+
+  local names = {}
+  for _, fmt_fn in ipairs(formatters) do
+    local formatter = fmt_fn()
+    if formatter and formatter.exe then
+      names[#names + 1] = formatter.exe
+    end
+  end
+
+  return table.concat(names, ", ")
+end
+
+utils.get_linter = function()
+  local has_lint, lint = pcall(require, "lint")
+  if not has_lint then
+    return nil
+  end
+
+  return lint.linters_by_ft[vim.bo.filetype]
+end
+
+utils.get_linter_name = function()
+  local linter = utils.get_linter()
+  if not linter then
+    return ""
+  end
+
+  return table.concat(linter, ", ")
+end
+
 return utils
