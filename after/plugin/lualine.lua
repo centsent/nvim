@@ -78,22 +78,19 @@ local components = {
   lsp = {
     function()
       local msg = "No Active LSP"
-      local buf_ft = vim.bo.filetype
-      local clients = vim.lsp.get_active_clients()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local clients = vim.lsp.buf_get_clients(bufnr)
 
       if next(clients) == nil then
         return msg
       end
 
-      local names = ""
-      for _, client in ipairs(clients) do
-        local filetypes = client.config.filetypes
-        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-          names = names .. client.name .. " "
-        end
+      local names = {}
+      for _, client in pairs(clients) do
+        names[#names + 1] = client.name
       end
 
-      return names
+      return table.concat(names, ", ")
     end,
     color = { fg = colors.white, gui = colors.gui_bold },
   },
