@@ -14,6 +14,7 @@ M.get_servers = function()
     "csharp_ls",
     "cssls",
     "cmake",
+    "dockerls",
     "gopls",
     "html",
     "jsonls",
