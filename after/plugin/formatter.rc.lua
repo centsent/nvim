@@ -81,6 +81,7 @@ local formatter_config = {
   php = { php_config },
   java = { java_config },
   fish = { require("formatter.filetypes.fish").fishindent },
+  ruby = { require("formatter.filetypes.ruby").rubocop },
 }
 
 local common_filetypes = {

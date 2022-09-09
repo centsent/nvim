@@ -10,6 +10,7 @@ local get_formatter = require("utils").get_formatter
 M.get_servers = function()
   return {
     "bashls",
+    "ccls",
     "clangd",
     "csharp_ls",
     "cssls",
@@ -23,6 +24,7 @@ M.get_servers = function()
     "phpactor",
     "pyright",
     "rust_analyzer",
+    "solargraph",
     "sumneko_lua",
     "tsserver",
     "vimls",

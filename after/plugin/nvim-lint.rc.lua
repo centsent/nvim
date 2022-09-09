@@ -26,6 +26,7 @@ lint.linters_by_ft = {
   -- $ composer global require squizlabs/php_codesniffer
   -- and make sure global vendor binaries directory is in $PATH
   php = { "phpcs" },
+  ruby = { "rubocop" },
 }
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufLeave" }, {
