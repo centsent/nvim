@@ -80,8 +80,6 @@ local plugins = {
   { "kylechui/nvim-surround" },
   -- EditorConfig plugin for Neovim
   { "gpanders/editorconfig.nvim" },
-  -- Vim plugin for intensely nerdy commenting powers
-  { "preservim/nerdcommenter" },
   -- Git integration for buffers
   { "lewis6991/gitsigns.nvim" },
   -- lua `fork` of vim-web-devicons for neovim
@@ -92,6 +90,8 @@ local plugins = {
   { "rcarriga/nvim-notify" },
   -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
   { "nvim-lualine/lualine.nvim" },
+  -- Smart and powerful comment plugin for neovim
+  { "numToStr/Comment.nvim" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
