@@ -102,7 +102,7 @@ local components = {
       local clients = vim.lsp.buf_get_clients(bufnr)
 
       if next(clients) == nil then
-        return ""
+        return "No Active LSP"
       end
 
       local names = {}
@@ -149,10 +149,10 @@ local config = {
     lualine_a = { components.mode },
     lualine_b = { components.branch, components.diff, components.diagnostics },
     lualine_c = {
+      components.filetype,
       components.filename,
       components.filesize,
       components.gap,
-      components.filetype,
       components.lsp,
       components.formatter,
       components.linter,
