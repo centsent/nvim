@@ -6,10 +6,11 @@ end
 local jdtls_setup = require("jdtls.setup")
 local mylsp = require("me.lsp")
 local home = os.getenv("HOME")
+local data_path = vim.fn.stdpath("data")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = home .. "/.cache/jdtls-workspace" .. project_name
-local jdtls_install_dir = home .. "/.local/share/nvim/mason/packages/jdtls"
-local launcher_version = "1.6.400.v2021024-0641"
+local jdtls_install_dir = data_path .. "/mason/packages/jdtls"
+local jdtls_jar = vim.fn.glob(jdtls_install_dir .. "/plugins/org.eclipse.equinox.launcher_*.jar")
 local root_dir = jdtls_setup.find_root({ ".git", "mvnw", "gradlew" })
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -29,7 +30,7 @@ local cmd = {
   "java.base/java.lang=ALL-UNNAMED",
 
   "-jar",
-  jdtls_install_dir .. "/plugins/org.eclipse.equinox.launcher_" .. launcher_version .. ".jar",
+  jdtls_jar,
   "-configuration",
   jdtls_install_dir .. "/config_linux",
   "-data",
