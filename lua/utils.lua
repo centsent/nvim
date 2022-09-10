@@ -41,8 +41,8 @@ utils.get_formatter_name = function()
   local names = {}
   for _, fmt_fn in ipairs(formatters) do
     local formatter = fmt_fn()
-    if formatter and formatter.exe then
-      names[#names + 1] = formatter.exe
+    if formatter then
+      names[#names + 1] = formatter.name or formatter.exe
     end
   end
 

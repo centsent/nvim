@@ -51,6 +51,7 @@ end
 local java_config = function()
   return {
     exe = "java",
+    name = "google-java-format",
     args = {
       "-jar",
       os.getenv("HOME") .. "/.local/jars/google-java-format.jar",
