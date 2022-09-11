@@ -1,25 +1,25 @@
-local ok, _ = pcall(require, "tokyonight")
-if not ok then
+local has_tokyonight, tokyonight = pcall(require, "tokyonight")
+if not has_tokyonight then
   return
 end
 
--- Sets the global variable
-local g = function(option, value)
-  vim.g[option] = value
-end
-
 local tokyonight_settings = {
-  -- Make functions italic
-  tokyonight_italic_functions = true,
-  -- Enable this to disable setting the background color
-  tokyonight_transparent = true,
-  -- Sidebar like windows like NvimTree get a transparent background
   tokyonight_transparent_sidebar = true,
+  -- Enable this to disable setting the background color
+  transparent = true,
+  styles = {
+    -- Make functions italic
+    functions = "italic",
+    -- Sidebar like windows like NvimTree get a transparent background
+    sidebar = "transparent",
+  },
 }
 
-for option, value in pairs(tokyonight_settings) do
-  g(option, value)
+local setup = function()
+  tokyonight.setup(tokyonight_settings)
+
+  -- Load the colorscheme
+  vim.cmd("colorscheme tokyonight")
 end
 
--- Load the colorscheme
-vim.cmd("colorscheme tokyonight")
+setup()
