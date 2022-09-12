@@ -60,6 +60,8 @@ local global_options = {
   timeoutlen = 1000,
   -- Access system's clipboard
   clipboard = "unnamedplus",
+  -- Enables 24-bit RGB color in the TUI
+  termguicolors = true,
 }
 
 for option, value in pairs(global_options) do

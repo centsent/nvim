@@ -92,6 +92,8 @@ local plugins = {
   { "nvim-lualine/lualine.nvim" },
   -- Smart and powerful comment plugin for neovim
   { "numToStr/Comment.nvim" },
+  -- The fastest Neovim colorizer.
+  { "norcalli/nvim-colorizer.lua" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
