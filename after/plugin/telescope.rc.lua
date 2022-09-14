@@ -20,7 +20,7 @@ local settings = {
       "--hidden",
       "--follow",
     },
-    file_ignore_patterns = { "node_modules", ".git", "vendor" },
+    file_ignore_patterns = { "node_modules", ".git/", "vendor/" },
   },
   extensions = {
     ["ui-select"] = {
