@@ -3,7 +3,7 @@ if not has_lualine then
   return
 end
 
-local signs = require("me.lsp").signs
+local lsp_signs = require("me.lsp").signs
 local bold = "bold"
 local colors = {
   bg = "#292e42",
@@ -88,7 +88,7 @@ local components = {
   diagnostics = {
     "diagnostics",
     sources = { "nvim_diagnostic" },
-    symbols = { error = signs.Error, warn = signs.Warn, info = signs.Error },
+    symbols = { error = lsp_signs.Error, warn = lsp_signs.Warn, info = lsp_signs.Error },
     diagnostics_color = {
       color_error = { fg = colors.red },
       color_warn = { fg = colors.yellow },
@@ -163,4 +163,8 @@ local config = {
   },
 }
 
-lualine.setup(config)
+local setup = function(user_config)
+  lualine.setup(user_config)
+end
+
+setup(config)
