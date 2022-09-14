@@ -1,7 +1,9 @@
-local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+local safe_require = require("utils").safe_require
+local has_lspconfig, lspconfig = safe_require("lspconfig")
 if not has_lspconfig then
   return
 end
+
 local lsp = require("me.lsp")
 local servers = lsp.get_servers()
 
@@ -9,7 +11,7 @@ local servers = lsp.get_servers()
 lsp.setup_signs()
 
 local setup = function(name)
-  local ok, _ = pcall(require, "me.lsp.conf." .. name)
+  local ok, _ = safe_require("me.lsp.conf." .. name)
 
   if not ok then
     local default_config = lsp.get_default_config()

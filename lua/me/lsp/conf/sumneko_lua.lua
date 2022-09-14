@@ -1,5 +1,7 @@
+local safe_require = require("utils").safe_require
+
 local make_config = function()
-  local has_lua_dev, lua_dev = pcall(require, "lua-dev")
+  local has_lua_dev, lua_dev = safe_require("lua-dev")
   if not has_lua_dev then
     return {}
   end
@@ -20,4 +22,4 @@ local make_config = function()
   return config
 end
 
-require("me.lsp").extend_config("sumneko_lua", make_config())
+require("me.lsp").setup_with_config("sumneko_lua", make_config())

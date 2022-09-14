@@ -1,6 +1,10 @@
 local utils = {}
 local uv = vim.loop
 
+utils.safe_require = function(mod)
+  return pcall(require, mod)
+end
+
 utils.is_executable = function(expr)
   return vim.fn.executable(expr) == 1
 end
