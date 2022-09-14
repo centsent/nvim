@@ -24,12 +24,21 @@ local settings = {
   },
   extensions = {
     ["ui-select"] = {
-      require("telescope.themes").get_dropdown({}),
+      require("telescope.themes").get_cursor({}),
+    },
+    ["file_browser"] = {
+      theme = "ivy",
+      -- disables netrw and use telescope-file-browser in its place
+      hijack_netrw = true,
     },
   },
 }
 
-telescope.setup(settings)
+local setup = function(config)
+  telescope.setup(config)
+  telescope.load_extension("ui-select")
+  telescope.load_extension("file_browser")
+end
 
 local find_project_files = function()
   local cwd = os.getenv("PWD")
@@ -66,6 +75,21 @@ local telescope_keymaps = {
   },
 }
 
-require("keymaps").load_keymaps(telescope_keymaps)
+local set_keymaps = function(keymaps)
+  require("keymaps").load_keymaps(keymaps)
+end
 
-telescope.load_extension("ui-select")
+local set_lex_command = function()
+  -- create `Lex` command if netrw was disabled
+  if vim.g.loaded_netrw ~= 1 then
+    return
+  end
+
+  -- I remapped `<leader>f` to `Lex`
+  -- so create a `Lex` command to replace netrw with file-browser
+  vim.api.nvim_create_user_command("Lex", with(telescope.extensions.file_browser.file_browser), {})
+end
+
+setup(settings)
+set_keymaps(telescope_keymaps)
+set_lex_command()

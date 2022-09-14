@@ -72,6 +72,8 @@ local plugins = {
   { "nvim-telescope/telescope.nvim" },
   -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker
   { "nvim-telescope/telescope-ui-select.nvim" },
+  -- File Browser extension for telescope.nvim
+  { "nvim-telescope/telescope-file-browser.nvim" },
   -- A neovim lua plugin to help easily manage multiple terminal windows
   { "akinsho/toggleterm.nvim" },
   -- A super powerful autopair plugin for Neovim that supports multiple characters
