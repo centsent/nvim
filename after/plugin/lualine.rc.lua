@@ -1,4 +1,5 @@
-local has_lualine, lualine = pcall(require, "lualine")
+local utils = require("utils")
+local has_lualine, lualine = utils.safe_require("lualine")
 if not has_lualine then
   return
 end
@@ -116,13 +117,13 @@ local components = {
   },
   formatter = {
     function()
-      return require("utils").get_formatter_name()
+      return utils.get_formatter_name()
     end,
     color = { fg = colors.green },
   },
   linter = {
     function()
-      return require("utils").get_linter_name()
+      return utils.get_linter_name()
     end,
     color = { fg = colors.cyan },
   },
@@ -137,6 +138,12 @@ local components = {
       local fg_color = mode_colors[vim.fn.mode()] or colors.rose
       return { fg = fg_color, bg = colors.bg }
     end,
+  },
+  time = {
+    function()
+      return string.format("%s", os.date("%H:%M:%S"))
+    end,
+    color = { fg = colors.green, bg = colors.bg },
   },
 }
 
@@ -159,7 +166,7 @@ local config = {
     },
     lualine_x = { components.progress },
     lualine_y = { components.location },
-    lualine_z = { components.encoding, components.fileformat },
+    lualine_z = { components.encoding, components.fileformat, components.time },
   },
 }
 
