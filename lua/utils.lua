@@ -26,7 +26,7 @@ utils.is_directory = function(path)
 end
 
 utils.get_formatter = function()
-  local has_fmtconfig, fmtconfig = pcall(require, "formatter.config")
+  local has_fmtconfig, fmtconfig = utils.safe_require("formatter.config")
   if not has_fmtconfig then
     return nil
   end
@@ -54,7 +54,7 @@ utils.get_formatter_name = function()
 end
 
 utils.get_linter = function()
-  local has_lint, lint = pcall(require, "lint")
+  local has_lint, lint = utils.safe_require("lint")
   if not has_lint then
     return nil
   end

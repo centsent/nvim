@@ -1,12 +1,18 @@
-local has_telescope, telescope = pcall(require, "telescope")
+local utils = require("utils")
+local safe_require = utils.safe_require
+local has_telescope, telescope = safe_require("telescope")
 if not has_telescope then
   return
 end
 
 local builtin = require("telescope.builtin")
 local logger = require("logger")
-local utils = require("utils")
 local with = utils.with
+
+local find_files_opts = {
+  hidden = true,
+  follow = true,
+}
 
 local settings = {
   defaults = {
@@ -20,7 +26,15 @@ local settings = {
       "--hidden",
       "--follow",
     },
-    file_ignore_patterns = { "node_modules", ".git/", "vendor/" },
+    file_ignore_patterns = {
+      "node_modules",
+      ".git/*",
+      "vendor/*",
+      ".mypy_cache/.*",
+      "__pycache__/*",
+      "*.png",
+      "*.jpg",
+    },
   },
   extensions = {
     ["ui-select"] = {
@@ -40,6 +54,17 @@ local setup = function(config)
   telescope.load_extension("file_browser")
 end
 
+local find_files_command = function()
+  return {
+    "fd",
+    "--type",
+    "f",
+    "--strip-cwd-prefix",
+    "--color",
+    "never",
+  }
+end
+
 local find_project_files = function()
   local cwd = os.getenv("PWD")
   local client = vim.lsp.get_client_by_id(1)
@@ -48,10 +73,12 @@ local find_project_files = function()
     cwd = client.config.root_dir
   end
 
-  builtin.find_files({
-    cwd = cwd,
-    hidden = true,
-  })
+  if utils.is_executable("fd") then
+    find_files_opts.find_command = find_files_command()
+  end
+
+  find_files_opts.cwd = cwd
+  builtin.find_files(find_files_opts)
 end
 
 local live_grep = function()
@@ -72,6 +99,7 @@ local telescope_keymaps = {
     ["fm"] = with(builtin.keymaps),
     ["fd"] = with(builtin.lsp_document_symbols),
     ["fr"] = with(builtin.lsp_references),
+    ["fn"] = ":Telescope notify<cr>",
   },
 }
 
@@ -79,11 +107,9 @@ local set_keymaps = function(keymaps)
   require("keymaps").load_keymaps(keymaps)
 end
 
-local set_lex_command = function()
-  -- create `Lex` command if netrw was disabled
-  if vim.g.loaded_netrw ~= 1 then
-    return
-  end
+local setup_commands = function()
+  -- disable `netrw` before creating `Lex` command
+  vim.g.loaded_netrw = 1
 
   -- I remapped `<leader>f` to `Lex`
   -- so create a `Lex` command to replace netrw with file-browser
@@ -92,4 +118,4 @@ end
 
 setup(settings)
 set_keymaps(telescope_keymaps)
-set_lex_command()
+setup_commands()
