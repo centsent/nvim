@@ -70,6 +70,8 @@ local plugins = {
   { "JoosepAlviste/nvim-ts-context-commentstring" },
   -- Show code context
   { "nvim-treesitter/nvim-treesitter-context" },
+  -- Syntax aware text-objects, select, move, swap, and peek support.
+  { "nvim-treesitter/nvim-treesitter-textobjects" },
   -- Find, Filter, Preview, Pick. All lua, all the time.
   { "nvim-telescope/telescope.nvim" },
   -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker
