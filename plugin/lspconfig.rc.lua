@@ -4,18 +4,20 @@ if not has_lspconfig then
   return
 end
 
-local lsp = require("me.lsp")
-local servers = lsp.get_servers()
+local mylsp = require("me.lsp")
+local servers = mylsp.get_servers()
 
--- Diagnostic symbols in the sign column (gutter)
-lsp.setup_signs()
+-- Diagnostic symbols in the sign column
+mylsp.setup_signs()
 
 local setup = function(name)
   local ok, _ = safe_require("me.lsp.conf." .. name)
 
   if not ok then
-    local default_config = lsp.get_default_config()
-    lspconfig[name].setup(default_config)
+    lspconfig[name].setup({
+      on_attach = mylsp.on_attach,
+      capabilities = mylsp.make_capabilities(),
+    })
   end
 end
 

@@ -9,7 +9,10 @@ if has_neodev then
   neodev.setup()
 end
 
+local mylsp = require("me.lsp")
 lspconfig.sumneko_lua.setup({
+  on_attach = mylsp.on_attach,
+  capabilities = mylsp.make_capabilities(),
   settings = {
     Lua = {
       completion = {

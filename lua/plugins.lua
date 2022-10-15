@@ -45,6 +45,10 @@ local plugins = {
   { "neovim/nvim-lspconfig" },
   -- Dev setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
   { "folke/neodev.nvim" },
+  -- A Lua plugin, written in TypeScript, to write TypeScript (Lua optional).
+  { "jose-elias-alvarez/typescript.nvim" },
+  -- A plugin to improve your rust experience in neovim.
+  { "simrat39/rust-tools.nvim" },
   -- Portable package manager for Neovim that runs everywhere Neovim runs.
   { "williamboman/mason.nvim" },
   -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim

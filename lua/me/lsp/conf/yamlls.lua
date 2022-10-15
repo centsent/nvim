@@ -1,4 +1,10 @@
 local safe_require = require("utils").safe_require
+local has_lspconfig, lspconfig = safe_require("lspconfig")
+if not has_lspconfig then
+  return
+end
+
+local mylsp = require("me.lsp")
 
 local make_config = function()
   local settings = {
@@ -14,7 +20,11 @@ local make_config = function()
     settings.yaml.schemas = schemastore.json.schemas()
   end
 
-  return { settings = settings }
+  return {
+    on_attach = mylsp.on_attach,
+    capabilities = mylsp.make_capabilities,
+    settings = settings,
+  }
 end
 
-require("me.lsp").setup_with_config("yamlls", make_config())
+lspconfig.yamlls.setup(make_config())

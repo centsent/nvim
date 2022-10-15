@@ -1,13 +1,13 @@
 local mylsp = {}
+local utils = require("utils")
 
 local o = function(option, value)
   vim.api.nvim_set_option(option, value)
 end
 
-local with = require("utils").with
-local get_formatter = require("utils").get_formatter
-local safe_require = require("utils").safe_require
-local has_lspconfig, lspconfig = safe_require("lspconfig")
+local with = utils.with
+local get_formatter = utils.get_formatter
+local safe_require = utils.safe_require
 
 mylsp.get_servers = function()
   return {
@@ -39,20 +39,22 @@ local buf_formatting = function()
   local formatter = get_formatter()
   -- fallback to lsp formatting if no formatter defined
   if not formatter then
-    vim.lsp.buf.formatting({})
+    vim.lsp.buf.format({ async = true })
   end
 end
 
 local format_on_save = function(client, bufnr)
   -- Format on save if the lsp client supports formatting
-  if client.resolved_capabilities.document_formatting then
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-    vim.api.nvim_create_autocmd("BufWritePost", {
-      group = augroup,
-      buffer = bufnr,
-      callback = with(buf_formatting),
-    })
+  if not client.server_capabilities.documentFormattingProvider then
+    return
   end
+
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    group = augroup,
+    buffer = bufnr,
+    callback = with(buf_formatting),
+  })
 end
 
 local show_diagnostic_on_focus = function(_, bufnr)
@@ -73,25 +75,44 @@ local show_diagnostic_on_focus = function(_, bufnr)
   o("signcolumn", "yes")
 end
 
-local set_keymaps = function(_, bufnr)
-  local buf_set_keymap = function(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
+local document_highlight = function(client, bufnr)
+  if not client.server_capabilities.documentHighlightProvider then
+    return
   end
 
-  local opts = { noremap = true, silent = true }
+  local augroup = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
+  vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    group = augroup,
+    buffer = bufnr,
+    callback = with(vim.lsp.buf.document_highlight),
+  })
+
+  vim.api.nvim_create_autocmd("CursorMoved", {
+    group = augroup,
+    buffer = bufnr,
+    callback = with(vim.lsp.buf.clear_references),
+  })
+end
+
+local set_keymaps = function(_, bufnr)
+  local buf_set_keymap = function(mode, from, to)
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set(mode, from, to, bufopts)
+  end
+
   local keymaps = {
-    ["gd"] = ":lua vim.lsp.buf.definition()<cr>",
-    ["gi"] = ":lua vim.lsp.buf.implementation()<cr>",
-    ["gr"] = ":lua vim.lsp.buf.rename()<cr>",
-    ["gy"] = ":lua vim.lsp.buf.type_definition()<cr>",
-    ["gh"] = ":lua vim.lsp.buf.hover()<cr>",
-    ["gn"] = ":lua vim.diagnostic.goto_next()<cr>",
-    ["gp"] = ":lua vim.diagnostic.goto_prev()<cr>",
-    ["ga"] = ":lua vim.lsp.buf.code_action()<cr>",
+    ["gd"] = with(vim.lsp.buf.definition),
+    ["gi"] = with(vim.lsp.buf.implementation),
+    ["gr"] = with(vim.lsp.buf.rename),
+    ["gtd"] = with(vim.lsp.buf.type_definition),
+    ["gh"] = with(vim.lsp.buf.hover),
+    ["gn"] = with(vim.diagnostic.goto_next),
+    ["gp"] = with(vim.diagnostic.goto_prev),
+    ["ga"] = with(vim.lsp.buf.code_action),
   }
 
   for from, to in pairs(keymaps) do
-    buf_set_keymap("n", from, to, opts)
+    buf_set_keymap("n", from, to)
   end
 end
 
@@ -99,6 +120,7 @@ mylsp.on_attach = function(client, bufnr)
   set_keymaps(client, bufnr)
   show_diagnostic_on_focus(client, bufnr)
   format_on_save(client, bufnr)
+  document_highlight(client, bufnr)
 end
 
 mylsp.make_capabilities = function()
@@ -106,26 +128,10 @@ mylsp.make_capabilities = function()
   -- Set up completion using nvim_cmp with LSP source
   local has_cmp, cmp = safe_require("cmp_nvim_lsp")
   if has_cmp then
-    capabilities = cmp.update_capabilities(capabilities)
+    capabilities = cmp.default_capabilities(capabilities)
   end
 
   return capabilities
-end
-
-mylsp.get_default_config = function()
-  return {
-    capabilities = mylsp.make_capabilities(),
-    on_attach = mylsp.on_attach,
-    flags = { debounce_text_change = 150 },
-  }
-end
-
-mylsp.setup_with_config = function(name, config)
-  if not has_lspconfig then
-    return
-  end
-
-  lspconfig[name].setup(vim.tbl_deep_extend("force", mylsp.get_default_config(), config))
 end
 
 mylsp.signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
