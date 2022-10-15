@@ -3,12 +3,16 @@ if not has_formatter then
   return
 end
 
+local get_current_buf_name = function()
+  return vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
+end
+
 local prettier_config = function()
   return {
     exe = "prettier",
     args = {
       "--stdin-filepath",
-      vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+      get_current_buf_name(),
       "--tab-width",
       2,
     },
@@ -37,7 +41,7 @@ local vue_config = function()
     exe = "prettier",
     args = {
       "--stdin-filepath",
-      vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
+      get_current_buf_name(),
       "--doule-quote",
       "--tab-width",
       2,
@@ -55,7 +59,7 @@ local java_config = function()
     args = {
       "-jar",
       os.getenv("HOME") .. "/.local/jars/google-java-format.jar",
-      vim.api.nvim_buf_get_name(0),
+      get_current_buf_name(),
     },
     stdin = true,
   }
@@ -69,7 +73,7 @@ local php_config = function()
     exe = "phpcbf",
     args = {
       "--standard=PSR12",
-      vim.api.nvim_buf_get_name(0),
+      get_current_buf_name(),
     },
     stdin = true,
     ignore_exitcode = true,
