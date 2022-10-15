@@ -96,6 +96,8 @@ local plugins = {
   { "numToStr/Comment.nvim" },
   -- The fastest Neovim colorizer.
   { "norcalli/nvim-colorizer.lua" },
+  -- Indent guides for Neovim
+  { "lukas-reineke/indent-blankline.nvim" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
