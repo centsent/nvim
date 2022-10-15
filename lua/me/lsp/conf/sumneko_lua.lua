@@ -1,12 +1,12 @@
 local safe_require = require("utils").safe_require
 
 local make_config = function()
-  local has_lua_dev, lua_dev = safe_require("lua-dev")
-  if not has_lua_dev then
+  local has_neodev, neodev = safe_require("neodev")
+  if not has_neodev then
     return {}
   end
 
-  local config = lua_dev.setup({
+  local config = neodev.setup({
     runtime_path = true,
     library = {
       vimruntime = true,

@@ -44,7 +44,7 @@ local plugins = {
   -- Configs for neovim lsp client
   { "neovim/nvim-lspconfig" },
   -- Dev setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
-  { "folke/lua-dev.nvim" },
+  { "folke/neodev.nvim" },
   -- Portable package manager for Neovim that runs everywhere Neovim runs.
   { "williamboman/mason.nvim" },
   -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim
@@ -68,6 +68,8 @@ local plugins = {
   { "p00f/nvim-ts-rainbow" },
   -- Neovim treesitter plugin for setting the commentstring based on the cursor location in a file
   { "JoosepAlviste/nvim-ts-context-commentstring" },
+  -- Show code context
+  { "nvim-treesitter/nvim-treesitter-context" },
   -- Find, Filter, Preview, Pick. All lua, all the time.
   { "nvim-telescope/telescope.nvim" },
   -- It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker
