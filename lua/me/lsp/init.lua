@@ -28,6 +28,7 @@ mylsp.get_servers = function()
     "rust_analyzer",
     "solargraph",
     "sumneko_lua",
+    "taplo",
     "tsserver",
     "vimls",
     "volar",
