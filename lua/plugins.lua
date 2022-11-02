@@ -106,6 +106,8 @@ local plugins = {
   { "norcalli/nvim-colorizer.lua" },
   -- Indent guides for Neovim
   { "lukas-reineke/indent-blankline.nvim" },
+  -- Next-generation motion plugin using incremental input processing
+  { "ggandor/lightspeed.nvim" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
