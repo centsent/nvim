@@ -112,6 +112,16 @@ M.load_keymaps = function(keymaps)
   end
 end
 
+M.load_keymaps_for_mode = function(mode, keymaps, opts)
+  if mode == nil or keymaps == nil then
+    return
+  end
+
+  for from, to in pairs(keymaps) do
+    vim.keymap.set(mode, from, to, opts)
+  end
+end
+
 M.load_keymaps(default_keymaps)
 
 return M

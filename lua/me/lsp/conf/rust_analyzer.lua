@@ -6,9 +6,13 @@ end
 
 local mylsp = require("me.lsp")
 
+local function on_attach(client, bufnr)
+  mylsp.on_attach(client, bufnr)
+end
+
 rt.setup({
   server = {
-    on_attach = mylsp.on_attach,
+    on_attach = on_attach,
     capabilities = mylsp.make_capabilities(),
   },
 })

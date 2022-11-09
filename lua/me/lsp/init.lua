@@ -95,11 +95,8 @@ local document_highlight = function(client, bufnr)
   })
 end
 
-local set_keymaps = function(_, bufnr)
-  local buf_set_keymap = function(mode, from, to)
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set(mode, from, to, bufopts)
-  end
+local set_keymaps = function(bufnr)
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   local keymaps = {
     ["gd"] = with(vim.lsp.buf.definition),
@@ -112,13 +109,11 @@ local set_keymaps = function(_, bufnr)
     ["ga"] = with(vim.lsp.buf.code_action),
   }
 
-  for from, to in pairs(keymaps) do
-    buf_set_keymap("n", from, to)
-  end
+  require("keymaps").load_keymaps_for_mode("n", keymaps, bufopts)
 end
 
 mylsp.on_attach = function(client, bufnr)
-  set_keymaps(client, bufnr)
+  set_keymaps(bufnr)
   show_diagnostic_on_focus(client, bufnr)
   format_on_save(client, bufnr)
   document_highlight(client, bufnr)
