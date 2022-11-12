@@ -108,6 +108,14 @@ local plugins = {
   { "lukas-reineke/indent-blankline.nvim" },
   -- Next-generation motion plugin using incremental input processing
   { "ggandor/lightspeed.nvim" },
+  -- A snazzy bufferline for Neovim
+  { "akinsho/bufferline.nvim", tag = "v3.*" },
+  -- lsp_lines is a simple neovim plugin that renders diagnostics using virtual lines on top of the real line of code.
+  { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
+  -- A pretty list for showing diagnostics, references, telescope results, quickfix and location lists to help you solve all the trouble your code is causing.
+  { "folke/trouble.nvim" },
+  -- Lua version of phpactor nvim plugin
+  { "gbprod/phpactor.nvim" },
 
   -- For my personal use only
   -- The open source plugin for productivity metrics, goals, leaderboards, and automatic time tracking.
