@@ -1,127 +1,33 @@
-local M = {}
-
--- Map leader key to comma
+-- :fennel:1668258291
 vim.g.mapleader = ","
-
-local mode_adapters = {
-  normal_mode = "n",
-  visual_mode = "v",
-  visual_block_mode = "x",
-  insert_mode = "i",
-  operator_pending_mode = "o",
-}
-
-local default_keymaps = {
-  normal_mode = {
-    -- Map <space> to / (search)
-    ["<space>"] = "/",
-    -- Disable arrow keys
-    ["<left>"] = "<nop>",
-    ["<right>"] = "<nop>",
-    ["<up>"] = "<nop>",
-    ["<down>"] = "<nop>",
-    -- ex mode commands made easy
-    [";"] = ":",
-    -- Don't highlight search result
-    ["<leader>/"] = ":nohlsearch<cr>",
-    -- Fast saving
-    ["<leader>w"] = ":w!<cr>",
-    -- Quickly close the current window/buffer
-    ["<leader>q"] = ":q<cr>",
-    -- Quickly close the current window/buffer without reminder
-    ["<leader>a"] = ":q!<cr>",
-    -- Toggle netrw
-    ["<leader>f"] = ":Lex<cr>",
-    -- Remap U to <c-r> for easier undo
-    ["U"] = "<c-r>",
-    -- Go to home and end using capitalized directions
-    ["H"] = "^",
-    ["L"] = "$",
-    -- Move a line of text up and down
-    ["<c-j>"] = ":move +1<cr>",
-    ["<c-k>"] = ":move -2<cr>",
-    -- Use tab for circular windows navigation
-    ["<tab>"] = "<c-w>w",
-    -- Mappings for managing tabs
-    -- Open a new tab
-    ["tt"] = ":tabnew<cr>",
-    -- Navigate to previous tab
-    ["tp"] = ":tabprevious<cr>",
-    -- Navigate to next tab
-    ["tn"] = ":tabnext<cr>",
-    -- New horizontal split(editing current buffer)
-    ["<space>1"] = "<c-w>s",
-    -- Split window vertically(editing current buffer)
-    ["<space>2"] = "<c-w>v",
-  },
-  visual_mode = {
-    -- Copy to clipboard
-    ["<leader>y"] = '"+y',
-    -- Paste from clipboard
-    ["<leader>p"] = '"+p',
-    -- Cut to clipboard
-    ["<leader>x"] = '"+d',
-    -- Go to home and end using capitalized directions
-    ["H"] = "^",
-    ["L"] = "$",
-  },
-  visual_block_mode = {
-    ["<c-j>"] = ":move '>+1<cr>gv-gv",
-    ["<c-k>"] = ":move '<-2<cr>gv-gv",
-  },
-  insert_mode = {
-    -- Use <c-j> for escaping
-    ["<c-j>"] = "<esc>",
-    -- Directions in insert mode
-    ["<c-b>"] = "<c-o>h",
-    ["<c-f>"] = "<c-o>l",
-    -- Go to next line
-    ["<c-n>"] = "<c-o>j",
-    -- Go to previous line
-    ["<c-p>"] = "<c-o>k",
-    -- Go to home
-    ["<c-a>"] = "<c-o>^",
-    -- Go to end
-    ["<c-e>"] = "<c-o>$",
-    -- Scroll up
-    ["<c-u>"] = "<c-\\><c-o><c-u>",
-    -- Scroll down
-    ["<c-d>"] = "<c-\\><c-o><c-d>",
-  },
-  operator_pending_mode = {
-    ["H"] = "^",
-    ["L"] = "$",
-  },
-}
-
-local load_mode = function(mode_key, keymaps)
+local mode_adapters = {normal_mode = "n", visual_mode = "v", visual_block_mode = "x", insert_mode = "i", operator_pending_mode = "o"}
+local default_keymaps = {normal_mode = {["<space>"] = "/", ["<left>"] = "<nop>", ["<right>"] = "<nop>", ["<up>"] = "<nop>", ["<down>"] = "<nop>", [";"] = ":", ["<leader>/"] = ":nohlsearch<cr>", ["<leader>w"] = ":w!<cr>", ["<leader>q"] = ":q<cr>", ["<leader>a"] = ":q!<cr>", ["<leader>f"] = ":Lex<cr>", U = "<c-r>", H = "^", L = "$", ["<c-j>"] = ":move +1<cr>", ["<c-k>"] = ":move -2<cr>", ["<tab>"] = "<c-w>w", tt = ":tabnew<cr>", tp = ":tabprevious<cr>", tn = ":tabnext<cr>", ["<space>1"] = "<c-w>s", ["<space>2"] = "<c-w>v"}, visual_mode = {["<leader>y"] = "\"+y", ["<leader>p"] = "\"+p", ["<leader>x"] = "\"+d", H = "^", L = "$"}, visual_block_mode = {["<c-j>"] = ":move '>+1<cr>gv-gv", ["<c-k>"] = ":move '<-2<cr>gv-gv"}, insert_mode = {["<c-j>"] = "<esc>", ["<c-b>"] = "<c-o>h", ["<c-f>"] = "<c-o>l", ["<c-n>"] = "<c-o>j", ["<c-p>"] = "<c-o>k", ["<c-a>"] = "<c-o>^", ["<c-e>"] = "<c-o>$", ["<c-u>"] = "<c-\\><c-o><c-u>", ["<c-d>"] = "<c-\\><c-o><c-d>"}, operator_pending_mode = {H = "^", L = "$"}}
+local function load_mode(mode_key, keymaps)
   local mode = mode_adapters[mode_key]
-
-  if not mode then
-    return
-  end
-
-  for from, to in pairs(keymaps) do
-    vim.keymap.set(mode, from, to)
+  if (mode ~= nil) then
+    for from, to in pairs(keymaps) do
+      vim.keymap.set(mode, from, to)
+    end
+    return nil
+  else
+    return nil
   end
 end
-
-M.load_keymaps = function(keymaps)
+local function load_keymaps(keymaps)
   for mode_key, mode_keymaps in pairs(keymaps) do
     load_mode(mode_key, mode_keymaps)
   end
+  return nil
 end
-
-M.load_keymaps_for_mode = function(mode, keymaps, opts)
-  if mode == nil or keymaps == nil then
-    return
-  end
-
-  for from, to in pairs(keymaps) do
-    vim.keymap.set(mode, from, to, opts)
+local function load_keymaps_for_mode(mode, keymaps, opts)
+  if ((mode ~= nil) and (keymaps ~= nil)) then
+    for from, to in pairs(keymaps) do
+      vim.keymap.set(mode, from, to, opts)
+    end
+    return nil
+  else
+    return nil
   end
 end
-
-M.load_keymaps(default_keymaps)
-
-return M
+load_keymaps(default_keymaps)
+return {load_keymaps = load_keymaps, load_keymaps_for_mode = load_keymaps_for_mode}
