@@ -3,6 +3,8 @@
 packer_compiled.lua
 after/plugin/*.lua
 lua/me/*.lua
+lua/me/lsp/*.lua
+lua/me/lsp/conf/*.lua
 options.lua
 keymaps.lua
 plugins.lua
