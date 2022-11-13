@@ -6,7 +6,7 @@
 
     (rt.setup {
       :server {
-        :on_attach on_attach
+        : on_attach
         :capabilities (mylsp.make_capabilities)
       }
     })))

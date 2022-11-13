@@ -15,7 +15,7 @@
       {
         :on_attach mylsp.on_attach
         :capabilities (mylsp.make_capabilities)
-        :settings settings
+        : settings
       })
 
     (lspconfig.yamlls.setup (make_config))))

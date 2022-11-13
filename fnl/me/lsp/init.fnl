@@ -111,8 +111,8 @@
     (vim.fn.sign_define hl {:text icon :texthl hl :numhl hl})))
 
 :return {
-  :signs signs
-  :setup_signs setup_signs
-  :get_servers get_servers
-  :on_attach on_attach
+  : signs
+  : setup_signs
+  : get_servers
+  : on_attach
 }

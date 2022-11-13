@@ -12,6 +12,6 @@
       {
       :on_attach mylsp.on_attach
       :capabilities mylsp.capabilities
-      :settings settings
+      : settings
       })
     (lspconfig.jsonls.setup (make_config))))
