@@ -1,4 +1,4 @@
--- :fennel:1668269448
+-- :fennel:1668246343
 local has_impatient_3f, impatient = pcall(require, "impatient")
 if has_impatient_3f then
   impatient.enable_profile()

@@ -1,3 +1,10 @@
 /.netrwhist
 /spell/
 packer_compiled.lua
+after/plugin/*.lua
+lua/me/*.lua
+options.lua
+keymaps.lua
+plugins.lua
+utils.lua
+tangerine_vimrc.lua
