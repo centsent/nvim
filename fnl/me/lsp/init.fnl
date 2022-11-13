@@ -11,7 +11,7 @@
 (fn get_servers []
    [
     "bashls"
-    "ccls"
+    ;; "ccls"
     "clangd"
     "csharp_ls"
     "cssls"

@@ -1,4 +1,4 @@
--- :fennel:1668268600
+-- :fennel:1668273097
 local has_lualine_3f, lualine = pcall(require, "lualine")
 if has_lualine_3f then
   local lsp_signs = (require("me.lsp")).signs
@@ -10,37 +10,33 @@ if has_lualine_3f then
   local function _1_()
     local bufnr = vim.api.nvim_get_current_buf()
     local clients = vim.lsp.get_active_clients({bufnr = bufnr})
-    if next(clients) then
-      local names = {}
-      for _, client in pairs(clients) do
-        local function _2_()
-          return names
-        end
-        names[(_2_ + 1)] = client.name
-      end
-      table.concat(names, " ")
-    else
-    end
     if (nil == next(clients)) then
       return "No Active LSP"
     else
-      return nil
+      local names = {}
+      for _, client in pairs(clients) do
+        names[(#names + 1)] = client.name
+      end
+      return table.concat(names, " ")
     end
   end
-  local function _5_()
-    return (require("utils")).get_formatter_name
+  local function _3_()
+    return (require("utils")).get_formatter_name()
   end
-  local function _6_()
+  local function _4_()
+    return (require("utils")).get_linter_name()
+  end
+  local function _5_()
     return "%="
   end
-  local function _7_()
-    local fg_color = mode_colors[vim.fn.mode()][colors.rose]
+  local function _6_()
+    local fg_color = (mode_colors[vim.fn.mode()] or colors.rose)
     return {fg = fg_color, bg = colors.bg}
   end
-  local function _8_()
+  local function _7_()
     return string.format("%s", os.date("%H:%M:%S"))
   end
-  components = {fileformat = {color = {bg = colors.bg, fg = colors.green, gui = bold}, "fileformat"}, encoding = {color = {bg = colors.bg, fg = colors.green, gui = bold}, fmt = string.upper, "encoding"}, filename = {color = {fg = colors.blue, gui = bold}, "filename"}, filetype = {icon_only = true, "filetype"}, filesize = {color = {fg = colors.white}, "filesize"}, progress = {color = {bg = colors.bg, fg = colors.fg, gui = bold}, "progress"}, location = {color = {bg = colors.bg, fg = colors.fg, gui = bold}, "location"}, branch = {icon = icons.branch, color = {bg = colors.bg, fg = colors.magenta, gui = bold}, "branch"}, diff = {symbols = {added = icons.added, modified = icons.modified, removed = icons.removed}, diff_color = {added = {fg = colors.green}, modified = {fg = colors.orange}, removed = {fg = colors.red}}, color = {bg = colors.bg}, "diff"}, diagnostics = {sources = {"nvim_diagnostic"}, symbols = {error = lsp_signs.Error, warn = lsp_signs.Warn, info = lsp_signs.Info}, diagnostics_color = {color_error = {fg = colors.red}, color_warn = {fg = colors.yellow}, color_info = {fg = colors.cyan}}, color = {bg = colors.bg}, "diagnostics"}, lsp = {color = {fg = colors.white, gui = bold}, _1_}, formatter = {color = {fg = colors.green}, _5_}, gap = {_6_}, mode = {color = _7_, "mode"}, time = {color = {fg = colors.green, bg = colors.bg}, _8_}}
+  components = {fileformat = {color = {bg = colors.bg, fg = colors.green, gui = bold}, "fileformat"}, encoding = {color = {bg = colors.bg, fg = colors.green, gui = bold}, fmt = string.upper, "encoding"}, filename = {color = {fg = colors.blue, gui = bold}, "filename"}, filetype = {icon_only = true, "filetype"}, filesize = {color = {fg = colors.white}, "filesize"}, progress = {color = {bg = colors.bg, fg = colors.fg, gui = bold}, "progress"}, location = {color = {bg = colors.bg, fg = colors.fg, gui = bold}, "location"}, branch = {icon = icons.branch, color = {bg = colors.bg, fg = colors.magenta, gui = bold}, "branch"}, diff = {symbols = {added = icons.added, modified = icons.modified, removed = icons.removed}, diff_color = {added = {fg = colors.green}, modified = {fg = colors.orange}, removed = {fg = colors.red}}, color = {bg = colors.bg}, "diff"}, diagnostics = {sources = {"nvim_diagnostic"}, symbols = {error = lsp_signs.Error, warn = lsp_signs.Warn, info = lsp_signs.Info}, diagnostics_color = {color_error = {fg = colors.red}, color_warn = {fg = colors.yellow}, color_info = {fg = colors.cyan}}, color = {bg = colors.bg}, "diagnostics"}, lsp = {color = {fg = colors.white, gui = bold}, _1_}, formatter = {color = {fg = colors.green}, _3_}, linter = {color = {fg = colors.cyan}, _4_}, gap = {_5_}, mode = {color = _6_, "mode"}, time = {color = {fg = colors.green, bg = colors.bg}, _7_}}
   local config = {options = {component_separators = "", section_separators = ""}, sections = {lualine_a = {components.mode}, lualine_b = {components.branch, components.diff, components.diagnostics}, lualine_c = {components.filetype, components.filename, components.filesize, components.gap, components.lsp, components.formatter, components.linter}, lualine_x = {components.progress}, lualine_y = {components.location}, lualine_z = {components.encoding, components.fileformat, components.time}}}
   local function setup(user_config)
     return lualine.setup(user_config)

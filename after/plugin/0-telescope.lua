@@ -1,4 +1,4 @@
--- :fennel:1668265419
+-- :fennel:1668269448
 local has_telescope_3f, telescope = pcall(require, "telescope")
 if has_telescope_3f then
   local builtin = require("telescope.builtin")

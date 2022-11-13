@@ -100,27 +100,25 @@
       (local bufnr (vim.api.nvim_get_current_buf))
       (local clients (vim.lsp.get_active_clients { :bufnr bufnr }))
 
-      (when (next clients)
-        (local names {})
-        (each [_ client (pairs clients)]
-          (tset names (+ #names 1) client.name))
-        (table.concat names " "))
-
-      (when (= nil (next clients))
-        "No Active LSP"))
+      (if (= nil (next clients))
+        "No Active LSP"
+        (do 
+          (local names {})
+          (each [_ client (pairs clients)]
+            (tset names (+ (length names) 1) client.name))
+          (table.concat names " "))))
       :color { :fg colors.white :gui bold }
     }
     :formatter {
       1 (lambda []
-        (. (require :utils) :get_formatter_name))
+        ((. (require :utils) :get_formatter_name)))
       :color { :fg colors.green }
     }
-    ;; linter {
-    ;; function()
-    ;;   return utils.get_linter_name()
-    ;; end
-    ;; color { fg colors.cyan }
-    ;; }
+    :linter {
+      1 (lambda []
+        ((. (require :utils) :get_linter_name)))
+      :color { :fg colors.cyan }
+    }
     :gap [ 
       (lambda []
         "%=")
@@ -128,7 +126,7 @@
     :mode {
       1 "mode"
       :color (lambda []
-        (local fg_color (or (. mode_colors (vim.fn.mode) colors.rose)))
+        (local fg_color (or (. mode_colors (vim.fn.mode)) colors.rose))
         { :fg fg_color :bg colors.bg }
       )
     }

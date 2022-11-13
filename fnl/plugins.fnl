@@ -114,6 +114,8 @@
   [ "folke/trouble.nvim" ]
   ; Lua version of phpactor nvim plugin
   [ "gbprod/phpactor.nvim" ]
+  ; Sweet Fennel integration for Neovim
+  ["udayvir-singh/tangerine.nvim"]
 
   ; For my personal use only
   ; The open source plugin for productivity metrics goals leaderboards and automatic time tracking.

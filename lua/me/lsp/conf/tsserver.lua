@@ -1,13 +1,8 @@
-local utils = require("utils")
-local has_typescript, typescript = utils.safe_require("typescript")
-if not has_typescript then
-  return
+-- :fennel:1668300349
+local has_typescript_3f, typescript = pcall(require, "typescript")
+if has_typescript_3f then
+  local mylsp = require("me.lsp")
+  return typescript.setup({server = {on_attach = mylsp.on_attach, capabilities = mylsp.make_capabilities()}})
+else
+  return nil
 end
-
-local mylsp = require("me.lsp")
-typescript.setup({
-  server = {
-    on_attach = mylsp.on_attach,
-    capabilities = mylsp.make_capabilities(),
-  },
-})
