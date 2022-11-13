@@ -1,4 +1,4 @@
-(let [(has_cmp? cmp) (pcall require :cmd)]
+(let [(has_cmp? cmp) (pcall require :cmp)]
   (when has_cmp?
     (cmp.setup {
       :snippet {
@@ -28,11 +28,11 @@
     })
 
     (cmp.setup.cmdline "/" {
-      :sources { :name "buffer" }
+      :sources [{ :name "buffer" }]
       :mapping (cmp.mapping.preset.cmdline)
     })
     (cmp.setup.cmdline ":" {
-      :sources { :name "cmdline" }
+      :sources [{ :name "cmdline" }]
       :mapping (cmp.mapping.preset.cmdline)
     })
 
