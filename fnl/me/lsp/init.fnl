@@ -91,11 +91,24 @@
 
   ((. (require :keymaps) :load_keymaps_for_mode) "n" keymaps bufopts))
 
+(fn setup_lsp_signature [client bufnr]
+  (let [(has-lsp-signature? lsp-signature) (pcall require :lsp_signature)]
+    (when has-lsp-signature?
+      (lsp-signature.setup {} bufnr))))
+
+(fn setup_navic [client bufnr]
+  (let [(has-navic? navic) (pcall require :nvim-navic)]
+    (when (and has-navic? client.server_capabilities.documentSymbolProvider)
+      (navic.attach client bufnr))))
+
 (fn on_attach [client bufnr]
   (set_keymaps bufnr)
   (show_diagnostic_on_focus client bufnr)
   (format_on_save client bufnr)
-  (document_highlight client bufnr))
+  (document_highlight client bufnr)
+  (setup_lsp_signature client bufnr)
+  (setup_navic client bufnr))
+
 
 (fn make_capabilities []
   (var capabilities (vim.lsp.protocol.make_client_capabilities))

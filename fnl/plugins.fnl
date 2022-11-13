@@ -116,10 +116,17 @@
   ["gbprod/phpactor.nvim"]
   ; Sweet Fennel integration for Neovim
   ["udayvir-singh/tangerine.nvim"]
+  ; LSP signature hint as you type
+  ["ray-x/lsp_signature.nvim"]
+  ; Standalone UI for nvim-lsp progress
+  ["j-hui/fidget.nvim"]
+  ; Simple winbar/statusline plugin that shows your current code context
+  ["SmiteshP/nvim-navic"]
 
   ; For my personal use only
   ; The open source plugin for productivity metrics goals leaderboards and automatic time tracking.
   ["wakatime/vim-wakatime"]
+
   ])
 
 (packer.startup (lambda [use]
