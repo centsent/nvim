@@ -5,7 +5,8 @@
       :transparent true
       :styles {
         :functions "italic"
-        :sidebar "transparent"
+        :sidebars "transparent"
+        :float "transparent"
       }
     })
 

@@ -59,7 +59,7 @@
   :clipboard "unnamedplus"
   ; Enables 24-bit RGB color in the TUI
   :termguicolors true
-  })
+})
 
 (each [option value (pairs global_options)]
   (set_option option value))

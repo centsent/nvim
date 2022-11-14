@@ -79,11 +79,5 @@
     (fn set_keymaps [keymaps]
       ((. (require :keymaps) :load_keymaps) keymaps))
 
-    (fn setup_commands []
-      (set vim.g.loaded_netrw 1)
-      (vim.api.nvim_create_user_command "Lex" (with telescope.extensions.file_browser.file_browser) {})
-    )
-
     (setup settings)
-    (set_keymaps telescope_keymaps)
-    (setup_commands)))
+    (set_keymaps telescope_keymaps)))
