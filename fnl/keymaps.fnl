@@ -32,6 +32,11 @@
     ; Go to home and end using capitalized directions
     :H "^"
     :L "$"
+    ; Scroll smoothly
+    :<c-d> "<c-d>zz"
+    :<c-u> "<c-u>zz"
+    :n "nzz"
+    :N "Nzz"
     ; Move a line of text up and down
     :<c-j> ":move +1<cr>"
     :<c-k> ":move -2<cr>"
