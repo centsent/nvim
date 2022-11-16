@@ -5,7 +5,8 @@
                         {:name :path}
                         {:name :buffer}
                         {:name :luasnip}
-                        {:name :nvim_lua}])
+                        {:name :nvim_lua}
+                        {:name :cmp_tabnine}])
     (local cmp-mapping
            {:<c-p> (cmp.mapping.select_prev_item)
             :<c-n> (cmp.mapping.select_next_item)
@@ -14,9 +15,9 @@
             :<cr> (cmp.mapping.confirm {:select true})
             :<tab> (cmp.mapping.confirm {:select true})})
     (local cmdline-confg
-           {":" {:sources [{:name :buffer}]
+           {":" {:sources [{:name :cmdline}]
                  :mapping (cmp.mapping.preset.cmdline)}
-            :/ {:sources [{:name :cmdline}]
+            :/ {:sources [{:name :buffer}]
                 :mapping (cmp.mapping.preset.cmdline)}})
 
     (fn setup-luasnip [args]
@@ -26,13 +27,19 @@
 
     (fn setup-cmdline [settings]
       (each [cmd config (pairs settings)]
-        (cmp.setup.cmdline cmd {:sources config.source :mapping config.mapping})))
+        (local {: sources : mapping} config)
+        (cmp.setup.cmdline cmd {: sources : mapping})))
 
     (fn setup-from-vscode []
       (let [(has-from-vscode? from-vscode) (pcall require
                                                   :luasnip.loaders.from_vscode)]
         (when has-from-vscode?
           (from-vscode.lazy_load))))
+
+    (fn setup-tabnine []
+      (let [(has-tabnine? tabnine) (pcall require :cmp_tabnine.config)]
+        (when has-tabnine?
+          (tabnine:setup {}))))
 
     (local cmp-settings
            {:snippet {:expand setup-luasnip}
@@ -42,5 +49,6 @@
     (cmp.setup cmp-settings)
     (setup-cmdline cmdline-confg)
     (setup-from-vscode)
+    (setup-tabnine)
     (vim.api.nvim_set_option :completeopt "menuone,noinsert,noselect")))
 

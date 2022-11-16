@@ -116,6 +116,8 @@
                 [:SmiteshP/nvim-navic]
                 ;; A file explorer tree for neovim written in lua
                 [:nvim-tree/nvim-tree.lua]
+                ;; TabNine plugin for hrsh7th/nvim-cmp
+                {1 :tzachar/cmp-tabnine :run :./install.sh}
                 ;; For my personal use only
                 ;; The open source plugin for productivity metrics goals leaderboards and automatic time tracking.
                 [:wakatime/vim-wakatime]])
