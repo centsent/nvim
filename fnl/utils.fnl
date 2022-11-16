@@ -3,37 +3,31 @@
     (when ok?
       (local formatters formatter_config.values.filetype)
       (local ft vim.bo.filetype)
-      (. formatters ft)
-      )))
+      (. formatters ft))))
 
 (fn get_formatter_name []
   (local formatter (get_formatter))
-
   (if formatter
-    (do
-      (local names {})
-      (each [_ fmt_fn (ipairs formatter)]
-        (local formatter (fmt_fn))
-        (when formatter
-          (tset names (+ (length names) 1) (or formatter.name formatter.exe))))
-      (table.concat names ", "))
-    ""))
+      (do
+        (local names {})
+        (each [_ fmt_fn (ipairs formatter)]
+          (local formatter (fmt_fn))
+          (when formatter
+            (tset names (+ (length names) 1) (or formatter.name formatter.exe))))
+        (table.concat names ", "))
+      ""))
 
 (fn get_linter []
-  (let [(has_lint? lint) (pcall require :lint)] 
+  (let [(has_lint? lint) (pcall require :lint)]
     (if has_lint?
-      (. lint.linters_by_ft vim.bo.filetype)
-      nil)))
+        (. lint.linters_by_ft vim.bo.filetype)
+        nil)))
 
 (fn get_linter_name []
   (local linter (get_linter))
-  (if (not linter)
-      ""
-      (table.concat linter ", ")))
+  (if linter
+      (table.concat linter ", ")
+      ""))
 
-:return {
-  :get_linter get_linter
-  :get_linter_name get_linter_name
-  :get_formatter get_formatter
-  :get_formatter_name get_formatter_name
-}
+{: get_linter : get_linter_name : get_formatter : get_formatter_name}
+
