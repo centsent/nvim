@@ -1,7 +1,7 @@
-(fn set_option [option value]
+(fn set-option [option value]
   (vim.api.nvim_set_option option value))
 
-(fn create_augroup [name]
+(fn create-augroup [name]
   (vim.api.nvim_create_augroup name {:clear true}))
 
 (fn with [func]
@@ -10,7 +10,6 @@
 
 (fn get_servers []
   [:bashls
-   ;; "ccls"
    :clangd
    :csharp_ls
    :cssls
@@ -32,34 +31,37 @@
    :volar
    :yamlls])
 
-(fn buf_formatting []
+(fn buf-formatting []
   (local formatter (. (require :utils) :get_formatter))
   (when (not formatter)
     (vim.lsp.buf.format {:async true})))
 
-(fn format_on_save [client bufnr]
+(fn format-on-save [client bufnr]
   (when client.server_capabilities.documentFormattingProvider
-    (local augroup (create_augroup :LspFormatting))
+    (local augroup (create-augroup :LspFormatting))
     (vim.api.nvim_create_autocmd :BufWritePost
                                  {:group augroup
                                   :buffer bufnr
-                                  :callback buf_formatting})))
+                                  :callback buf-formatting})))
 
-(fn show_diagnostic_on_focus [client bufnr] ; Set updatetime for CursorHold ; 300ms of no cursor movement to trigger CursorHold
-  (set_option :updatetime 300)
-  (local augroup (create_augroup :LspDiagnostic))
+(fn open-diagnostic-float []
+  (vim.diagnostic.open_float nil {:focusable false}))
+
+(fn show-diagnostic-on-focus [client bufnr]
+  ;; Set updatetime for CursorHold ; 300ms of no cursor movement to trigger CursorHold
+  (set-option :updatetime 300)
+  (local augroup (create-augroup :LspDiagnostic))
   (vim.api.nvim_create_autocmd :CursorHold
                                {:group augroup
                                 :buffer bufnr
-                                :callback (lambda []
-                                            (vim.diagnostic.open_float nil
-                                                                       {:focusable false}))})
-  ; have a fixed column for the diagnostics to appear in ; this removes the jitter when warnings/errors flow in
-  (set_option :signcolumn :yes))
+                                :callback open-diagnostic-float})
+  ;; have a fixed column for the diagnostics to appear in 
+  ;; this removes the jitter when warnings/errors flow in
+  (set-option :signcolumn :yes))
 
-(fn document_highlight [client bufnr]
+(fn document-highlight [client bufnr]
   (when client.server_capabilities.documentHighlightProvider
-    (local augroup (create_augroup :LspDocumentHighlight))
+    (local augroup (create-augroup :LspDocumentHighlight))
     (vim.api.nvim_create_autocmd [:CursorHold :CursorHoldI]
                                  {:group augroup
                                   :buffer bufnr
@@ -69,7 +71,7 @@
                                   :buffer bufnr
                                   :callback (with vim.lsp.buf.clear_references)})))
 
-(fn set_keymaps [bufnr]
+(fn set-keymaps [bufnr]
   (local bufopts {:noremap true :silent true :buffer bufnr})
   (local keymaps {:ga (with vim.lsp.buf.code_action)
                   :gd (with vim.lsp.buf.definition)
@@ -81,23 +83,29 @@
                   :gp (with vim.diagnostic.goto_prev)})
   ((. (require :keymaps) :load_keymaps_for_mode) :n keymaps bufopts))
 
-(fn setup_lsp_signature [client bufnr]
+(fn setup-lsp-signature [client bufnr]
   (let [(has-lsp-signature? lsp-signature) (pcall require :lsp_signature)]
     (when has-lsp-signature?
       (lsp-signature.setup {} bufnr))))
 
-(fn setup_navic [client bufnr]
+(fn setup-navic [client bufnr]
   (let [(has-navic? navic) (pcall require :nvim-navic)]
     (when (and has-navic? client.server_capabilities.documentSymbolProvider)
       (navic.attach client bufnr))))
 
+(fn setup-fidget [client bufnr]
+  (let [(has-fidget? fidget) (pcall require :fidget)]
+    (when has-fidget?
+      (fidget.setup {}))))
+
 (fn on_attach [client bufnr]
-  (set_keymaps bufnr)
-  (show_diagnostic_on_focus client bufnr)
-  (format_on_save client bufnr)
-  (document_highlight client bufnr)
-  (setup_lsp_signature client bufnr)
-  (setup_navic client bufnr))
+  (set-keymaps bufnr)
+  (show-diagnostic-on-focus client bufnr)
+  (format-on-save client bufnr)
+  (document-highlight client bufnr)
+  (setup-lsp-signature client bufnr)
+  (setup-navic client bufnr)
+  (setup-fidget))
 
 (fn make_capabilities []
   (var capabilities (vim.lsp.protocol.make_client_capabilities))

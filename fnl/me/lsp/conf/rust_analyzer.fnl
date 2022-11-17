@@ -1,9 +1,10 @@
 (let [(has_rt? rt) (pcall require :rust-tools)]
   (when has_rt?
-    (local mylsp (require :me.lsp))
+    (local {: on_attach : make_capabilities} (require :me.lsp))
 
-    (fn on_attach [client bufnr]
-      (mylsp.on_attach client bufnr))
+    (fn on-attach-rust [client bufnr]
+      (on_attach client bufnr))
 
-    (rt.setup {:server {: on_attach :capabilities (mylsp.make_capabilities)}})))
+    (rt.setup {:server {:on_attach on-attach-rust
+                        :capabilities (make_capabilities)}})))
 
