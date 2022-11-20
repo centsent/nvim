@@ -7,23 +7,29 @@
         (func)))
 
     (local find_files_opts {:hidden true :follow true})
-    (local settings
-           {:defaults {:vimgrep_arguments [:rg
-                                           :--no-heading
-                                           :--with-filename
-                                           :--line-number
-                                           :--column
-                                           :--smart-case
-                                           :--hidden
-                                           :--follow]
-                       :file_ignore_patterns [:node_modules
-                                              :.git/
-                                              :vendor/*
-                                              :.mypy_cache/.*
-                                              :__pycache__/*
-                                              :*.png
-                                              :*.jpg]}
-            :extensions {:ui-select ((. (require :telescope.themes) :get_cursor) {})}})
+    (local defaults {})
+    (local pickers {})
+    (local extensions {})
+    (set defaults.vimgrep_arguments
+         [:rg
+          :--no-heading
+          :--with-filename
+          :--line-number
+          :--column
+          :--smart-case
+          :--hidden
+          :--follow])
+    (set defaults.file_ignore_patterns
+         [:node_modules
+          :.git/
+          :vendor/*
+          :.mypy_cache/.*
+          :__pycache__/*
+          :*.png
+          :*.jpg])
+    (set pickers.live_grep {:theme :dropdown})
+    (set extensions.ui-select ((. (require :telescope.themes) :get_cursor) {}))
+    (local settings {: pickers : defaults : extensions})
 
     (fn setup [config]
       (telescope.setup config)

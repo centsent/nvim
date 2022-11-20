@@ -111,7 +111,8 @@
   (var capabilities (vim.lsp.protocol.make_client_capabilities))
   (let [(has_cmp? cmp) (pcall require :cmp_nvim_lsp)]
     (when has_cmp?
-      (set capabilities (cmp.default_capabilities capabilities)))))
+      (set capabilities (cmp.default_capabilities capabilities)))
+    capabilities))
 
 (local signs {:Error " " :Warn " " :Hint " " :Info " "})
 
@@ -120,5 +121,9 @@
     (local hl (.. :DiagnosticSign type))
     (vim.fn.sign_define hl {:text icon :texthl hl :numhl hl})))
 
-{: signs : setup_signs : get_servers : on_attach}
+(fn config [opts]
+  (local defualt-opts {: on_attach :capabilities (make_capabilities)})
+  (vim.tbl_deep_extend :force defualt-opts (or opts {})))
+
+{: signs : setup_signs : get_servers : on_attach : config}
 
