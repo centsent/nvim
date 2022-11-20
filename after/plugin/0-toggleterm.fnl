@@ -1,6 +1,6 @@
 (let [(has_toggleterm? toggleterm) (pcall require :toggleterm)]
   (when has_toggleterm?
-    (local Terminal (. (require :toggleterm.terminal) :Terminal))
+    (local {: Terminal} (require :toggleterm.terminal))
     (toggleterm.setup {:open_mapping :<leader>tt :direction :float})
 
     (fn make_lazygit_terminal []

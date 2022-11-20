@@ -18,8 +18,8 @@
       ""))
 
 (fn get_linter []
-  (let [(has_lint? lint) (pcall require :lint)]
-    (if has_lint?
+  (let [(has-lint? lint) (pcall require :lint)]
+    (if has-lint?
         (. lint.linters_by_ft vim.bo.filetype)
         nil)))
 

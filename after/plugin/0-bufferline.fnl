@@ -1,4 +1,8 @@
-(let [(has_bufferline? bufferline) (pcall require :bufferline)]
-  (when has_bufferline?
-    (bufferline.setup {:options {:mode :tabs :show_buffer_close_icons false}})))
+(let [(has-bufferline? bufferline) (pcall require :bufferline)]
+  (when has-bufferline?
+    (local options {:mode :tabs
+                    :show_buffer_close_icons true
+                    :show_close_icon false
+                    :indicator {:style :underline}})
+    (bufferline.setup {: options})))
 

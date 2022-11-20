@@ -1,11 +1,6 @@
 (let [(has_telescope? telescope) (pcall require :telescope)]
   (when has_telescope?
     (local builtin (require :telescope.builtin))
-
-    (fn with [func]
-      (lambda []
-        (func)))
-
     (local find_files_opts {:hidden true :follow true})
     (local defaults {})
     (local pickers {})
@@ -18,7 +13,8 @@
           :--column
           :--smart-case
           :--hidden
-          :--follow])
+          :--follow
+          :--trim])
     (set defaults.file_ignore_patterns
          [:node_modules
           :.git/
@@ -36,7 +32,7 @@
       (telescope.load_extension :ui-select))
 
     (fn find_files_command []
-      [:fd :--type :f :--strip-cwd-prefix :--color :never])
+      [:fd :--type :f :--strip-cwd-prefix :--hidden :--follow :--no-ignore-vcs])
 
     (fn find_project_files []
       (var cwd (os.getenv :PWD))
@@ -49,12 +45,12 @@
       (builtin.find_files find_files_opts))
 
     (local telescope_keymaps
-           {:normal_mode {:ff (with find_project_files)
-                          :fb (with builtin.buffers)
-                          :fg (with builtin.live_grep)
-                          :fm (with builtin.keymaps)
-                          :fd (with builtin.lsp_document_symbols)
-                          :fr (with builtin.lsp_references)
+           {:normal_mode {:ff #(find_project_files)
+                          :fb #(builtin.buffers)
+                          :fg #(builtin.live_grep)
+                          :fm #(builtin.keymaps)
+                          :fd #(builtin.lsp_document_symbols)
+                          :fr #(builtin.lsp_references)
                           :fn ":Telescope notify<cr>"}})
 
     (fn set_keymaps [keymaps]

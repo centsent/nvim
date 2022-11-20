@@ -4,10 +4,6 @@
 (fn create-augroup [name]
   (vim.api.nvim_create_augroup name {:clear true}))
 
-(fn with [func]
-  (lambda []
-    (func)))
-
 (fn get_servers []
   [:bashls
    :clangd
@@ -65,22 +61,22 @@
     (vim.api.nvim_create_autocmd [:CursorHold :CursorHoldI]
                                  {:group augroup
                                   :buffer bufnr
-                                  :callback (with vim.lsp.buf.document_highlight)})
+                                  :callback #(vim.lsp.buf.document_highlight)})
     (vim.api.nvim_create_autocmd :CursorMoved
                                  {:group augroup
                                   :buffer bufnr
-                                  :callback (with vim.lsp.buf.clear_references)})))
+                                  :callback #(vim.lsp.buf.clear_references)})))
 
 (fn set-keymaps [bufnr]
   (local bufopts {:noremap true :silent true :buffer bufnr})
-  (local keymaps {:ga (with vim.lsp.buf.code_action)
-                  :gd (with vim.lsp.buf.definition)
-                  :gi (with vim.lsp.buf.implementation)
-                  :gr (with vim.lsp.buf.rename)
-                  :gtd (with vim.lsp.buf.type_definition)
-                  :gh (with vim.lsp.buf.hover)
-                  :gn (with vim.diagnostic.goto_next)
-                  :gp (with vim.diagnostic.goto_prev)})
+  (local keymaps {:ga #(vim.lsp.buf.code_action)
+                  :gd #(vim.lsp.buf.definition)
+                  :gi #(vim.lsp.buf.implementation)
+                  :gr #(vim.lsp.buf.rename)
+                  :gtd #(vim.lsp.buf.type_definition)
+                  :gh #(vim.lsp.buf.hover)
+                  :gn #(vim.diagnostic.goto_next)
+                  :gp #(vim.diagnostic.goto_prev)})
   ((. (require :keymaps) :load_keymaps_for_mode) :n keymaps bufopts))
 
 (fn setup-lsp-signature [client bufnr]
