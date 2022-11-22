@@ -1,5 +1,5 @@
-(let [(has_formatter? formatter) (pcall require :formatter)]
-  (when has_formatter?
+(let [(has-formatter? formatter) (pcall require :formatter)]
+  (when has-formatter?
     (fn get-current-buf-name []
       (vim.fn.shellescape (vim.api.nvim_buf_get_name 0)))
 
@@ -39,10 +39,11 @@
               (get-current-buf-name)]})
 
     (fn php-config []
-      {;; Install phpcbf via composer:
-       ;; $ composer global require squizlabs/php_codesniffer
-       ;; and make sure global vendor binaries directory is in $PATH
-       :exe :phpcbf
+      "Install phpcbf via composer:
+       $ composer global require squizlabs/php_codesniffer
+       and make sure global vendor binaries directory is in $PATH
+       "
+      {:exe :phpcbf
        :args [:--standard=PSR12 (get-current-buf-name)]
        :stdin true
        :ignore_exitcode true})
@@ -50,32 +51,44 @@
     (fn fennel-config []
       {:exe :fnlfmt :stdin true :args [(get-current-buf-name)]})
 
-    (local formatter_config
+    (local {: fishindent} (require :formatter.filetypes.fish))
+    (local {: rubocop} (require :formatter.filetypes.ruby))
+    (local {: rustfmt} (require :formatter.filetypes.rust))
+    (local formatter-config
            {:lua [lua-config]
             :vue [vue-config]
             :php [php-config]
             :java [java-config]
-            :fish [(. (require :formatter.filetypes.fish) :fishindent)]
-            :ruby [(. (require :formatter.filetypes.ruby) :rubocop)]
+            :fish [fishindent]
+            :ruby [rubocop]
+            :rust [rustfmt]
             :fennel [fennel-config]})
-    (local common_filetypes [:css
-                             :scss
-                             :html
-                             :javascript
-                             :javascriptreact
-                             :typescript
-                             :typescriptreact
-                             :markdown
-                             :markdown.mdx
-                             :json
-                             :yaml
-                             :xml
-                             :svg
-                             :svelte])
-    (each [_ filetype (ipairs common_filetypes)]
-      (tset formatter_config filetype [prettier-config]))
-    (formatter.setup {:filetype formatter_config})
-    (local augroup (vim.api.nvim_create_augroup :FormatAutogroup {:clear true}))
-    (vim.api.nvim_create_autocmd :BufWritePost
-                                 {:group augroup :command :FormatWrite})))
+
+    (fn setup-common-filetypes []
+      (local common-filetypes [:css
+                               :scss
+                               :html
+                               :javascript
+                               :javascriptreact
+                               :typescript
+                               :typescriptreact
+                               :markdown
+                               :markdown.mdx
+                               :json
+                               :yaml
+                               :xml
+                               :svg
+                               :svelte])
+      (each [_ filetype (ipairs common-filetypes)]
+        (tset formatter-config filetype [prettier-config])))
+
+    (fn format-on-save []
+      (local augroup
+             (vim.api.nvim_create_augroup :FormatAutogroup {:clear true}))
+      (vim.api.nvim_create_autocmd :BufWritePost
+                                   {:group augroup :command :FormatWrite}))
+
+    (setup-common-filetypes)
+    (formatter.setup {:filetype formatter-config})
+    (format-on-save)))
 

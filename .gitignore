@@ -11,3 +11,4 @@ plugins.lua
 utils.lua
 tangerine_vimrc.lua
 0-lspconfig.lua
+.luarc.json
