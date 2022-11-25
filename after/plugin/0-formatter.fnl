@@ -67,6 +67,7 @@
     (fn setup-common-filetypes []
       (local common-filetypes [:css
                                :scss
+                               :graphql
                                :html
                                :javascript
                                :javascriptreact

@@ -28,17 +28,17 @@
    :yamlls])
 
 (fn buf-formatting []
-  (local formatter (. (require :utils) :get_formatter))
+  (local {: get_formatter} (require :utils))
+  (local formatter (get_formatter))
   (when (not formatter)
     (vim.lsp.buf.format {:async true})))
 
 (fn format-on-save [client bufnr]
   (when client.server_capabilities.documentFormattingProvider
+    (local events :BufWritePost)
     (local augroup (create-augroup :LspFormatting))
-    (vim.api.nvim_create_autocmd :BufWritePost
-                                 {:group augroup
-                                  :buffer bufnr
-                                  :callback buf-formatting})))
+    (local opts {:group augroup :buffer bufnr :callback #(buf-formatting)})
+    (vim.api.nvim_create_autocmd events opts)))
 
 (fn open-diagnostic-float []
   (vim.diagnostic.open_float nil {:focusable false}))
@@ -77,7 +77,8 @@
                   :gh #(vim.lsp.buf.hover)
                   :gn #(vim.diagnostic.goto_next)
                   :gp #(vim.diagnostic.goto_prev)})
-  ((. (require :keymaps) :load_keymaps_for_mode) :n keymaps bufopts))
+  (local {: load_keymaps_for_mode} (require :keymaps))
+  (load_keymaps_for_mode :n keymaps bufopts))
 
 (fn setup-lsp-signature [client bufnr]
   (let [(has-lsp-signature? lsp-signature) (pcall require :lsp_signature)]
@@ -101,7 +102,8 @@
   (document-highlight client bufnr)
   (setup-lsp-signature client bufnr)
   (setup-navic client bufnr)
-  (setup-fidget))
+  (setup-fidget)
+  nil)
 
 (fn make_capabilities []
   (var capabilities (vim.lsp.protocol.make_client_capabilities))
@@ -121,5 +123,5 @@
   (local defualt-opts {: on_attach :capabilities (make_capabilities)})
   (vim.tbl_deep_extend :force defualt-opts (or opts {})))
 
-{: signs : setup_signs : get_servers : on_attach : config}
+{: signs : setup_signs : get_servers : on_attach : config : make_capabilities}
 
