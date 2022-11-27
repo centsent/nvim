@@ -1,14 +1,15 @@
-(local install_path (vim.fn.stdpath :data))
-(var packer_bootstrap nil)
+(local data-path (vim.fn.stdpath :data))
+(local install-path (.. data-path :/site/pack/packer/start/packer.nvim))
+(var packer-bootstrap nil)
 
-(when (not (vim.fn.isdirectory install_path))
-  (local git_cmd [:git
+(when (not= (vim.fn.isdirectory install-path) 1)
+  (local git-cmd [:git
                   :clone
                   :--depth
                   :1
                   "https://github.com/wbthomason/packer.nvim"
-                  install_path])
-  (set packer_bootstrap (vim.fn.system git_cmd))
+                  install-path])
+  (set packer-bootstrap (vim.fn.system git-cmd))
   (vim.cmd "packadd packer.nvim"))
 
 (local packer (require :packer))
@@ -125,7 +126,8 @@
 (fn use-package [use]
   (each [_ plugin (ipairs plugins)]
     (use plugin))
-  (when packer_bootstrap
+  ;; Install the plugins for first time usage
+  (when packer-bootstrap
     (packer.sync)))
 
 (packer.startup use-package)
