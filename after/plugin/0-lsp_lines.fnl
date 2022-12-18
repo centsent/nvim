@@ -1,5 +1,6 @@
-(let [(has_lsp_lines? lsp_lines) (pcall require :lsp_lines)]
-  (when has_lsp_lines?
+(let [(has-lsp-lines? lsp-lines) (pcall require :lsp_lines)]
+  (when has-lsp-lines?
     (vim.diagnostic.config {:virtual_text false})
-    (lsp_lines.setup)))
+    (vim.keymap.set :n :<leader>l #(lsp-lines.toggle))
+    (lsp-lines.setup)))
 
