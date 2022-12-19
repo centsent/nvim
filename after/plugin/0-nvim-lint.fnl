@@ -25,7 +25,8 @@
                     ;; and make sure global vendor binaries directory is in $PATH
                     :php [:phpcs]
                     :ruby [:rubocop]
-                    :dockerfile [:hadolint]})
+                    :dockerfile [:hadolint]
+                    :fennel [:fennel]})
     (setup-phpcs)
     (set lint.linters_by_ft linters)
     (create-lint-autocmd)))

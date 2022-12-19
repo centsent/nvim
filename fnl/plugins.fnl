@@ -1,4 +1,5 @@
 (local data-path (vim.fn.stdpath :data))
+
 (local install-path (.. data-path :/site/pack/packer/start/packer.nvim))
 (var packer-bootstrap nil)
 
@@ -98,7 +99,7 @@
                 ;; Indent guides for Neovim
                 [:lukas-reineke/indent-blankline.nvim]
                 ;; Next-generation motion plugin using incremental input processing
-                [:ggandor/lightspeed.nvim]
+                [:ggandor/leap.nvim]
                 ;; A snazzy bufferline for Neovim
                 {1 :akinsho/bufferline.nvim :tag :v3.*}
                 ;; lsp_lines is a simple neovim plugin that renders diagnostics using virtual lines on top of the real line of code.
