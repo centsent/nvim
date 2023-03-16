@@ -1,7 +1,5 @@
 ## Keymaps
 
-### Normal Mode
-
 - Arrow keys has been disabled.
 - `<space>1`: New horizontal split(editing current buffer)
 - `<space>2`: New vertical split(editing current buffer)

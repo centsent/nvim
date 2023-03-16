@@ -15,12 +15,12 @@
    :html
    :jsonls
    :julials
+   :lua_ls
    :marksman
    :phpactor
    :pyright
    :rust_analyzer
    :solargraph
-   :sumneko_lua
    :taplo
    :tsserver
    :vimls
@@ -28,8 +28,8 @@
    :yamlls])
 
 (fn buf-formatting []
-  (local {: get_formatter} (require :utils))
-  (local formatter (get_formatter))
+  (local {: get-formatter} (require :me.util))
+  (local formatter (get-formatter))
   (when (not formatter)
     (vim.lsp.buf.format {:async true})))
 
@@ -77,7 +77,7 @@
                   :gh #(vim.lsp.buf.hover)
                   :gn #(vim.diagnostic.goto_next)
                   :gp #(vim.diagnostic.goto_prev)})
-  (local {: load_keymaps_for_mode} (require :keymaps))
+  (local {: load_keymaps_for_mode} (require :me.config.keymaps))
   (load_keymaps_for_mode :n keymaps bufopts))
 
 (fn setup-lsp-signature [client bufnr]
