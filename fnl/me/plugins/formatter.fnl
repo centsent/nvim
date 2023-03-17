@@ -55,11 +55,13 @@
   (local {: fishindent} (require :formatter.filetypes.fish))
   (local {: rubocop} (require :formatter.filetypes.ruby))
   (local {: rustfmt} (require :formatter.filetypes.rust))
+  (local {: black} (require :formatter.filetypes.python))
   (local formatter-config {:lua [lua-config]
                            :vue [vue-config]
                            :php [php-config]
                            :java [java-config]
                            :fish [fishindent]
+                           :python [black]
                            :ruby [rubocop]
                            :rust [rustfmt]
                            :fennel [fennel-config]})
@@ -81,16 +83,10 @@
                              :svg
                              :svelte])
     (each [_ filetype (ipairs common-filetypes)]
-      (tset formatter-config filetype [prettier-config])))
-
-  (fn format-on-save []
-    (local augroup (vim.api.nvim_create_augroup :FormatAutogroup {:clear true}))
-    (vim.api.nvim_create_autocmd :BufWritePost
-                                 {:group augroup :command :FormatWrite}))
-
+      (tset formatter-config filetype [prettier-config]))) ; (fn format-on-save [] ;   (local augroup (vim.api.nvim_create_augroup :FormatAutogroup {:clear true}))
+  ;   (vim.api.nvim_create_autocmd :BufWritePost ;                                {:group augroup :command :FormatWrite}))
   (setup-common-filetypes)
-  (formatter.setup {:filetype formatter-config})
-  (format-on-save))
+  (formatter.setup {:filetype formatter-config}))
 
 ;; Opt-in formatters
 {1 :mhartington/formatter.nvim : config :event :BufWritePost}

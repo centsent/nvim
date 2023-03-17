@@ -1,4 +1,4 @@
--- :fennel:1678977251
+-- :fennel:1679045065
 local function set_option(option, value)
   return vim.api.nvim_set_option(option, value)
 end

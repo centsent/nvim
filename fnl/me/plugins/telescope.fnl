@@ -19,6 +19,7 @@
         :.mypy_cache/.*
         :__pycache__/*
         :*.png
+        :venv/
         :*.jpg])
   (set pickers.live_grep {:theme :dropdown})
   (set extensions.ui-select ((. (require :telescope.themes) :get_cursor) {}))
@@ -36,23 +37,22 @@
     (local builtin (require :telescope.builtin))
     ((. builtin name))))
 
-(fn get-telescope-keymaps []
+(fn find-files-command []
+  [:fd :--type :f :--strip-cwd-prefix :--hidden :--follow])
+
+(fn find-project-files []
   (local find-files-opts {:hidden true :follow true})
+  (local builtin (require :telescope.builtin))
+  (var cwd (os.getenv :PWD))
+  (local client (vim.lsp.get_client_by_id 1))
+  (when client
+    (set cwd client.config.root_dir))
+  (when (= (vim.fn.executable :fd) 1)
+    (set find-files-opts.find_command (find-files-command)))
+  (set find-files-opts.cwd cwd)
+  (builtin.find_files find-files-opts))
 
-  (fn find-files-command []
-    [:fd :--type :f :--strip-cwd-prefix :--hidden :--follow])
-
-  (fn find-project-files []
-    (local builtin (require :telescope.builtin))
-    (var cwd (os.getenv :PWD))
-    (local client (vim.lsp.get_client_by_id 1))
-    (when client
-      (set cwd client.config.root_dir))
-    (when (= (vim.fn.executable :fd) 1)
-      (set find-files-opts.find_command (find-files-command)))
-    (set find-files-opts.cwd cwd)
-    (builtin.find_files find-files-opts))
-
+(fn get-telescope-keymaps []
   [{1 :ff 2 #(find-project-files) :desc "Find files in current project folder"}
    {1 :fb 2 (telescope-builtin :buffers) :desc "Telescope buffers"}
    {1 :fg 2 (telescope-builtin :live_grep) :desc "Telescope live grep"}

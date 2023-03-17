@@ -1,4 +1,4 @@
--- :fennel:1678538069
+-- :fennel:1679039797
 local function config()
   local formatter = require("formatter")
   local function get_current_buf_name()
@@ -28,7 +28,9 @@ local function config()
   local rubocop = _local_2_["rubocop"]
   local _local_3_ = require("formatter.filetypes.rust")
   local rustfmt = _local_3_["rustfmt"]
-  local formatter_config = {lua = {lua_config}, vue = {vue_config}, php = {php_config}, java = {java_config}, fish = {fishindent}, ruby = {rubocop}, rust = {rustfmt}, fennel = {fennel_config}}
+  local _local_4_ = require("formatter.filetypes.python")
+  local black = _local_4_["black"]
+  local formatter_config = {lua = {lua_config}, vue = {vue_config}, php = {php_config}, java = {java_config}, fish = {fishindent}, python = {black}, ruby = {rubocop}, rust = {rustfmt}, fennel = {fennel_config}}
   local function setup_common_filetypes()
     local common_filetypes = {"css", "scss", "graphql", "html", "javascript", "javascriptreact", "typescript", "typescriptreact", "markdown", "markdown.mdx", "json", "yaml", "xml", "svg", "svelte"}
     for _, filetype in ipairs(common_filetypes) do
@@ -36,12 +38,7 @@ local function config()
     end
     return nil
   end
-  local function format_on_save()
-    local augroup = vim.api.nvim_create_augroup("FormatAutogroup", {clear = true})
-    return vim.api.nvim_create_autocmd("BufWritePost", {group = augroup, command = "FormatWrite"})
-  end
   setup_common_filetypes()
-  formatter.setup({filetype = formatter_config})
-  return format_on_save()
+  return formatter.setup({filetype = formatter_config})
 end
 return {config = config, event = "BufWritePost", "mhartington/formatter.nvim"}

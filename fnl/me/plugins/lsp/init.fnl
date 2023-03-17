@@ -1,14 +1,21 @@
+(fn set-diagnostics-icons [icons]
+  (each [type icon (pairs icons)]
+    (local name (.. :DiagnosticSign type))
+    (vim.fn.sign_define name {:text icon :texthl name :numhl name})))
+
+(fn get-capabilities []
+  (local capabilities (vim.lsp.protocol.make_client_capabilities))
+  (local cmp (require :cmp_nvim_lsp))
+  (cmp.default_capabilities capabilities))
+
 (fn config [_ settings]
   (local util (require :me.util))
+  (local config (require :me.config))
   (util.on-attach (fn [client buffer]
                     (local keymaps (require :me.plugins.lsp.keymaps))
-                    (keymaps.on-attach client buffer)))
-
-  (fn get-capabilities []
-    (local capabilities (vim.lsp.protocol.make_client_capabilities))
-    (local cmp (require :cmp_nvim_lsp))
-    (cmp.default_capabilities capabilities))
-
+                    (local format (require :me.plugins.lsp.format))
+                    (keymaps.on-attach client buffer)
+                    (format.on-attach client buffer)))
   (local servers settings.servers)
   (local capabilities (get-capabilities))
 
@@ -31,6 +38,7 @@
     (mlsp.setup {: ensure_installed})
     (mlsp.setup_handlers [setup]))
 
+  (set-diagnostics-icons config.icons.diagnostics)
   (setup-mason-lsp))
 
 (local dependencies [;; Portable package manager for Neovim that runs everywhere Neovim runs.
@@ -43,7 +51,7 @@
                      ;; Simple winbar/statusline plugin that shows your current code context
                      :SmiteshP/nvim-navic
                      ;; LSP signature hint as you type
-                     :ray-x/lsp_signature.nvim
+                     {1 :ray-x/lsp_signature.nvim :config true}
                      ;; Extensions for the built-in LSP support in Neovim for eclipse.jdt.ls
                      :mfussenegger/nvim-jdtls])
 
