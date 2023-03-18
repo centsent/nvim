@@ -25,6 +25,7 @@
               :desc "Toggle autoformat"}])
 
 (fn parse-lazy-keymaps [keys]
+  ;; Parse the lazy keymaps and set the appropriate key bindings
   (local LazyKeysHandler (require :lazy.core.handler.keys))
   (local lazy-keymaps {})
   (each [_ value (ipairs keys)]
@@ -37,6 +38,7 @@
   lazy-keymaps)
 
 (fn set-lazy-key [client buffer lazy-key]
+  ;; Check if the provider is available and set the key binding if it is
   (local LazyKeysHandler (require :lazy.core.handler.keys))
   (local no-provider (or (not lazy-key.has)
                          (. client.server_capabilities
@@ -52,10 +54,12 @@
     (vim.keymap.set mode lhs rhs opts)))
 
 (fn set-keymaps [client buffer lazy-keymaps]
+  ;; Set the keymaps for the LSP client and buffer
   (each [_ lazy-key (pairs lazy-keymaps)]
     (set-lazy-key client buffer lazy-key)))
 
 (fn M.on-attach [client buffer]
+  ;; Set keymaps for the LSP client when it attaches to a buffer
   (local lazy-keymaps (parse-lazy-keymaps M.keys))
   (set-keymaps client buffer lazy-keymaps))
 

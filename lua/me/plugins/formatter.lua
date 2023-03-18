@@ -1,4 +1,4 @@
--- :fennel:1679039797
+-- :fennel:1679109125
 local function config()
   local formatter = require("formatter")
   local function get_current_buf_name()

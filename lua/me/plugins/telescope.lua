@@ -1,4 +1,4 @@
--- :fennel:1679056885
+-- :fennel:1679149050
 local function config()
   local telescope = require("telescope")
   local defaults = {}
@@ -16,34 +16,43 @@ end
 local dependencies = {"nvim-telescope/telescope-ui-select.nvim"}
 local function telescope_builtin(name)
   local function _1_()
-    local builtin = require("telescope.builtin")
-    return builtin[name]()
+    return (require("telescope.builtin"))[name]()
   end
   return _1_
 end
-local function find_files_command()
+local function make_fd_command()
   return {"fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--follow"}
 end
-local function find_project_files()
-  local find_files_opts = {hidden = true, follow = true}
-  local builtin = require("telescope.builtin")
-  local cwd = os.getenv("PWD")
-  local client = vim.lsp.get_client_by_id(1)
+local function get_root_dir(client)
   if client then
-    cwd = client.config.root_dir
+    return client.config.root_dir
+  else
+    return nil
+  end
+end
+local function get_find_files_opts(cwd)
+  return {hidden = true, follow = true, cwd = cwd, find_command = make_fd_command()}
+end
+local function find_project_files()
+  local builtin = require("telescope.builtin")
+  local cwd = vim.fn.getcwd()
+  local client = vim.lsp.get_client_by_id(1)
+  local root_dir = get_root_dir(client)
+  if root_dir then
+    cwd = root_dir
   else
   end
   if (vim.fn.executable("fd") == 1) then
-    find_files_opts.find_command = find_files_command()
+    local find_files_opts = get_find_files_opts(cwd)
+    return builtin.find_files(find_files_opts)
   else
+    return nil
   end
-  find_files_opts.cwd = cwd
-  return builtin.find_files(find_files_opts)
 end
 local function get_telescope_keymaps()
-  local function _4_()
+  local function _5_()
     return find_project_files()
   end
-  return {{desc = "Find files in current project folder", "ff", _4_}, {desc = "Telescope buffers", "fb", telescope_builtin("buffers")}, {desc = "Telescope live grep", "fg", telescope_builtin("live_grep")}, {desc = "Telescope keymaps", "fm", telescope_builtin("keymaps")}, {desc = "Telescope list lsp document symbols", "fd", telescope_builtin("lsp_document_symbols")}, {desc = "Telescope list lsp references", "fr", telescope_builtin("lsp_references")}, {desc = "Viewing Notify history", "fn", ":Telescope notify<cr>"}}
+  return {{desc = "Find files in current project folder", "ff", _5_}, {desc = "Telescope buffers", "fb", telescope_builtin("buffers")}, {desc = "Telescope live grep", "fg", telescope_builtin("live_grep")}, {desc = "Telescope keymaps", "fm", telescope_builtin("keymaps")}, {desc = "Telescope list lsp document symbols", "fd", telescope_builtin("lsp_document_symbols")}, {desc = "Telescope list lsp references", "fr", telescope_builtin("lsp_references")}, {desc = "Viewing Notify history", "fn", ":Telescope notify<cr>"}}
 end
 return {config = config, dependencies = dependencies, keys = get_telescope_keymaps, "nvim-telescope/telescope.nvim"}

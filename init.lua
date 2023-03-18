@@ -1,3 +1,6 @@
+-- Bootstraps a plugin by cloning its repository from the given URL,
+-- and adding it to the runtime path.
+-- If the plugin is already installed, just updates the runtime path.
 local function bootstrap(url)
   local name = url:gsub(".*/", "")
   local path = vim.fn.stdpath("data") .. "/lazy/" .. name
@@ -11,27 +14,22 @@ local function bootstrap(url)
   end
 end
 
+local function init_plugin(url, name)
+  bootstrap(url)
+  return require(name)
+end
+
 local function init_tangerine()
-  bootstrap("https://github.com/udayvir-singh/tangerine.nvim")
-  local has_tangerine, tangerine = pcall(require, "tangerine")
-  if not has_tangerine then
-    return
-  end
+  local tangerine = init_plugin("https://github.com/udayvir-singh/tangerine.nvim", "tangerine")
   tangerine.setup({
-    -- target = vim.fn.stdpath([[data]]) .. "/tangerine",
     rtpdirs = { "plugin", "after", "ftplugin", "ftdetect" },
     compiler = { hooks = { "oninit", "onsave" }, verbose = false },
   })
 end
 
 local function init_lazy()
-  bootstrap("https://github.com/folke/lazy.nvim")
+  local lazy = init_plugin("https://github.com/folke/lazy.nvim", "lazy")
   vim.g.mapleader = ","
-
-  local has_lazy, lazy = pcall(require, "lazy")
-  if not has_lazy then
-    return
-  end
 
   lazy.setup({
     spec = {

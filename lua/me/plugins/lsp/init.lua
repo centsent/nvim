@@ -1,4 +1,4 @@
--- :fennel:1679056141
+-- :fennel:1679108606
 local function set_diagnostics_icons(icons)
   for type, icon in pairs(icons) do
     local name = ("DiagnosticSign" .. type)

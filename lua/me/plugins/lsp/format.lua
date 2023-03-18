@@ -1,4 +1,4 @@
--- :fennel:1679055785
+-- :fennel:1679108366
 local M = {}
 M.autoformat = true
 M.toggle = function()

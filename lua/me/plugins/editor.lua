@@ -1,4 +1,4 @@
--- :fennel:1678790271
+-- :fennel:1679121512
 local function open_ssr()
   local ssr = require("ssr")
   return ssr.open()

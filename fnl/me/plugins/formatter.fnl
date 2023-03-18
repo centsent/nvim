@@ -1,15 +1,19 @@
 (fn config []
+  ;; Setup the formatter configuration for various file types and initializes the formatter.
   (local formatter (require :formatter))
 
   (fn get-current-buf-name []
+    ;; Get the current buffer's name
     (vim.fn.shellescape (vim.api.nvim_buf_get_name 0)))
 
   (fn prettier-config []
+    ;; Configure the prettier formatter for various file types
     {:exe :prettier
      :args [:--stdin-filepath (get-current-buf-name) :--tab-width 2]
      :stdin true})
 
   (fn lua-config []
+    ;; Configure the stylua formatter for Lua files
     {:exe :stylua
      :args [:--indent-width
             2
@@ -21,6 +25,7 @@
             :AutoPreferDouble]})
 
   (fn vue-config []
+    ;; Configure the prettier formatter for Vue files
     {:exe :prettier
      :stdin true
      :args [:--stdin-filepath
@@ -32,6 +37,7 @@
             :vue]})
 
   (fn java-config []
+    ;; Configure the google-java-format formatter for Java files
     {:exe :java
      :name :google-java-format
      :stdin true
@@ -40,16 +46,14 @@
             (get-current-buf-name)]})
 
   (fn php-config []
-    "Install phpcbf via composer:
-       $ composer global require squizlabs/php_codesniffer
-       and make sure global vendor binaries directory is in $PATH
-       "
+    ;; Configure the phpcbf formatter for PHP files
     {:exe :phpcbf
      :args [:--standard=PSR12 (get-current-buf-name)]
      :stdin true
      :ignore_exitcode true})
 
   (fn fennel-config []
+    ;; Configure the fnlfmt formatter for Fennel files
     {:exe :fnlfmt :stdin true :args [(get-current-buf-name)]})
 
   (local {: fishindent} (require :formatter.filetypes.fish))
@@ -67,6 +71,7 @@
                            :fennel [fennel-config]})
 
   (fn setup-common-filetypes []
+    ;; Configure the formatter for common file types
     (local common-filetypes [:css
                              :scss
                              :graphql

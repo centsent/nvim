@@ -34,23 +34,28 @@
 
 (fn telescope-builtin [name]
   (fn []
-    (local builtin (require :telescope.builtin))
-    ((. builtin name))))
+    ((. (require :telescope.builtin) name))))
 
-(fn find-files-command []
+(fn make-fd-command []
   [:fd :--type :f :--strip-cwd-prefix :--hidden :--follow])
 
-(fn find-project-files []
-  (local find-files-opts {:hidden true :follow true})
-  (local builtin (require :telescope.builtin))
-  (var cwd (os.getenv :PWD))
-  (local client (vim.lsp.get_client_by_id 1))
+(fn get-root-dir [client]
   (when client
-    (set cwd client.config.root_dir))
+    client.config.root_dir))
+
+(fn get-find-files-opts [cwd]
+  {:hidden true :follow true : cwd :find_command (make-fd-command)})
+
+(fn find-project-files []
+  (local builtin (require :telescope.builtin))
+  (var cwd (vim.fn.getcwd))
+  (local client (vim.lsp.get_client_by_id 1))
+  (local root_dir (get-root-dir client))
+  (when root_dir
+    (set cwd root_dir))
   (when (= (vim.fn.executable :fd) 1)
-    (set find-files-opts.find_command (find-files-command)))
-  (set find-files-opts.cwd cwd)
-  (builtin.find_files find-files-opts))
+    (local find_files_opts (get-find-files-opts cwd))
+    (builtin.find_files find_files_opts)))
 
 (fn get-telescope-keymaps []
   [{1 :ff 2 #(find-project-files) :desc "Find files in current project folder"}

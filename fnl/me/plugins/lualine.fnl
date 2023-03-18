@@ -109,6 +109,7 @@
 
 (local time {1 get-current-time :color {:fg colors.green :bg colors.bg}})
 (local components {: encoding
+                   : fileformat
                    : filename
                    : filetype
                    : filesize

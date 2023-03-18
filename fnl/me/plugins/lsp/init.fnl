@@ -1,14 +1,17 @@
 (fn set-diagnostics-icons [icons]
+  ;; Set diagnostic icons for each type
   (each [type icon (pairs icons)]
     (local name (.. :DiagnosticSign type))
     (vim.fn.sign_define name {:text icon :texthl name :numhl name})))
 
 (fn get-capabilities []
+  ;; Get the capabilities of the LSP client
   (local capabilities (vim.lsp.protocol.make_client_capabilities))
   (local cmp (require :cmp_nvim_lsp))
   (cmp.default_capabilities capabilities))
 
 (fn config [_ settings]
+  ;; Configure LSP settings and setup servers
   (local util (require :me.util))
   (local config (require :me.config))
   (util.on-attach (fn [client buffer]
@@ -20,6 +23,7 @@
   (local capabilities (get-capabilities))
 
   (fn setup [server]
+    ;; Setup the LSP server with the provided options
     (local old-opts {:capabilities (vim.deepcopy capabilities)})
     (local new-opts (or (. servers server) {}))
     (local server-opts (vim.tbl_deep_extend :force old-opts new-opts))
@@ -30,6 +34,7 @@
     ((. (. lspconfig server) :setup) server-opts))
 
   (fn setup-mason-lsp []
+    ;; Initialize and setup Mason LSP
     (local ensure_installed {})
     (each [server server-opts (pairs servers)]
       (when server-opts

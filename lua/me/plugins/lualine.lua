@@ -1,4 +1,4 @@
--- :fennel:1678692617
+-- :fennel:1679111384
 local lsp_signs = (require("me.lsp")).signs
 local bold = "bold"
 local colors = {bg = "#292e42", fg = "#bbc2cf", lightblue = "#7aa2f7", lime = "#9ece6a", yellow = "#ECBE7B", cyan = "#008080", green = "#98be65", orange = "#e0af68", magenta = "#c678dd", blue = "#51afef", red = "#ec5f67", lavender = "#bb9af7", rose = "#f7768e", white = "#ffffff"}
@@ -64,7 +64,7 @@ local function get_current_time()
   return string.format("%s", os.date("%H:%M:%S"))
 end
 local time = {color = {fg = colors.green, bg = colors.bg}, get_current_time}
-local components = {encoding = encoding, filename = filename, filetype = filetype, filesize = filesize, progress = progress, location = location, branch = branch, diff = diff, diagnostics = diagnostics, lsp = lsp, formatter = formatter, linter = linter, gap = gap, mode = mode, time = time}
+local components = {encoding = encoding, fileformat = fileformat, filename = filename, filetype = filetype, filesize = filesize, progress = progress, location = location, branch = branch, diff = diff, diagnostics = diagnostics, lsp = lsp, formatter = formatter, linter = linter, gap = gap, mode = mode, time = time}
 local sections = {lualine_a = {components.mode}, lualine_b = {components.branch, components.diff, components.diagnostics}, lualine_c = {components.filetype, components.filename, components.filesize, components.gap, components.lsp, components.formatter, components.linter}, lualine_x = {components.progress}, lualine_y = {components.location}, lualine_z = {components.encoding, components.fileformat, components.time}}
 local opts = {options = {component_separators = "", section_separators = ""}, sections = sections}
 return {opts = opts, event = "VeryLazy", "nvim-lualine/lualine.nvim"}

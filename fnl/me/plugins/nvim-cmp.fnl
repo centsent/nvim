@@ -1,11 +1,21 @@
-(fn config []
+(fn setup-luasnip [args]
+  (local luasnip (require :luasnip))
+  (luasnip.lsp_expand args.body))
+
+(fn setup-from-vscode []
+  (local from-vscode (require :luasnip.loaders.from_vscode))
+  (from-vscode.lazy_load))
+
+(fn config [_ _]
   (local cmp (require :cmp))
+  (local lspkind (require :lspkind))
   (local cmp-sources [{:name :nvim_lsp}
                       {:name :nvim_lsp_signature_help}
                       {:name :path}
                       {:name :buffer}
                       {:name :luasnip}
-                      {:name :nvim_lua}])
+                      {:name :nvim_lua}
+                      {:name :codeium}])
   (local cmp-mapping
          {:<c-p> (cmp.mapping.select_prev_item)
           :<c-n> (cmp.mapping.select_next_item)
@@ -18,23 +28,14 @@
                :mapping (cmp.mapping.preset.cmdline)}
           :/ {:sources [{:name :buffer}] :mapping (cmp.mapping.preset.cmdline)}})
 
-  (fn setup-luasnip [args]
-    (let [(has-luasnip? luasnip) (pcall require :luasnip)]
-      (when has-luasnip?
-        (luasnip.lsp_expand args.body))))
-
   (fn setup-cmdline [settings]
     (each [cmd config (pairs settings)]
       (local {: sources : mapping} config)
       (cmp.setup.cmdline cmd {: sources : mapping})))
 
-  (fn setup-from-vscode []
-    (let [(has-from-vscode? from-vscode) (pcall require
-                                                :luasnip.loaders.from_vscode)]
-      (when has-from-vscode?
-        (from-vscode.lazy_load))))
-
+  (local lspkind-format (lspkind.cmp_format {:mode :symbol_text}))
   (local cmp-settings {:snippet {:expand setup-luasnip}
+                       :formatting {:format lspkind-format}
                        :sources (cmp.config.sources cmp-sources)
                        :mapping (cmp.mapping.preset.insert cmp-mapping)
                        :experimental {:ghost_text true}})
@@ -61,5 +62,8 @@
                 ;; luasnip completion source for nvim-cmp
                 :saadparwaiz1/cmp_luasnip
                 ;; Set of preconfigured snippets for different languages.
-                :rafamadriz/friendly-snippets]}
+                :rafamadriz/friendly-snippets
+                ;; vscode-like pictograms for neovim lsp completion items
+                {1 :onsails/lspkind.nvim
+                 :opts {:symbol_map (. (. (require :me.config) :icons) :kinds)}}]}
 

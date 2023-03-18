@@ -1,4 +1,5 @@
 (fn open-ssr []
+  ;; Open the SSR (structural search and replace) plugin
   (local ssr (require :ssr))
   (ssr.open))
 
@@ -28,6 +29,7 @@
  {1 :ggandor/leap.nvim
   :event [:BufNewFile :BufReadPost]
   :config (fn []
+            ;; Initialize and configure the Leap motion plugin for Neovim
             (local leap (require :leap))
             (leap.add_default_mappings))}]
 
