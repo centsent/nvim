@@ -33,7 +33,6 @@ local function init_lazy()
 
   lazy.setup({
     spec = {
-      { import = "me.plugins.extras.lsp" },
       { import = "me.plugins" },
     },
     performance = {

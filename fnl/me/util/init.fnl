@@ -5,10 +5,7 @@
   (not= (. lazy.plugins plugin) nil))
 
 (fn M.on-very-lazy [fun]
-  (vim.api.nvim_create_autocmd :User
-                               {:pattern :VeryLazy
-                                :callback (fn []
-                                            (fun))}))
+  (vim.api.nvim_create_autocmd :User {:pattern :VeryLazy :callback #(fun)}))
 
 (fn M.load [mod]
   (local util (require :lazy.core.util))
@@ -44,7 +41,8 @@
         (each [_ fmt-fn (ipairs formatter)]
           (local formatter (fmt-fn))
           (when formatter
-            (tset names (+ (length names) 1) (or formatter.name formatter.exe))))
+            (local name (or formatter.name formatter.exe))
+            (tset names (+ (length names) 1) name)))
         (table.concat names ", "))
       ""))
 

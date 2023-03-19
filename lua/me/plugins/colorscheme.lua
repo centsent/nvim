@@ -1,2 +1,2 @@
--- :fennel:1679111296
-return {{lazy = true, opts = {style = "moon", tokyonight_transparent_sidebar = true, transparent = true, styles = {functions = {italic = true}, comments = {italic = true}, keywords = {italic = true}, sidebars = "transparent", float = "transparent"}}, "folke/tokyonight.nvim"}}
+-- :fennel:1679212944
+return {{lazy = true, "nordtheme/vim"}, {lazy = true, "shaunsingh/oxocarbon.nvim"}, {lazy = true, "ellisonleao/gruvbox.nvim"}, {lazy = true, "rose-pine/neovim"}, {lazy = true, opts = {style = "moon", tokyonight_transparent_sidebar = true, transparent = true, styles = {functions = {italic = true}, comments = {italic = true}, keywords = {italic = true}, sidebars = "transparent", float = "transparent"}}, "folke/tokyonight.nvim"}}

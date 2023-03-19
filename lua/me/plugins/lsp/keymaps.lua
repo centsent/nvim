@@ -1,4 +1,4 @@
--- :fennel:1679108791
+-- :fennel:1679200329
 local M = {}
 local function _1_()
   return vim.lsp.buf.code_action()
@@ -7,13 +7,13 @@ local function _2_()
   return vim.lsp.buf.definition()
 end
 local function _3_()
-  return vim.lsp.buf.implementation()
+  return vim.lsp.buf.type_definition()
 end
 local function _4_()
-  return vim.lsp.buf.rename()
+  return vim.lsp.buf.implementation()
 end
 local function _5_()
-  return vim.lsp.buf.type_definition()
+  return vim.lsp.buf.rename()
 end
 local function _6_()
   return vim.lsp.buf.hover()
@@ -30,7 +30,7 @@ end
 local function _10_()
   return (require("me.plugins.lsp.format")).toggle()
 end
-M.keys = {{desc = "Code Action", mode = {"n", "v"}, has = "codeAction", "ga", _1_}, {desc = "Go to definition", "gd", _2_}, {desc = "Go to implementation", "gi", _3_}, {desc = "Rename", has = "rename", "gr", _4_}, {desc = "Go to Type Definition", "gD", _5_}, {desc = "Hover", "gk", _6_}, {desc = "Signature Help", has = "signatureHelp", "gK", _7_}, {desc = "Next diagnostic", "gn", _8_}, {desc = "Prev diagnostic", "gp", _9_}, {desc = "Toggle autoformat", "gF", _10_}}
+M.keys = {{desc = "Code Action", mode = {"n", "v"}, has = "codeAction", "ga", _1_}, {desc = "Go to definition", "gd", _2_}, {desc = "Go to Type Definition", "gD", _3_}, {desc = "Go to implementation", "gi", _4_}, {desc = "Rename", has = "rename", "gr", _5_}, {desc = "Hover", "gk", _6_}, {desc = "Signature Help", has = "signatureHelp", "gK", _7_}, {desc = "Next diagnostic", "gn", _8_}, {desc = "Prev diagnostic", "gp", _9_}, {desc = "Toggle autoformat", "gF", _10_}}
 local function parse_lazy_keymaps(keys)
   local LazyKeysHandler = require("lazy.core.handler.keys")
   local lazy_keymaps = {}

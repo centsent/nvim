@@ -65,5 +65,8 @@
                 :rafamadriz/friendly-snippets
                 ;; vscode-like pictograms for neovim lsp completion items
                 {1 :onsails/lspkind.nvim
-                 :opts {:symbol_map (. (. (require :me.config) :icons) :kinds)}}]}
+                 :opts {:symbol_map (. (. (require :me.config) :icons) :kinds)}
+                 :config (fn [_ opts]
+                           (local lspkind (require :lspkind))
+                           (lspkind.init opts))}]}
 

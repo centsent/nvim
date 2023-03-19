@@ -6,13 +6,13 @@
               :mode [:n :v]
               :has :codeAction}
              {1 :gd 2 #(vim.lsp.buf.definition) :desc "Go to definition"}
+             {1 :gD
+              2 #(vim.lsp.buf.type_definition)
+              :desc "Go to Type Definition"}
              {1 :gi
               2 #(vim.lsp.buf.implementation)
               :desc "Go to implementation"}
              {1 :gr 2 #(vim.lsp.buf.rename) :desc :Rename :has :rename}
-             {1 :gD
-              2 #(vim.lsp.buf.type_definition)
-              :desc "Go to Type Definition"}
              {1 :gk 2 #(vim.lsp.buf.hover) :desc :Hover}
              {1 :gK
               2 #(vim.lsp.buf.signature_help)

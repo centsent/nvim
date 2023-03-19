@@ -4,7 +4,10 @@
                             :Warn " "
                             :Hint " "
                             :Info " "}
-              :git {:added " " :modified " " :removed " "}
+              :git {:added " "
+                    :modified " "
+                    :removed " "
+                    :branch ""}
               :kinds {:Array " "
                       :Boolean " "
                       :Class " "

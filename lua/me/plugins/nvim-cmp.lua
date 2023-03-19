@@ -1,4 +1,4 @@
--- :fennel:1679152109
+-- :fennel:1679197154
 local function setup_luasnip(args)
   local luasnip = require("luasnip")
   return luasnip.lsp_expand(args.body)
@@ -29,4 +29,8 @@ local function config(_, _0)
   setup_from_vscode()
   return vim.api.nvim_set_option("completeopt", "menuone,noinsert,noselect")
 end
-return {event = "InsertEnter", config = config, dependencies = {"hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lsp-signature-help", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets", {opts = {symbol_map = ((require("me.config")).icons).kinds}, "onsails/lspkind.nvim"}}, "hrsh7th/nvim-cmp"}
+local function _2_(_, opts)
+  local lspkind = require("lspkind")
+  return lspkind.init(opts)
+end
+return {event = "InsertEnter", config = config, dependencies = {"hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lsp-signature-help", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets", {opts = {symbol_map = ((require("me.config")).icons).kinds}, config = _2_, "onsails/lspkind.nvim"}}, "hrsh7th/nvim-cmp"}

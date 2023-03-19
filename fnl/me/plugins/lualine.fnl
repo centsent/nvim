@@ -1,4 +1,6 @@
-(local lsp-signs (. (require :me.lsp) :signs))
+(local config (require :me.config))
+(local lsp-signs config.icons.diagnostics)
+(local git-icons config.icons.git)
 (local bold :bold)
 (local colors {:bg "#292e42"
                :fg "#bbc2cf"
@@ -22,34 +24,40 @@
                     :o colors.cyan
                     :R colors.rose})
 
-(local icons {:branch "" :added " " :modified " " :removed " "})
+;; File format component
 (local fileformat
        {1 :fileformat :color {:bg colors.bg :fg colors.green :gui bold}})
 
+;; File encoding component
 (local encoding {1 :encoding
                  :color {:bg colors.bg :fg colors.green :gui bold}
                  :fmt string.upper})
 
+;; File name component
 (local filename {1 :filename :color {:fg colors.blue :gui bold}})
+;; File type component
 (local filetype {1 :filetype :icon_only true})
+;; File size component
 (local filesize {1 :filesize :color {:fg colors.white}})
+;; Cursor progress component
 (local progress {1 :progress :color {:bg colors.bg :fg colors.fg :gui bold}})
-
+;; Cursor location component
 (local location {1 :location :color {:bg colors.bg :fg colors.fg :gui bold}})
-
+;; Git branch component
 (local branch
        {1 :branch
-        :icon icons.branch
+        :icon git-icons.branch
         :color {:bg colors.bg :fg colors.magenta :gui bold}})
 
-(local diff-symbols {:added icons.added
-                     :modified icons.modified
-                     :removed icons.removed})
+(local diff-symbols {:added git-icons.added
+                     :modified git-icons.modified
+                     :removed git-icons.removed})
 
 (local diff-color {:added {:fg colors.green}
                    :modified {:fg colors.orange}
                    :removed {:fg colors.red}})
 
+;; Git diff component
 (local diff {1 :diff
              :symbols diff-symbols
              :diff_color diff-color
@@ -64,50 +72,54 @@
         :color_warn {:fg colors.yellow}
         :color_info {:fg colors.cyan}})
 
+;; LSP diagnostics component
 (local diagnostics {1 :diagnostics
                     :sources [:nvim_diagnostic]
                     :symbols diagnostics-symbols
                     :diagnostics_color diagnostics-color
                     :color {:bg colors.bg}})
 
-(fn set-lsp []
+(fn get-lsp []
   (local bufnr (vim.api.nvim_get_current_buf))
   (local clients (vim.lsp.get_active_clients {: bufnr}))
-  (if (= nil (next clients))
-      "No Active LSP"
-      (do
-        (local names {})
-        (each [_ client (pairs clients)]
-          (tset names (+ (length names) 1) client.name))
-        (table.concat names " "))))
 
-(local lsp {1 set-lsp :color {:fg colors.white :gui bold}})
-(local formatter {1 (lambda []
-                      ((. (require :me.util) :get-formatter-name)))
-                  :color {:fg colors.green}
-                  :cond (fn []
-                          (local util (require :me.util))
-                          (util.has :formatter.nvim))})
+  (fn get-lsp-client-name []
+    (local names {})
+    (each [_ client (pairs clients)]
+      (tset names (+ (length names) 1) client.name))
+    (table.concat names " "))
 
-(local linter {1 (lambda []
-                   ((. (require :me.util) :get-linter-name)))
-               :color {:fg colors.cyan}
-               :cond (fn []
-                       (local util (require :me.util))
-                       (util.has :nvim-lint))})
+  (if (next clients)
+      (get-lsp-client-name)
+      ;; No active lsp client
+      "No Active LSP"))
 
-(local gap [(lambda [] "%=")])
+;; LSP client name component
+(local lsp {1 get-lsp :color {:fg colors.white :gui bold}})
+;; Buffer formatter name component
+(local formatter {1 #((. (require :me.util) :get-formatter-name))
+                  :color {:fg colors.green}})
 
-(fn set-mode-color []
-  (local fg_color (or (. mode-colors (vim.fn.mode)) colors.rose))
-  {:fg fg_color :bg colors.bg})
+;; Buffer linter name component
+(local linter {1 #((. (require :me.util) :get-linter-name))
+               :color {:fg colors.cyan}})
 
-(local mode {1 :mode :color set-mode-color})
+;; A gap between components
+(local gap ["%="])
+
+(fn get-mode-color []
+  (local fg (or (. mode-colors (vim.fn.mode)) colors.rose))
+  {: fg :bg colors.bg})
+
+;; Vim mode component
+(local mode {1 :mode :color get-mode-color})
 
 (fn get-current-time []
   (string.format "%s" (os.date "%H:%M:%S")))
 
+;; Current time component
 (local time {1 get-current-time :color {:fg colors.green :bg colors.bg}})
+
 (local components {: encoding
                    : fileformat
                    : filename
@@ -142,9 +154,8 @@
                              components.fileformat
                              components.time]})
 
-(local opts {:options {:component_separators "" :section_separators ""}
-             : sections})
-
 ;; A blazing fast and easy to configure neovim statusline plugin written in pure lua.
-{1 :nvim-lualine/lualine.nvim : opts :event :VeryLazy}
+{1 :nvim-lualine/lualine.nvim
+ :opts {:options {:component_separators "" :section_separators ""} : sections}
+ :event :VeryLazy}
 

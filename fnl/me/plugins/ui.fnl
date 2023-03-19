@@ -1,17 +1,14 @@
 (fn init-notify []
-  (local Util (require :me.util))
-  (when (not (Util.has :noice.nvim))
-    (Util.on-very-lazy (fn []
-                         (set vim.notify (require :notify))))))
+  (local util (require :me.util))
+  (when (not (util.has :noice.nvim))
+    (util.on-very-lazy #(set vim.notify (require :notify)))))
 
 [;; A fancy configurable notification manager for NeoVim
  {1 :rcarriga/nvim-notify
   :opts {:timeout 3000 :max_width 80 :background_colour "#121212"}
   :init init-notify
   :keys [{1 :<leader>n
-          2 (fn []
-              (local notify (require :notify))
-              (notify.dismiss {:slient true :pending true}))
+          2 #((. (require :notify) :dismiss) {:slient true :pending true})
           :desc "Delete all notifications"}]}
  ;; Indent guides for Neovim
  {1 :lukas-reineke/indent-blankline.nvim
@@ -46,5 +43,9 @@
  ;; UI Component Library for Neovim
  {1 :MunifTanjim/nui.nvim :lazy true}
  ;; Git integration for buffers
- {1 :lewis6991/gitsigns.nvim :event [:BufNewFile :BufReadPost]}]
+ {1 :lewis6991/gitsigns.nvim :event [:BufNewFile :BufReadPost]}
+ ;; Extensible Neovim Scrollbar
+ {1 :petertriho/nvim-scrollbar
+  :opts {:excluded_filetypes [:prompt :TelescopePrompt :noice :notify]}
+  :event [:BufReadPost]}]
 

@@ -1,4 +1,4 @@
--- :fennel:1678948091
+-- :fennel:1679241099
 local M = {}
 M.has = function(plugin)
   local lazy = require("lazy.core.config")
@@ -51,7 +51,8 @@ M["get-formatter-name"] = function()
     for _, fmt_fn in ipairs(formatter) do
       local formatter0 = fmt_fn()
       if formatter0 then
-        names[(#names + 1)] = (formatter0.name or formatter0.exe)
+        local name = (formatter0.name or formatter0.exe)
+        do end (names)[(#names + 1)] = name
       else
       end
     end
