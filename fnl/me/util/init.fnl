@@ -1,8 +1,10 @@
+(import-macros {: not-nil! : tappend!} :macros)
+
 (local M {})
 
 (fn M.has [plugin]
   (local lazy (require :lazy.core.config))
-  (not= (. lazy.plugins plugin) nil))
+  (not-nil! (. lazy.plugins plugin)))
 
 (fn M.on-very-lazy [fun]
   (vim.api.nvim_create_autocmd :User {:pattern :VeryLazy :callback #(fun)}))
@@ -42,7 +44,7 @@
           (local formatter (fmt-fn))
           (when formatter
             (local name (or formatter.name formatter.exe))
-            (tset names (+ (length names) 1) name)))
+            (tappend! names name)))
         (table.concat names ", "))
       ""))
 
@@ -58,7 +60,7 @@
       (table.concat linter ", ") ""))
 
 (fn M.is-loaded [plugin]
-  (not= (. (require :lazy.core.config) :plugins plugin "_" :loaded) nil))
+  (not-nil! (. (require :lazy.core.config) :plugins plugin "_" :loaded)))
 
 M
 

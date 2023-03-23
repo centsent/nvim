@@ -1,3 +1,5 @@
+(import-macros {: g!} :macros)
+
 (fn make-lazygit-terminal []
   ;; Create a new lazygit terminal instance
   (local {: Terminal} (require :toggleterm.terminal))
@@ -18,7 +20,7 @@
  ;; A plugin for profiling Vim and Neovim startup time
  {1 :dstein64/vim-startuptime
   :cmd :StartupTime
-  :config #(set vim.g.startuptime_tries 10)}
+  :config #(g! :startuptime_tries 10)}
  ;; Single tabpage interface for easily cycling through diffs for all modified files for any git rev
  {1 :sindrets/diffview.nvim
   :cmd {:DiffviewOpen :DiffviewClose :DiffviewToggleFiles :DiffviewFocusFiles}

@@ -1,4 +1,4 @@
--- :fennel:1679549149
+-- :fennel:1679565903
 local config = require("me.config")
 local lsp_signs = config.icons.diagnostics
 local git_icons = config.icons.git

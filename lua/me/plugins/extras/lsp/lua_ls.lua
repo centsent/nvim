@@ -1,3 +1,3 @@
--- :fennel:1679490321
+-- :fennel:1679576313
 local lua_ls_settings = {settings = {Lua = {completion = {callSnippet = "Replace"}, diagnostics = {globals = {"vim"}}, workspace = {library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false}, runtime = {version = "LuaJIT"}}}}
 return {dependencies = {{opts = {experimental = {pathStrict = true}}, config = true, "folke/neodev.nvim"}}, opts = {servers = {lua_ls = lua_ls_settings}}, "neovim/nvim-lspconfig"}

@@ -1,3 +1,4 @@
+(import-macros {: tappend!} :macros)
 (local config (require :me.config))
 (local lsp-signs config.icons.diagnostics)
 (local git-icons config.icons.git)
@@ -87,7 +88,7 @@
     (local names {})
     (each [_ client (pairs clients)]
       (when (not (vim.tbl_contains names client.name))
-        (tset names (+ (length names) 1) client.name)))
+        (tappend! names client.name)))
     (table.concat names ", "))
 
   (if (next clients)

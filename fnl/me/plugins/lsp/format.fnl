@@ -1,3 +1,4 @@
+(import-macros {: not-nil!} :macros)
 (local M {})
 
 (set M.autoformat true)
@@ -16,7 +17,7 @@
   (when M.autoformat
     (local {: get-formatter} (require :me.util))
     (local formatter (get-formatter))
-    (if (not= nil formatter)
+    (if (not-nil! formatter)
         (vim.cmd :FormatWrite)
         (vim.lsp.buf.format))))
 

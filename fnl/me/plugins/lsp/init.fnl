@@ -1,3 +1,5 @@
+(import-macros {: tappend!} :macros)
+
 (fn set-diagnostics-icons [icons]
   ;; Set diagnostic icons for each type
   (each [type icon (pairs icons)]
@@ -43,11 +45,11 @@
       (when server-opts
         (local available (mlsp.get_available_servers))
         (local is-not-mason-server
-               (and (not= server-opts.mason false)
-                    (not (vim.tbl_contains available server))))
+               (or (= server-opts.mason false)
+                   (not (vim.tbl_contains available server))))
         (if is-not-mason-server
             (setup server)
-            (tset ensure_installed (+ (length ensure_installed) 1) server))))
+            (tappend! ensure_installed server))))
     (mlsp.setup {: ensure_installed})
     (mlsp.setup_handlers [setup]))
 

@@ -37,7 +37,9 @@
  ;; to help you solve all the trouble your code is causing.
  {1 :folke/trouble.nvim
   :opts {:position :right :use_diagnostic_signs true}
-  :keys [{1 :gt 2 ":Trouble<cr>" :desc "Open trouble list (Trouble.nvim)"}]}
+  :keys [{1 :gt
+          2 ":TroubleToggle<cr>"
+          :desc "Open trouble list (Trouble.nvim)"}]}
  ;; lua `fork` of vim-web-devicons for neovim
  {1 :kyazdani42/nvim-web-devicons :lazy true}
  ;; UI Component Library for Neovim

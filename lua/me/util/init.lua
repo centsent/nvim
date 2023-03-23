@@ -1,8 +1,8 @@
--- :fennel:1679549866
+-- :fennel:1679568438
 local M = {}
 M.has = function(plugin)
   local lazy = require("lazy.core.config")
-  return (lazy.plugins[plugin] ~= nil)
+  return (nil ~= lazy.plugins[plugin])
 end
 M["on-very-lazy"] = function(fun)
   local function _1_()
@@ -78,6 +78,6 @@ M["get-linter-name"] = function()
   end
 end
 M["is-loaded"] = function(plugin)
-  return ((require("lazy.core.config")).plugins[plugin]._.loaded ~= nil)
+  return (nil ~= (require("lazy.core.config")).plugins[plugin]._.loaded)
 end
 return M

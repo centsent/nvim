@@ -1,4 +1,4 @@
--- :fennel:1679553734
+-- :fennel:1679566664
 local function set_diagnostics_icons(icons)
   for type, icon in pairs(icons) do
     local name = ("DiagnosticSign" .. type)
@@ -44,7 +44,7 @@ local function config(_, settings)
     for server, server_opts in pairs(servers) do
       if server_opts then
         local available = mlsp.get_available_servers()
-        local is_not_mason_server = ((server_opts.mason ~= false) and not vim.tbl_contains(available, server))
+        local is_not_mason_server = ((server_opts.mason == false) or not vim.tbl_contains(available, server))
         if is_not_mason_server then
           setup(server)
         else
