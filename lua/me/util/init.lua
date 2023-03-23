@@ -1,4 +1,4 @@
--- :fennel:1679241099
+-- :fennel:1679549866
 local M = {}
 M.has = function(plugin)
   local lazy = require("lazy.core.config")
@@ -76,5 +76,8 @@ M["get-linter-name"] = function()
   else
     return ""
   end
+end
+M["is-loaded"] = function(plugin)
+  return ((require("lazy.core.config")).plugins[plugin]._.loaded ~= nil)
 end
 return M

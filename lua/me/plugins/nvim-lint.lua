@@ -1,11 +1,11 @@
--- :fennel:1679492006
+-- :fennel:1679549946
+local function setup_phpcs()
+  local phpcs = require("lint.linters.phpcs")
+  phpcs.args = {"-q", "--report=json", "--standard=PSR12", "-"}
+  return nil
+end
 local function config()
   local lint = require("lint")
-  local function setup_phpcs()
-    local phpcs = require("lint.linters.phpcs")
-    phpcs.args = {"-q", "--report=json", "--standard=PSR12", "-"}
-    return nil
-  end
   local function create_lint_autocmd()
     local events = {"BufEnter", "BufWritePost", "BufLeave"}
     local augroup = vim.api.nvim_create_augroup("NvimLint", {clear = true})
@@ -21,4 +21,4 @@ local function config()
   lint.linters_by_ft = linters
   return create_lint_autocmd()
 end
-return {config = config, event = {"BufWritePost"}, "mfussenegger/nvim-lint"}
+return {config = config, event = {"BufReadPost", "BufNewFile", "BufWritePost"}, "mfussenegger/nvim-lint"}

@@ -1,4 +1,4 @@
--- :fennel:1679303011
+-- :fennel:1679549149
 local config = require("me.config")
 local lsp_signs = config.icons.diagnostics
 local git_icons = config.icons.git
@@ -41,14 +41,20 @@ end
 local lsp = {color = {fg = colors.white, gui = bold}, get_lsp}
 local formatter
 local function _3_()
+  return (require("me.util"))["is-loaded"]("formatter.nvim")
+end
+local function _4_()
   return (require("me.util"))["get-formatter-name"]()
 end
-formatter = {color = {fg = colors.green}, _3_}
+formatter = {color = {fg = colors.green}, cond = _3_, _4_}
 local linter
-local function _4_()
+local function _5_()
+  return (require("me.util"))["is-loaded"]("nvim-lint")
+end
+local function _6_()
   return (require("me.util"))["get-linter-name"]()
 end
-linter = {color = {fg = colors.cyan}, _4_}
+linter = {color = {fg = colors.cyan}, cond = _5_, _6_}
 local gap = {"%="}
 local function get_mode_color()
   local fg = (mode_colors[vim.fn.mode()] or colors.rose)

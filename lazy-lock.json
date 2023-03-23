@@ -27,7 +27,6 @@
   "lualine.nvim": { "branch": "master", "commit": "e99d733e0213ceb8f548ae6551b04ae32e590c80" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "2b811031febe5f743e07305738181ff367e1e452" },
   "mason.nvim": { "branch": "main", "commit": "cc0582694e3a665a3e41450d8c9e6c6071dd882b" },
-  "neoconf.nvim": { "branch": "main", "commit": "bc531ca41ba55d87416b4b3ade606ff81236389b" },
   "neodev.nvim": { "branch": "main", "commit": "ce2bedbfc07b28c1f247102de19c4767602c4fc7" },
   "neogen": { "branch": "main", "commit": "93d997dbddfe084e77ba4541c54a7b8bfd754fb1" },
   "neovim": { "branch": "main", "commit": "1883d8b417403f1d8c56d52d90445bbbe6be4b80" },
@@ -67,6 +66,7 @@
   "trouble.nvim": { "branch": "main", "commit": "67337644e38144b444d026b0df2dc5fa0038930f" },
   "typescript.nvim": { "branch": "main", "commit": "f66d4472606cb24615dfb7dbc6557e779d177624" },
   "vim": { "branch": "main", "commit": "684c345b8a8bf5e37919c38be6edaaa9356dbf4b" },
+  "vim-go": { "branch": "master", "commit": "23cc4bca2f586c8c2f7d2cb78bbbfec4b7361763" },
   "vim-startuptime": { "branch": "master", "commit": "6580cf539c33a212f4f5542068a3b4dd2b3ad834" },
   "vim-wakatime": { "branch": "master", "commit": "3b3d7f3d0fb4a476a7d1ef4d6f41e31050bdf52a" }
 }

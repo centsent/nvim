@@ -1,4 +1,4 @@
--- :fennel:1679491636
+-- :fennel:1679552665
 local function set_diagnostics_icons(icons)
   for type, icon in pairs(icons) do
     local name = ("DiagnosticSign" .. type)
@@ -61,4 +61,4 @@ local function config(_, settings)
   return setup_mason_lsp()
 end
 local dependencies = {{opts = {max_concurrent_installers = 10}, "williamboman/mason.nvim"}, "williamboman/mason-lspconfig.nvim", "j-hui/fidget.nvim", "SmiteshP/nvim-navic", {config = true, "ray-x/lsp_signature.nvim"}, "mfussenegger/nvim-jdtls"}
-return {{opts = {autoformat = true, setup = {}, servers = {bashls = {}, clangd = {}, csharp_ls = {}, cssls = {}, cmake = {}, dockerls = {}, fennel_language_server = {settings = {fennel = {diagnostics = {globals = {"vim"}}}}, mason = false}, gopls = {}, html = {}, julials = {}, marksman = {}, pyright = {}, solargraph = {}, taplo = {}, vimls = {}, volar = {}}}, config = config, dependencies = dependencies, event = {"BufReadPost", "BufNewFile"}, "neovim/nvim-lspconfig"}, {import = "me.plugins.extras.lsp"}}
+return {{opts = {autoformat = true, setup = {}, servers = {bashls = {}, clangd = {}, csharp_ls = {}, cssls = {}, cmake = {}, dockerls = {}, fennel_language_server = {settings = {fennel = {diagnostics = {globals = {"vim"}}}}, mason = false}, html = {}, julials = {}, marksman = {}, pyright = {}, solargraph = {}, taplo = {}, vimls = {}, volar = {}}}, config = config, dependencies = dependencies, event = {"BufReadPost", "BufNewFile"}, "neovim/nvim-lspconfig"}, {import = "me.plugins.extras.lsp"}}

@@ -94,5 +94,7 @@
   (formatter.setup {:filetype formatter-config}))
 
 ;; Opt-in formatters
-{1 :mhartington/formatter.nvim : config :event :BufWritePost}
+{1 :mhartington/formatter.nvim
+ : config
+ :event [:BufReadPost :BufNewFile :BufWritePost]}
 

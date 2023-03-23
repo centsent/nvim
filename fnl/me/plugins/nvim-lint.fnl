@@ -1,9 +1,9 @@
+(fn setup-phpcs []
+  (local phpcs (require :lint.linters.phpcs))
+  (set phpcs.args [:-q :--report=json :--standard=PSR12 "-"]))
+
 (fn config []
   (local lint (require :lint))
-
-  (fn setup-phpcs []
-    (local phpcs (require :lint.linters.phpcs))
-    (set phpcs.args [:-q :--report=json :--standard=PSR12 "-"]))
 
   (fn create-lint-autocmd []
     (local events [:BufEnter :BufWritePost :BufLeave])
@@ -31,5 +31,5 @@
 {;; An asynchronous linter plugin for Neovim complementary to the built-in Language Server Protocol support.
  1 :mfussenegger/nvim-lint
  : config
- :event [:BufWritePost]}
+ :event [:BufReadPost :BufNewFile :BufWritePost]}
 

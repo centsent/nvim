@@ -81,7 +81,6 @@
                    :dockerls {}
                    :fennel_language_server {:mason false
                                             :settings {:fennel {:diagnostics {:globals [:vim]}}}}
-                   :gopls {}
                    :html {}
                    :julials {}
                    :marksman {}

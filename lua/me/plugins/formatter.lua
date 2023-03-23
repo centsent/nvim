@@ -1,4 +1,4 @@
--- :fennel:1679109125
+-- :fennel:1679549963
 local function config()
   local formatter = require("formatter")
   local function get_current_buf_name()
@@ -41,4 +41,4 @@ local function config()
   setup_common_filetypes()
   return formatter.setup({filetype = formatter_config})
 end
-return {config = config, event = "BufWritePost", "mhartington/formatter.nvim"}
+return {config = config, event = {"BufReadPost", "BufNewFile", "BufWritePost"}, "mhartington/formatter.nvim"}

@@ -98,12 +98,18 @@
 ;; LSP client name component
 (local lsp {1 get-lsp :color {:fg colors.white :gui bold}})
 ;; Buffer formatter name component
-(local formatter {1 #((. (require :me.util) :get-formatter-name))
-                  :color {:fg colors.green}})
+(local formatter
+       {1 #((. (require :me.util) :get-formatter-name))
+        :color {:fg colors.green}
+        :cond (fn []
+                ((. (require :me.util) :is-loaded) :formatter.nvim))})
 
 ;; Buffer linter name component
-(local linter {1 #((. (require :me.util) :get-linter-name))
-               :color {:fg colors.cyan}})
+(local linter
+       {1 #((. (require :me.util) :get-linter-name))
+        :color {:fg colors.cyan}
+        :cond (fn []
+                ((. (require :me.util) :is-loaded) :nvim-lint))})
 
 ;; A gap between components
 (local gap ["%="])

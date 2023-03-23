@@ -57,5 +57,8 @@
   (if linter
       (table.concat linter ", ") ""))
 
+(fn M.is-loaded [plugin]
+  (not= (. (require :lazy.core.config) :plugins plugin "_" :loaded) nil))
+
 M
 
