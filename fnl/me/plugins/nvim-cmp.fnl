@@ -21,12 +21,14 @@
           :<c-n> (cmp.mapping.select_next_item)
           :<c-d> (cmp.mapping.scroll_docs -4)
           :<c-u> (cmp.mapping.scroll_docs 4)
-          :<cr> (cmp.mapping.confirm {:select true})
           :<tab> (cmp.mapping.confirm {:select true})})
   (local cmdline-confg
-         {":" {:sources [{:name :cmdline}]
+         {":" {:sources [{:name :path}
+                         {:name :cmdline}
+                         {:name :cmdline_history}]
                :mapping (cmp.mapping.preset.cmdline)}
-          :/ {:sources [{:name :buffer}] :mapping (cmp.mapping.preset.cmdline)}})
+          :/ {:sources [{:name :buffer} {:name :cmdline_history}]
+              :mapping (cmp.mapping.preset.cmdline)}})
 
   (fn setup-cmdline [settings]
     (each [cmd config (pairs settings)]
@@ -57,6 +59,8 @@
                 :hrsh7th/cmp-path
                 ;; nvim-cmp source for vim's cmdline
                 :hrsh7th/cmp-cmdline
+                ;; Source for nvim-cmp which reads results from command-line or search histories
+                :dmitmel/cmp-cmdline-history
                 ;; Snippet Engine for Neovim written in Lua.
                 :L3MON4D3/LuaSnip
                 ;; luasnip completion source for nvim-cmp

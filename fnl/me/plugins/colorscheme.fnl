@@ -1,4 +1,8 @@
-[;; An arctic, north-bluish clean and elegant Vim theme
+[;; A highly customizable theme for vim and neovim with support for lsp, treesitter and a variety of plugins
+ {1 :EdenEast/nightfox.nvim :lazy true}
+ ;; Soothing pastel theme for (Neo)vim
+ {1 :catppuccin/nvim :name :catppuccin :lazy true}
+ ;; An arctic, north-bluish clean and elegant Vim theme
  {1 :nordtheme/vim :lazy true}
  ;; A dark and light Neovim theme written in fennel, inspired by IBM Carbon
  {1 :shaunsingh/oxocarbon.nvim :lazy true}

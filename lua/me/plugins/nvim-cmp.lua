@@ -1,4 +1,4 @@
--- :fennel:1679197154
+-- :fennel:1679391619
 local function setup_luasnip(args)
   local luasnip = require("luasnip")
   return luasnip.lsp_expand(args.body)
@@ -11,8 +11,8 @@ local function config(_, _0)
   local cmp = require("cmp")
   local lspkind = require("lspkind")
   local cmp_sources = {{name = "nvim_lsp"}, {name = "nvim_lsp_signature_help"}, {name = "path"}, {name = "buffer"}, {name = "luasnip"}, {name = "nvim_lua"}, {name = "codeium"}}
-  local cmp_mapping = {["<c-p>"] = cmp.mapping.select_prev_item(), ["<c-n>"] = cmp.mapping.select_next_item(), ["<c-d>"] = cmp.mapping.scroll_docs(-4), ["<c-u>"] = cmp.mapping.scroll_docs(4), ["<cr>"] = cmp.mapping.confirm({select = true}), ["<tab>"] = cmp.mapping.confirm({select = true})}
-  local cmdline_confg = {[":"] = {sources = {{name = "cmdline"}}, mapping = cmp.mapping.preset.cmdline()}, ["/"] = {sources = {{name = "buffer"}}, mapping = cmp.mapping.preset.cmdline()}}
+  local cmp_mapping = {["<c-p>"] = cmp.mapping.select_prev_item(), ["<c-n>"] = cmp.mapping.select_next_item(), ["<c-d>"] = cmp.mapping.scroll_docs(-4), ["<c-u>"] = cmp.mapping.scroll_docs(4), ["<tab>"] = cmp.mapping.confirm({select = true})}
+  local cmdline_confg = {[":"] = {sources = {{name = "path"}, {name = "cmdline"}, {name = "cmdline_history"}}, mapping = cmp.mapping.preset.cmdline()}, ["/"] = {sources = {{name = "buffer"}, {name = "cmdline_history"}}, mapping = cmp.mapping.preset.cmdline()}}
   local function setup_cmdline(settings)
     for cmd, config0 in pairs(settings) do
       local _local_1_ = config0
@@ -33,4 +33,4 @@ local function _2_(_, opts)
   local lspkind = require("lspkind")
   return lspkind.init(opts)
 end
-return {event = "InsertEnter", config = config, dependencies = {"hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lsp-signature-help", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets", {opts = {symbol_map = ((require("me.config")).icons).kinds}, config = _2_, "onsails/lspkind.nvim"}}, "hrsh7th/nvim-cmp"}
+return {event = "InsertEnter", config = config, dependencies = {"hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lsp-signature-help", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "dmitmel/cmp-cmdline-history", "L3MON4D3/LuaSnip", "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets", {opts = {symbol_map = ((require("me.config")).icons).kinds}, config = _2_, "onsails/lspkind.nvim"}}, "hrsh7th/nvim-cmp"}

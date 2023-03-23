@@ -1,4 +1,4 @@
--- :fennel:1678525998
+-- :fennel:1679492006
 local function config()
   local lint = require("lint")
   local function setup_phpcs()
@@ -16,7 +16,7 @@ local function config()
     opts = {group = augroup, callback = _1_}
     return vim.api.nvim_create_autocmd(events, opts)
   end
-  local linters = {lua = {"luacheck", "codespell"}, sh = {"shellcheck"}, java = {"codespell"}, javascript = {"eslint"}, typescript = {"eslint"}, vue = {"eslint"}, go = {"golangci-lint"}, python = {"ruff"}, yaml = {"yamllint"}, gitcommit = {"codespell"}, php = {"phpcs"}, ruby = {"rubocop"}, fennel = {"fennel"}}
+  local linters = {lua = {"luacheck", "codespell"}, sh = {"shellcheck"}, java = {"codespell"}, javascript = {"eslint"}, typescript = {"eslint"}, vue = {"eslint"}, go = {"golangcilint"}, python = {"ruff"}, yaml = {"yamllint"}, gitcommit = {"codespell"}, php = {"phpcs"}, ruby = {"rubocop"}, fennel = {"fennel"}}
   setup_phpcs()
   lint.linters_by_ft = linters
   return create_lint_autocmd()

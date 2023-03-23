@@ -1,7 +1,6 @@
 (let [(has-jdtls jdtls) (pcall require :jdtls)]
   (when has-jdtls
     (local jdtls-setup (require :jdtls.setup))
-    (local {: make_capabilities : on_attach} (require :me.lsp))
     (local home (os.getenv :HOME))
     (local data-path (vim.fn.stdpath :data))
     (local project-name (vim.fn.fnamemodify (vim.fn.getcwd) ":p:h:t"))
@@ -77,13 +76,8 @@
                     :debounce_text_changes 150
                     :server_side_fuzzy_completion true}})
 
-    (fn jdtls-on-attach [client bufnr]
-      (on_attach client bufnr)
-      (jdtls-setup.add_commands))
-
     (fn setup-jdtls []
-      (set jdtls-config.on_attach jdtls-on-attach)
-      (set jdtls-config.capabilities (make_capabilities))
+      (set jdtls-config.on_attach #(jdtls-setup.add_commands))
       (jdtls.start_or_attach jdtls-config))
 
     (setup-jdtls)))

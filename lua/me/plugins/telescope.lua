@@ -1,4 +1,4 @@
--- :fennel:1679149050
+-- :fennel:1679487879
 local function config()
   local telescope = require("telescope")
   local defaults = {}
@@ -14,9 +14,9 @@ local function config()
   return telescope.load_extension("notify")
 end
 local dependencies = {"nvim-telescope/telescope-ui-select.nvim"}
-local function telescope_builtin(name)
+local function telescope_builtin(picker)
   local function _1_()
-    return (require("telescope.builtin"))[name]()
+    return (require("telescope.builtin"))[picker]()
   end
   return _1_
 end
@@ -43,8 +43,8 @@ local function find_project_files()
   else
   end
   if (vim.fn.executable("fd") == 1) then
-    local find_files_opts = get_find_files_opts(cwd)
-    return builtin.find_files(find_files_opts)
+    local find_file_opts = get_find_files_opts(cwd)
+    return builtin.find_files(find_file_opts)
   else
     return nil
   end

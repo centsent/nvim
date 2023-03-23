@@ -47,6 +47,7 @@ local function init_lazy()
       },
     },
   })
+
   require("me.config").setup({})
 end
 

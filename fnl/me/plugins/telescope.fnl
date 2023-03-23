@@ -29,12 +29,13 @@
   (telescope.load_extension :notify))
 
 (local dependencies
-       [;; It sets vim.ui.select to telescope. That means for example that neovim core stuff can fill the telescope picker
+       [;; It sets vim.ui.select to telescope. 
+        ;; That means for example that neovim core stuff can fill the telescope picker
         :nvim-telescope/telescope-ui-select.nvim])
 
-(fn telescope-builtin [name]
+(fn telescope-builtin [picker]
   (fn []
-    ((. (require :telescope.builtin) name))))
+    ((. (require :telescope.builtin) picker))))
 
 (fn make-fd-command []
   [:fd :--type :f :--strip-cwd-prefix :--hidden :--follow])
@@ -54,8 +55,8 @@
   (when root_dir
     (set cwd root_dir))
   (when (= (vim.fn.executable :fd) 1)
-    (local find_files_opts (get-find-files-opts cwd))
-    (builtin.find_files find_files_opts)))
+    (local find-file-opts (get-find-files-opts cwd))
+    (builtin.find_files find-file-opts)))
 
 (fn get-telescope-keymaps []
   [{1 :ff 2 #(find-project-files) :desc "Find files in current project folder"}

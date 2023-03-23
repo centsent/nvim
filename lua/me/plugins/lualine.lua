@@ -1,4 +1,4 @@
--- :fennel:1679234805
+-- :fennel:1679303011
 local config = require("me.config")
 local lsp_signs = config.icons.diagnostics
 local git_icons = config.icons.git
@@ -25,9 +25,12 @@ local function get_lsp()
   local function get_lsp_client_name()
     local names = {}
     for _, client in pairs(clients) do
-      names[(#names + 1)] = client.name
+      if not vim.tbl_contains(names, client.name) then
+        names[(#names + 1)] = client.name
+      else
+      end
     end
-    return table.concat(names, " ")
+    return table.concat(names, ", ")
   end
   if next(clients) then
     return get_lsp_client_name()
@@ -37,15 +40,15 @@ local function get_lsp()
 end
 local lsp = {color = {fg = colors.white, gui = bold}, get_lsp}
 local formatter
-local function _2_()
+local function _3_()
   return (require("me.util"))["get-formatter-name"]()
 end
-formatter = {color = {fg = colors.green}, _2_}
+formatter = {color = {fg = colors.green}, _3_}
 local linter
-local function _3_()
+local function _4_()
   return (require("me.util"))["get-linter-name"]()
 end
-linter = {color = {fg = colors.cyan}, _3_}
+linter = {color = {fg = colors.cyan}, _4_}
 local gap = {"%="}
 local function get_mode_color()
   local fg = (mode_colors[vim.fn.mode()] or colors.rose)

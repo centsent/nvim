@@ -1,4 +1,4 @@
--- :fennel:1678890424
+-- :fennel:1679295145
 local function setup_tsserver(_, opts)
   local typescript = require("typescript")
   return typescript.setup({server = opts})

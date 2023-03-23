@@ -17,13 +17,10 @@
                   :javascript [:eslint]
                   :typescript [:eslint]
                   :vue [:eslint]
-                  :go [:golangci-lint]
+                  :go [:golangcilint]
                   :python [:ruff]
                   :yaml [:yamllint]
                   :gitcommit [:codespell]
-                  ;; Install phpcs via composer:
-                  ;; $ composer global require squizlabs/php_codesniffer
-                  ;; and make sure global vendor binaries directory is in $PATH
                   :php [:phpcs]
                   :ruby [:rubocop]
                   :fennel [:fennel]})

@@ -1,4 +1,4 @@
--- :fennel:1679241497
+-- :fennel:1679491636
 local function set_diagnostics_icons(icons)
   for type, icon in pairs(icons) do
     local name = ("DiagnosticSign" .. type)
@@ -16,10 +16,10 @@ local function config(_, settings)
   local function on_attach(client, buffer)
     local keymaps = require("me.plugins.lsp.keymaps")
     local format = require("me.plugins.lsp.format")
-    local navic = require("nvim-navic")
     keymaps["on-attach"](client, buffer)
     format["on-attach"](client, buffer)
     if client.server_capabilities.documentSymbolProvider then
+      local navic = require("nvim-navic")
       return navic.attach(client, buffer)
     else
       return nil

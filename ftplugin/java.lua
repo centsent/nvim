@@ -1,10 +1,7 @@
--- :fennel:1669386367
+-- :fennel:1679302658
 local has_jdtls, jdtls = pcall(require, "jdtls")
 if has_jdtls then
   local jdtls_setup = require("jdtls.setup")
-  local _local_1_ = require("me.lsp")
-  local make_capabilities = _local_1_["make_capabilities"]
-  local on_attach = _local_1_["on_attach"]
   local home = os.getenv("HOME")
   local data_path = vim.fn.stdpath("data")
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
@@ -19,13 +16,11 @@ if has_jdtls then
   local code_generation_template = "${object.className}{${member.name()}=${member.value} ${otherMembers}}"
   local java_configuration = {eclipse = {downloadSources = true}, maven = {downloadSources = true}, implementationsCodeLens = {enabled = true}, referencesCodeLens = {enabled = true}, references = {includeDecompiledSources = true}, inlayHints = {parameterNames = {enabled = "all"}}, format = {enabled = false}, completion = {favoriteStaticMembers = favoriteStaticMembers}, signatureHelp = {enabled = true}, contentProvider = {preferred = "fernflower"}, sources = {organizeImports = {starThreshold = 999, staticStarThreshold = 9999}}, codeGeneration = {toString = {template = code_generation_template}, useBlocks = true}}
   local jdtls_config = {cmd = cmd, root_dir = root_dir, settings = {java = java_configuration}, init_options = {extendedClientCapabilities = extendedClientCapabilities}, autostart = true, flags = {allow_incremental_sync = true, debounce_text_changes = 150, server_side_fuzzy_completion = true}}
-  local function jdtls_on_attach(client, bufnr)
-    on_attach(client, bufnr)
-    return jdtls_setup.add_commands()
-  end
   local function setup_jdtls()
-    jdtls_config.on_attach = jdtls_on_attach
-    jdtls_config.capabilities = make_capabilities()
+    local function _1_()
+      return jdtls_setup.add_commands()
+    end
+    jdtls_config.on_attach = _1_
     return jdtls.start_or_attach(jdtls_config)
   end
   return setup_jdtls()

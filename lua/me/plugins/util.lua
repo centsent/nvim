@@ -1,4 +1,4 @@
--- :fennel:1679213267
+-- :fennel:1679295752
 local function make_lazygit_terminal()
   local _local_1_ = require("toggleterm.terminal")
   local Terminal = _local_1_["Terminal"]

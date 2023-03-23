@@ -86,8 +86,9 @@
   (fn get-lsp-client-name []
     (local names {})
     (each [_ client (pairs clients)]
-      (tset names (+ (length names) 1) client.name))
-    (table.concat names " "))
+      (when (not (vim.tbl_contains names client.name))
+        (tset names (+ (length names) 1) client.name)))
+    (table.concat names ", "))
 
   (if (next clients)
       (get-lsp-client-name)

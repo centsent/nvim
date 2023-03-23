@@ -17,10 +17,10 @@
   (fn on-attach [client buffer]
     (local keymaps (require :me.plugins.lsp.keymaps))
     (local format (require :me.plugins.lsp.format))
-    (local navic (require :nvim-navic))
     (keymaps.on-attach client buffer)
     (format.on-attach client buffer)
     (when client.server_capabilities.documentSymbolProvider
+      (local navic (require :nvim-navic))
       (navic.attach client buffer)))
 
   (fn setup [server]
