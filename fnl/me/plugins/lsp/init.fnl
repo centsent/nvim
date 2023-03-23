@@ -65,7 +65,8 @@
                      ;; Simple winbar/statusline plugin that shows your current code context
                      :SmiteshP/nvim-navic
                      ;; LSP signature hint as you type
-                     {1 :ray-x/lsp_signature.nvim :config true}
+                     {1 :ray-x/lsp_signature.nvim
+                      :opts {:noice true :padding " "}}
                      ;; Extensions for the built-in LSP support in Neovim for eclipse.jdt.ls
                      :mfussenegger/nvim-jdtls])
 

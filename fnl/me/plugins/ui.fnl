@@ -43,7 +43,9 @@
  ;; UI Component Library for Neovim
  {1 :MunifTanjim/nui.nvim :lazy true}
  ;; Git integration for buffers
- {1 :lewis6991/gitsigns.nvim :event [:BufNewFile :BufReadPost]}
+ {1 :lewis6991/gitsigns.nvim
+  :event [:BufNewFile :BufReadPost]
+  :opts {:current_line_blame true}}
  ;; Extensible Neovim Scrollbar
  {1 :petertriho/nvim-scrollbar
   :opts {:excluded_filetypes [:prompt :TelescopePrompt :noice :notify]}
