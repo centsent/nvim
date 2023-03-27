@@ -1,3 +1,5 @@
+(import-macros {: each!} :macros)
+
 (fn set-option [option value]
   (vim.api.nvim_set_option option value))
 
@@ -59,6 +61,5 @@
                 ;; Enables 24-bit RGB color in the TUI
                 :termguicolors true})
 
-(each [option value (pairs options)]
-  (set-option option value))
+(each! options set-option)
 

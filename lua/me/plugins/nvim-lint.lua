@@ -1,4 +1,4 @@
--- :fennel:1679549946
+-- :fennel:1679708844
 local function setup_phpcs()
   local phpcs = require("lint.linters.phpcs")
   phpcs.args = {"-q", "--report=json", "--standard=PSR12", "-"}

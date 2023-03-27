@@ -21,7 +21,7 @@
  ;; The fastest Neovim colorizer.
  {1 :norcalli/nvim-colorizer.lua
   :opts {:filetypes ["*" :!lazy] :buftype ["*" :!prompt :!nofile]}
-  :event [:BufReadPre]}
+  :event :BufReadPost}
  ;; Next-generation motion plugin using incremental input processing
  {1 :ggandor/leap.nvim
   :event [:BufNewFile :BufReadPost]

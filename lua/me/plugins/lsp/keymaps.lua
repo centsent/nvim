@@ -1,4 +1,4 @@
--- :fennel:1679322934
+-- :fennel:1679641162
 local M = {}
 local function _1_()
   return vim.lsp.buf.code_action()

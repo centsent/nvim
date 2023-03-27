@@ -1,15 +1,16 @@
--- :fennel:1679586224
+-- :fennel:1679708837
 local function config(_, opts)
   local telescope = require("telescope")
   local _local_1_ = require("telescope.themes")
   local get_cursor = _local_1_["get_cursor"]
   opts.extensions["ui-select"] = get_cursor({})
   telescope.setup(opts)
+  telescope.load_extension("fzf")
   telescope.load_extension("ui-select")
   return telescope.load_extension("notify")
 end
-local dependencies = {"nvim-telescope/telescope-ui-select.nvim"}
-local function telescope_builtin(picker)
+local dependencies = {"nvim-telescope/telescope-ui-select.nvim", {build = "make", "nvim-telescope/telescope-fzf-native.nvim"}}
+local function run(picker)
   local function _2_()
     return (require("telescope.builtin"))[picker]()
   end
@@ -45,7 +46,9 @@ local function get_telescope_keymaps()
   local function _6_()
     return find_project_files()
   end
-  return {{desc = "Find files in current project folder", "ff", _6_}, {desc = "Telescope buffers", "fb", telescope_builtin("buffers")}, {desc = "Telescope live grep", "fg", telescope_builtin("live_grep")}, {desc = "Telescope keymaps", "fm", telescope_builtin("keymaps")}, {desc = "Telescope list lsp document symbols", "fd", telescope_builtin("lsp_document_symbols")}, {desc = "Telescope list lsp references", "fr", telescope_builtin("lsp_references")}, {desc = "Viewing Notify history", "fn", ":Telescope notify<cr>"}}
+  return {{desc = "Find files in current project folder", "ff", _6_}, {desc = "Telescope buffers", "fb", run("buffers")}, {desc = "Telescope live grep", "fg", run("live_grep")}, {desc = "Telescope keymaps", "fm", run("keymaps")}, {desc = "Telescope list lsp document symbols", "fd", run("lsp_document_symbols")}, {desc = "Telescope list lsp references", "fr", run("lsp_references")}, {desc = "Viewing Notify history", "fn", ":Telescope notify<cr>"}}
 end
-local opts = {defaults = {file_ignore_patterns = {"node_modules", ".git/", "vendor/*", ".mypy_cache/.*", "__pycache__/*", "venv/", "*.png", "*.jpg"}, vimgrep_arguments = {"rg", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--hidden", "--follow", "--trim"}}, pickers = {live_grep = {theme = "dropdown"}}, extensions = {}}
+local file_ignore_patterns = {"node_modules", ".git/", ".cache", "vendor/", ".mypy_cache/.*", "__pycache__/*", "venv/", "%.a", "%.o", "%.out", "%.pdf", "%.class", "%.mkv", "%.mp4", "%.zip", "%.png", "%.jpg"}
+local vimgrep_arguments = {"rg", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--hidden", "--follow", "--trim"}
+local opts = {defaults = {file_ignore_patterns = file_ignore_patterns, vimgrep_arguments = vimgrep_arguments}, pickers = {live_grep = {theme = "dropdown"}}, extensions = {}}
 return {dependencies = dependencies, opts = opts, config = config, keys = get_telescope_keymaps, "nvim-telescope/telescope.nvim"}

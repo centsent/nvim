@@ -1,2 +1,2 @@
--- :fennel:1679580050
+-- :fennel:1679890621
 return {{lazy = true, "EdenEast/nightfox.nvim"}, {lazy = true, name = "catppuccin", "catppuccin/nvim"}, {lazy = true, name = "nord", "nordtheme/vim"}, {lazy = true, "shaunsingh/oxocarbon.nvim"}, {lazy = true, "ellisonleao/gruvbox.nvim"}, {lazy = true, name = "rose-pine", "rose-pine/neovim"}, {lazy = true, opts = {style = "storm", tokyonight_transparent_sidebar = true, transparent = true, styles = {functions = {italic = true}, comments = {italic = true}, keywords = {italic = true}, sidebars = "transparent", float = "transparent"}}, "folke/tokyonight.nvim"}}

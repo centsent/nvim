@@ -1,4 +1,4 @@
--- :fennel:1679576214
+-- :fennel:1679641175
 vim.g["mapleader"] = ","
 local mode_adapters = {["normal-mode"] = "n", ["visual-mode"] = "v", ["visual-block-mode"] = "x", ["insert-mode"] = "i", ["operator-pending-mode"] = "o"}
 local normal_mode = {["<space>"] = "/", ["<left>"] = "<nop>", ["<right>"] = "<nop>", ["<up>"] = "<nop>", ["<down>"] = "<nop>", [";"] = ":", ["<leader>/"] = ":nohlsearch<cr>", ["<leader>w"] = ":w!<cr>", ["<leader>q"] = ":q<cr>", ["<leader>a"] = ":q!<cr>", U = "<c-r>", H = "^", L = "$", ["<c-d>"] = "<c-d>zz", ["<c-u>"] = "<c-u>zz", n = "nzz", N = "Nzz", ["<c-j>"] = ":move +1<cr>", ["<c-k>"] = ":move -2<cr>", ["<tab>"] = "<c-w>w", tt = ":tabnew<cr>", tp = ":tabprevious<cr>", tn = ":tabnext<cr>", ["<space>1"] = "<c-w>s", ["<space>2"] = "<c-w>v"}
@@ -9,8 +9,11 @@ local default_keymaps = {["normal-mode"] = normal_mode, ["visual-mode"] = visual
 local function load_mode(mode_key, keymaps)
   local mode = mode_adapters[mode_key]
   if (nil ~= mode) then
-    for from, to in pairs(keymaps) do
-      vim.keymap.set(mode, from, to)
+    for key_2_auto, val_3_auto in pairs(keymaps) do
+      local function _1_(from, to)
+        return vim.keymap.set(mode, from, to)
+      end
+      _1_(key_2_auto, val_3_auto)
     end
     return nil
   else

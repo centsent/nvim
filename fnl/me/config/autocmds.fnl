@@ -1,5 +1,10 @@
+(import-macros {: ieach!} :macros)
+
 (fn augroup [name]
   (vim.api.nvim_create_augroup (.. :me_ name) {:clear true}))
+
+(fn create-autocmd [autocmd]
+  (vim.api.nvim_create_autocmd autocmd.events autocmd.opts))
 
 (fn set-lastloc []
   (local mark (vim.api.nvim_buf_get_mark 0 "\""))
@@ -31,6 +36,5 @@
                                    :startuptime]
                          :callback close-with-q}}])
 
-(each [_ autocmd (ipairs autocmds)]
-  (vim.api.nvim_create_autocmd autocmd.events autocmd.opts))
+(ieach! autocmds create-autocmd)
 

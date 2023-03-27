@@ -19,8 +19,18 @@
   "appends 'val' to a list 'tbl'."
   `(tset ,tbl (+ (length ,tbl) 1) ,val))
 
+(fn M.each! [tbl handler]
+  "Iterate values in table/list with 'handler'."
+  `(each [key# val# (pairs ,tbl)]
+     (,handler key# val#)))
+
+(fn M.ieach! [lst handler]
+  "Iterate values in list with index and 'handler'."
+  `(each [index# val# (ipairs ,lst)]
+     (,handler val# index#)))
+
 (fn M.g! [name val]
-  "sets global variable 'name' to 'val'."
+  "Sets vim global variable 'name' to 'val'."
   `(tset vim.g ,(parse-sym name) ,val))
 
 M

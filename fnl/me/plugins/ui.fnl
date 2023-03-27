@@ -23,12 +23,10 @@
   :opts {:lsp {:override {:vim.lsp.util.convert_input_to_markdown_lines true
                           :vim.lsp.util.stylize_markdown true}
                :signature {:enabled false}}
-         :presets {:bottom_search true
-                   :command_palette true
-                   :long_message_to_split true}}}
+         :presets {:command_palette true :long_message_to_split true}}}
  ;; A snazzy bufferline for Neovim
  {1 :akinsho/bufferline.nvim
-  :event [:VeryLazy]
+  :event :VeryLazy
   :opts {:options {:mode :tabs
                    :show_buffer_close_icons false
                    :show_close_icon false
@@ -51,5 +49,5 @@
  ;; Extensible Neovim Scrollbar
  {1 :petertriho/nvim-scrollbar
   :opts {:excluded_filetypes [:prompt :TelescopePrompt :noice :notify]}
-  :event [:BufReadPost]}]
+  :event :BufReadPost}]
 
