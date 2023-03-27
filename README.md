@@ -1,3 +1,5 @@
+# Move to https://github.com/centsent/dotfiles
+
 ## Keymaps
 
 - Arrow keys has been disabled.
